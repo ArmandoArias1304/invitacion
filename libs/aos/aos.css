@@ -1,0 +1,78 @@
+/* AOS - Animate On Scroll Library
+   Version: 2.3.1
+   License: MIT License
+   Documentation: https://michalsnik.github.io/aos/
+*/
+
+[data-aos] {
+  opacity: 0;
+  transition-property: opacity, transform;
+}
+
+[data-aos].aos-animate {
+  opacity: 1;
+}
+
+[data-aos][data-aos-easing] {
+  transition-timing-function: var(--aos-easing);
+}
+
+[data-aos][data-aos-duration] {
+  transition-duration: var(--aos-duration);
+}
+
+[data-aos][data-aos-delay] {
+  transition-delay: var(--aos-delay);
+}
+
+[data-aos][data-aos-anchor] {
+  position: relative;
+}
+
+[data-aos][data-aos-anchor]::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+[data-aos][data-aos-offset] {
+  --aos-offset: var(--aos-offset);
+}
+
+[data-aos][data-aos-once="true"] {
+  --aos-once: true;
+}
+
+[data-aos="fade"] {
+  transform: translateY(20px);
+}
+
+[data-aos="fade-up"] {
+  transform: translateY(20px);
+}
+
+[data-aos="fade-down"] {
+  transform: translateY(-20px);
+}
+
+[data-aos="fade-left"] {
+  transform: translateX(-20px);
+}
+
+[data-aos="fade-right"] {
+  transform: translateX(20px);
+}
+
+[data-aos="zoom-in"] {
+  transform: scale(0.9);
+}
+
+[data-aos="zoom-out"] {
+  transform: scale(1.1);
+}
+
+/* Additional AOS animations can be added below */

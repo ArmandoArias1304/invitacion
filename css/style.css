@@ -1,0 +1,9187 @@
+/* ==========================================================================
+   INVITACIÓN DIGITAL DE BODA - ESTILOS PRINCIPALES
+   ========================================================================== */
+
+/* Variables CSS */
+:root {
+  --primary-color: #d4af37;
+  --secondary-color: #8b6f47;
+  --accent-color: #f8f5f0;
+  --text-dark: #2c2c2c;
+  --text-light: #666;
+  --white: #ffffff;
+  --gradient-primary: linear-gradient(135deg, #d4af37 0%, #b8941f 100%);
+  --gradient-overlay: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6));
+  --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.1);
+  --shadow-card: 0 8px 25px rgba(0, 0, 0, 0.15);
+  --border-radius: 15px;
+  --font-primary: "Playfair Display", serif;
+  --font-secondary: "Lato", sans-serif;
+  --font-script: "Great Vibes", cursive;
+}
+
+/* Reset y Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  overflow-x: hidden !important;
+  max-width: 100vw !important;
+}
+
+body {
+  overflow-x: hidden !important;
+  max-width: 100vw !important;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Contenido principal inicialmente oculto */
+#contenido-principal {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.8s ease-in;
+}
+
+#contenido-principal.show {
+  display: block !important;
+  opacity: 1 !important;
+}
+
+.section-title {
+  font-family: "Sacramento", cursive;
+  font-size: 6rem;
+  color: #c8a96e;
+  margin-bottom: 2rem;
+  font-weight: 600;
+  position: relative;
+}
+
+.padrinos-list li {
+  font-size: 1.2rem !important;
+  /* Cambiar el tamaño aquí */
+}
+
+/* Color específico para h4, párrafos y listas de padrinos */
+h4,
+.timeline-card h4,
+.padrinos-card h4,
+.info-card h4,
+.regalo-card h4,
+.trivia-question h4,
+p,
+.lead,
+.romantic-message,
+.padrinos-list li {
+  color: var(--text-light) !important;
+}
+
+/* Color específico para h4 */
+h4,
+.timeline-card h4,
+.padrinos-card h4,
+.info-card h4,
+.regalo-card h4,
+.trivia-question h4 {
+  color: #4a2c2a !important;
+}
+
+.separacion {
+  max-width: 100%;
+  /* Asegura que la imagen no sobrepase el contenedor */
+  display: block;
+  /* Evita espacios en blanco extra */
+  margin: 0 auto;
+  /* Centra la imagen si es necesario */
+}
+
+/* Fuente Patua One para h1 y h4 */
+h1 {
+  font-family: "Patua One", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 6.3rem !important;
+  padding-top: 40px;
+}
+
+/*Para los que no agarró xd*/
+
+h4,
+.timeline-card h4,
+.padrinos-card h4,
+.info-card h4,
+.regalo-card h4,
+.trivia-question h4,
+.itinerario-item .event h5,
+p,
+.lead,
+.romantic-message,
+li,
+a,
+h3,
+#options-container {
+  font-family: "Patua One", serif !important;
+  font-weight: 400 !important;
+}
+
+.section-title::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: var(--gradient-primary);
+  border-radius: 2px;
+}
+
+/* ==========================================================================
+  CONTROL DE MÚSICA - TEMÁTICA DE BODA ELEGANTE (CORREGIDO PARA MÓVIL)
+  ========================================================================== */
+
+/* Control de música con temática elegante */
+.music-control {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform: translateY(20px);
+}
+
+.music-control.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Botón de música con colores temáticos */
+.music-btn {
+  width: 65px;
+  height: 65px;
+  background: linear-gradient(135deg, #4a2c2a 0%, #2c1810 50%, #4a2c2a 100%);
+  border: 4px solid #d4af37;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 10px 30px rgba(74, 44, 42, 0.4),
+    0 5px 15px rgba(212, 175, 55, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+/* Efecto de brillo dorado sutil en el fondo */
+.music-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+      circle at 30% 30%,
+      rgba(212, 175, 55, 0.2) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 70% 70%,
+      rgba(244, 228, 188, 0.15) 0%,
+      transparent 50%
+    );
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  animation: elegantGlow 4s ease-in-out infinite;
+}
+
+@keyframes elegantGlow {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1) rotate(0deg);
+  }
+
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05) rotate(180deg);
+  }
+}
+
+.music-btn.playing::before {
+  opacity: 1;
+}
+
+/* Estados hover mejorados */
+.music-btn:hover {
+  transform: scale(1.1);
+  border-color: #f4e4bc;
+  box-shadow: 0 15px 40px rgba(74, 44, 42, 0.5),
+    0 8px 25px rgba(212, 175, 55, 0.4), inset 0 3px 0 rgba(255, 255, 255, 0.2);
+  background: linear-gradient(135deg, #5a3c3a 0%, #3c2820 50%, #5a3c3a 100%);
+}
+
+.music-btn:active {
+  transform: scale(0.95);
+}
+
+/* Icono de música con colores temáticos */
+.music-icon {
+  font-size: 1.6rem;
+  color: #d4af37;
+  transition: all 0.3s ease;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7), 0 0 10px rgba(212, 175, 55, 0.7);
+  z-index: 2;
+  position: relative;
+}
+
+.music-btn:hover .music-icon {
+  color: #f4e4bc;
+  text-shadow: 0 3px 6px rgba(0, 0, 0, 0.6), 0 0 15px rgba(244, 228, 188, 0.5);
+  transform: scale(1.1);
+}
+
+/* Estado reproduciendo - verde elegante */
+.music-btn.playing {
+  background: #84641e;
+  border-color: #c79b3c;
+  animation: musicPulseElegant 3s ease-in-out infinite;
+}
+
+.music-btn.playing .music-icon {
+  color: #4d380b;
+}
+
+@keyframes musicPulseElegant {
+  0%,
+  100% {
+    box-shadow: 0 10px 30px rgba(45, 90, 61, 0.4),
+      0 5px 15px rgba(74, 124, 89, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  50% {
+    box-shadow: 0 15px 40px rgba(45, 90, 61, 0.6),
+      0 8px 25px rgba(74, 124, 89, 0.5), inset 0 3px 0 rgba(255, 255, 255, 0.2);
+  }
+}
+
+/* Estado silenciado - rojo elegante */
+.music-btn.muted {
+  background: linear-gradient(135deg, #6b2c28 0%, #4a1e1b 50%, #6b2c28 100%);
+  border-color: #8b4049;
+  animation: none;
+}
+
+.music-btn.muted .music-icon {
+  color: #d47c85;
+}
+
+/* Tooltip temático */
+.music-btn::after {
+  content: attr(title);
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #4a2c2a 0%, #2c1810 100%);
+  color: #f4e4bc;
+  padding: 10px 15px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-family: "Patua One", serif;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  pointer-events: none;
+  z-index: 10001;
+  border: 2px solid #d4af37;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.music-btn:hover::after {
+  opacity: 1;
+  visibility: visible;
+  top: -45px;
+}
+
+/* Indicador de volumen temático */
+.volume-indicator {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(135deg, #f4e4bc 0%, #d4af37 100%);
+  border: 2px solid #4a2c2a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: #4a2c2a;
+  font-weight: bold;
+  font-family: "Patua One", serif;
+  opacity: 0;
+  transition: all 0.3s ease;
+  transform: scale(0);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+  /* AGREGADO: Evitar interferencias */
+}
+
+.music-btn.playing .volume-indicator {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Elemento de audio oculto */
+#backgroundMusic {
+  display: none;
+}
+
+/* Efecto decorativo alrededor del botón */
+.music-control::before {
+  content: "";
+  position: absolute;
+  top: -15px;
+  left: -15px;
+  right: -15px;
+  bottom: -15px;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 50%;
+  opacity: 0;
+  transition: all 0.4s ease;
+  animation: decorativeRing 6s ease-in-out infinite;
+}
+
+@keyframes decorativeRing {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.5;
+    transform: scale(1.1);
+  }
+}
+
+.music-control.show::before {
+  opacity: 1;
+}
+
+/* Modificación al botón "Ver Invitación" - temático */
+.btn-elegant.music-ready::after {
+  content: "🎵";
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 1.2rem;
+  background: linear-gradient(135deg, #d4af37 0%, #f4e4bc 100%);
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: noteFloatElegant 3s ease-in-out infinite;
+  box-shadow: 0 3px 10px rgba(212, 175, 55, 0.4);
+}
+
+@keyframes noteFloatElegant {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-5px) rotate(5deg);
+  }
+}
+
+/* Responsive temático */
+@media (max-width: 768px) {
+  .music-control {
+    bottom: 15px;
+    right: 15px;
+  }
+
+  .music-btn {
+    width: 55px;
+    height: 55px;
+    border-width: 3px;
+  }
+
+  .music-icon {
+    font-size: 1.3rem;
+  }
+
+  .music-btn::after {
+    font-size: 12px;
+    padding: 8px 12px;
+    top: -40px;
+  }
+
+  .music-btn:hover::after {
+    top: -35px;
+  }
+
+  .volume-indicator {
+    width: 20px;
+    height: 20px;
+    font-size: 10px;
+    top: -8px;
+    right: -8px;
+  }
+}
+
+@media (max-width: 576px) {
+  .music-control {
+    bottom: 10px;
+    right: 10px;
+  }
+
+  .music-btn {
+    width: 60px;
+    /* CORREGIDO: De 50px a 60px */
+    height: 60px;
+    /* CORREGIDO: De 50px a 60px */
+    border-width: 2px;
+    animation: none;
+    /* CORREGIDO: Quitar animaciones que interfieren */
+  }
+
+  /* CORREGIDO: Eliminar efectos decorativos en móvil */
+  .music-btn::before {
+    display: none;
+  }
+
+  .music-btn.playing {
+    animation: none;
+    /* CORREGIDO: Quitar pulse en móvil */
+  }
+
+  .music-icon {
+    font-size: 1.2rem;
+  }
+
+  .music-btn::after {
+    top: -35px;
+    font-size: 11px;
+    padding: 6px 10px;
+  }
+
+  .music-btn:hover::after {
+    top: -30px;
+  }
+
+  .volume-indicator {
+    width: 18px;
+    height: 18px;
+    font-size: 9px;
+    top: -6px;
+    right: -6px;
+    pointer-events: none;
+    /* CORREGIDO: Asegurar que no bloquee clicks */
+  }
+
+  /* Ocultar anillo decorativo en móviles */
+  .music-control::before {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   HERO SECTION - LUJO ATEMPORAL (REEMPLAZAR CSS EXISTENTE)
+   ========================================================================== */
+
+.hero-section-elegant {
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: radial-gradient(
+      circle at 30% 20%,
+      rgba(244, 228, 188, 0.4) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 70% 80%,
+      rgba(212, 175, 55, 0.3) 0%,
+      transparent 50%
+    ),
+    linear-gradient(135deg, #1a0f0b 0%, #2c1810 30%, #4a2c2a 70%, #2c1810 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.8);
+}
+
+/* Overlay con efecto de rotación sutil */
+.hero-section-elegant::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: conic-gradient(
+    from 0deg at 50% 50%,
+    transparent 0deg,
+    rgba(212, 175, 55, 0.02) 45deg,
+    transparent 90deg,
+    rgba(244, 228, 188, 0.03) 135deg,
+    transparent 180deg,
+    rgba(212, 175, 55, 0.02) 225deg,
+    transparent 270deg,
+    rgba(244, 228, 188, 0.03) 315deg,
+    transparent 360deg
+  );
+  animation: luxuryRotate 40s linear infinite;
+  pointer-events: none;
+}
+
+/* Animación de rotación muy sutil */
+@keyframes luxuryRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Overlay elegante (ya existe en tu código, mantener como está) */
+.hero-overlay-elegant {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.2) 0%,
+    rgba(0, 0, 0, 0.3) 50%,
+    rgba(0, 0, 0, 0.2) 100%
+  );
+  backdrop-filter: blur(0.5px);
+}
+
+/* Partículas de corazones flotantes (mantener como está) */
+.heart-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.heart-particle {
+  position: absolute;
+  color: rgba(244, 228, 188, 0.4);
+  /* Ajustado al nuevo esquema de colores */
+  font-size: 20px;
+  animation: heartFloat 20s infinite linear;
+  opacity: 0;
+}
+
+.heart-particle:nth-child(odd) {
+  font-size: 28px;
+}
+
+.heart-particle:nth-child(even) {
+  font-size: 20px;
+}
+
+/* Mantener todas tus posiciones de corazones existentes */
+.heart-particle:nth-child(1) {
+  left: 10%;
+  animation-delay: 0s;
+  animation-duration: 25s;
+}
+
+.heart-particle:nth-child(2) {
+  left: 20%;
+  animation-delay: 3s;
+  animation-duration: 18s;
+}
+
+.heart-particle:nth-child(3) {
+  left: 30%;
+  animation-delay: 6s;
+  animation-duration: 22s;
+}
+
+.heart-particle:nth-child(4) {
+  left: 40%;
+  animation-delay: 9s;
+  animation-duration: 20s;
+}
+
+.heart-particle:nth-child(5) {
+  left: 50%;
+  animation-delay: 12s;
+  animation-duration: 24s;
+}
+
+.heart-particle:nth-child(6) {
+  left: 60%;
+  animation-delay: 2s;
+  animation-duration: 19s;
+}
+
+.heart-particle:nth-child(7) {
+  left: 70%;
+  animation-delay: 5s;
+  animation-duration: 21s;
+}
+
+.heart-particle:nth-child(8) {
+  left: 80%;
+  animation-delay: 8s;
+  animation-duration: 23s;
+}
+
+.heart-particle:nth-child(9) {
+  left: 15%;
+  animation-delay: 11s;
+  animation-duration: 17s;
+}
+
+.heart-particle:nth-child(10) {
+  left: 85%;
+  animation-delay: 1s;
+  animation-duration: 26s;
+}
+
+/* Nuevos corazones (del 11 al 20) */
+.heart-particle:nth-child(11) {
+  left: 25%;
+  animation-delay: 4s;
+  animation-duration: 27s;
+}
+
+.heart-particle:nth-child(12) {
+  left: 35%;
+  animation-delay: 7s;
+  animation-duration: 19s;
+}
+
+.heart-particle:nth-child(13) {
+  left: 45%;
+  animation-delay: 10s;
+  animation-duration: 25s;
+}
+
+.heart-particle:nth-child(14) {
+  left: 55%;
+  animation-delay: 1.5s;
+  animation-duration: 21s;
+}
+
+.heart-particle:nth-child(15) {
+  left: 65%;
+  animation-delay: 4.5s;
+  animation-duration: 23s;
+}
+
+.heart-particle:nth-child(16) {
+  left: 75%;
+  animation-delay: 7.5s;
+  animation-duration: 18s;
+}
+
+.heart-particle:nth-child(17) {
+  left: 5%;
+  animation-delay: 13s;
+  animation-duration: 26s;
+}
+
+.heart-particle:nth-child(18) {
+  left: 95%;
+  animation-delay: 16s;
+  animation-duration: 22s;
+}
+
+.heart-particle:nth-child(19) {
+  left: 12%;
+  animation-delay: 19s;
+  animation-duration: 24s;
+}
+
+.heart-particle:nth-child(20) {
+  left: 88%;
+  animation-delay: 22s;
+  animation-duration: 20s;
+}
+
+/* Animación de corazones (mantener como está) */
+@keyframes heartFloat {
+  0% {
+    transform: translateY(100vh) rotate(0deg) scale(0.5);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  20% {
+    transform: translateY(80vh) rotate(45deg) scale(0.8);
+  }
+
+  50% {
+    transform: translateY(40vh) rotate(180deg) scale(1);
+    opacity: 0.8;
+  }
+
+  80% {
+    transform: translateY(10vh) rotate(270deg) scale(0.6);
+    opacity: 0.4;
+  }
+
+  100% {
+    transform: translateY(-10vh) rotate(360deg) scale(0.3);
+    opacity: 0;
+  }
+}
+
+/* Contenido principal (mantener como está) */
+.hero-content-elegant {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  color: white;
+  max-width: 600px;
+  padding: 2rem;
+  filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.3));
+}
+
+/* Título principal elegante (mantener como está) */
+.hero-title-elegant {
+  font-family: "Sacramento", cursive;
+  font-size: 8.5rem;
+  color: white;
+  margin-bottom: 2rem;
+  font-weight: 400;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+  letter-spacing: 2px;
+  animation: titleFadeIn 2s ease-out;
+}
+
+/* Contenedor de nombres minimalista (mantener como está) */
+.couple-names-elegant {
+  font-size: 3.5rem !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+  animation: namesFadeIn 2s ease-out 0.5s both;
+}
+
+.bride-name-elegant,
+.groom-name-elegant {
+  font-family: "Great Vibes", cursive;
+  font-size: 4.9rem !important;
+  color: white;
+  margin: 0;
+  font-weight: 400;
+  text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.8);
+  transition: all 0.3s ease;
+}
+
+.bride-name-elegant:hover,
+.groom-name-elegant:hover {
+  color: #f4e4bc;
+  /* Ajustado al nuevo esquema */
+  transform: scale(1.05);
+}
+
+.ampersand-elegant {
+  font-family: "Great Vibes", cursive;
+  font-size: 5rem;
+  color: #f4e4bc;
+  /* Ajustado al nuevo esquema */
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+  opacity: 0.9;
+}
+
+/* Fecha elegante (mantener como está) */
+.wedding-date-elegant {
+  font-family: "Patua One", serif;
+  font-size: 2.3rem;
+  color: #ffffff;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 4rem;
+  font-weight: 400;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9);
+  position: relative;
+  animation: dateFadeIn 2s ease-out 1s both;
+}
+
+/* Líneas decorativas sutiles (mantener como está) */
+.wedding-date-elegant::before,
+.wedding-date-elegant::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.5),
+    transparent
+  );
+}
+
+.wedding-date-elegant::before {
+  left: -80px;
+}
+
+.wedding-date-elegant::after {
+  right: -80px;
+}
+
+/* Botón minimalista elegante (mantener como está) */
+.btn-elegant {
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  color: white;
+  padding: 18px 45px;
+  font-family: "Patua One", serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+  border-radius: 50px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  animation: buttonFadeIn 2s ease-out 1.5s both;
+  margin-top: 2rem;
+}
+
+.btn-elegant::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transition: left 0.6s ease;
+}
+
+.btn-elegant:hover {
+  border-color: #f4e4bc;
+  /* Ajustado al nuevo esquema */
+  color: #f4e4bc;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(244, 228, 188, 0.3);
+}
+
+.btn-elegant:hover::before {
+  left: 100%;
+}
+
+.btn-elegant:hover .btn-icon {
+  transform: scale(1.2);
+  color: #f4e4bc;
+}
+
+.btn-icon {
+  transition: all 0.3s ease;
+}
+
+.btn-text {
+  transition: all 0.3s ease;
+}
+
+/* Animaciones de entrada (mantener como están) */
+@keyframes titleFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes namesFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes dateFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes buttonFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Efecto de sombra global mejorado (mantener como está) */
+.hero-section-elegant::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.2),
+    inset 0 0 100px rgba(0, 0, 0, 0.1);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* RESPONSIVE DESIGN (mantener como está) */
+@media (max-width: 768px) {
+  .hero-content-elegant {
+    padding: 1.5rem;
+  }
+
+  .hero-title-elegant {
+    font-size: 2.8rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .couple-names-elegant {
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .bride-name-elegant,
+  .groom-name-elegant {
+    font-size: 3rem;
+  }
+
+  .ampersand-elegant {
+    font-size: 2.5rem;
+    margin: 0.5rem 0;
+  }
+
+  .wedding-date-elegant {
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    margin-bottom: 3rem;
+  }
+
+  .wedding-date-elegant::before,
+  .wedding-date-elegant::after {
+    width: 40px;
+  }
+
+  .wedding-date-elegant::before {
+    left: -50px;
+  }
+
+  .wedding-date-elegant::after {
+    right: -50px;
+  }
+
+  .btn-elegant {
+    padding: 15px 35px;
+    font-size: 1rem;
+  }
+
+  /* Menos corazones en móvil */
+  .heart-particle:nth-child(n + 6) {
+    display: none;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-title-elegant {
+    font-size: 2.3rem;
+    letter-spacing: 1px;
+  }
+
+  .bride-name-elegant,
+  .groom-name-elegant {
+    font-size: 2.5rem;
+  }
+
+  .ampersand-elegant {
+    font-size: 2rem;
+  }
+
+  .wedding-date-elegant {
+    font-size: 1rem;
+    letter-spacing: 1px;
+    padding: 0 1rem;
+  }
+
+  .wedding-date-elegant::before,
+  .wedding-date-elegant::after {
+    display: none;
+  }
+
+  .btn-elegant {
+    padding: 12px 30px;
+    font-size: 0.95rem;
+    gap: 8px;
+  }
+}
+
+/* Overlay elegante y sutil */
+.hero-overlay-elegant {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.4) 0%,
+    rgba(0, 0, 0, 0.5) 50%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+  backdrop-filter: blur(0.5px);
+}
+
+/* Partículas de corazones flotantes */
+.heart-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.heart-particle {
+  position: absolute;
+  color: rgba(212, 175, 55, 0.3);
+  font-size: 20px;
+  animation: heartFloat 20s infinite linear;
+  opacity: 0;
+}
+
+.heart-particle:nth-child(odd) {
+  font-size: 28px;
+  /* Corazones impares más grandes */
+}
+
+.heart-particle:nth-child(even) {
+  font-size: 20px;
+  /* Corazones pares más pequeños */
+}
+
+/* Posiciones aleatorias para los corazones */
+.heart-particle:nth-child(1) {
+  left: 10%;
+  animation-delay: 0s;
+  animation-duration: 25s;
+}
+
+.heart-particle:nth-child(2) {
+  left: 20%;
+  animation-delay: 3s;
+  animation-duration: 18s;
+}
+
+.heart-particle:nth-child(3) {
+  left: 30%;
+  animation-delay: 6s;
+  animation-duration: 22s;
+}
+
+.heart-particle:nth-child(4) {
+  left: 40%;
+  animation-delay: 9s;
+  animation-duration: 20s;
+}
+
+.heart-particle:nth-child(5) {
+  left: 50%;
+  animation-delay: 12s;
+  animation-duration: 24s;
+}
+
+.heart-particle:nth-child(6) {
+  left: 60%;
+  animation-delay: 2s;
+  animation-duration: 19s;
+}
+
+.heart-particle:nth-child(7) {
+  left: 70%;
+  animation-delay: 5s;
+  animation-duration: 21s;
+}
+
+.heart-particle:nth-child(8) {
+  left: 80%;
+  animation-delay: 8s;
+  animation-duration: 23s;
+}
+
+.heart-particle:nth-child(9) {
+  left: 15%;
+  animation-delay: 11s;
+  animation-duration: 17s;
+}
+
+.heart-particle:nth-child(10) {
+  left: 85%;
+  animation-delay: 1s;
+  animation-duration: 26s;
+}
+
+/* Nuevos corazones (del 11 al 20) */
+.heart-particle:nth-child(11) {
+  left: 25%;
+  animation-delay: 4s;
+  animation-duration: 27s;
+}
+
+.heart-particle:nth-child(12) {
+  left: 35%;
+  animation-delay: 7s;
+  animation-duration: 19s;
+}
+
+.heart-particle:nth-child(13) {
+  left: 45%;
+  animation-delay: 10s;
+  animation-duration: 25s;
+}
+
+.heart-particle:nth-child(14) {
+  left: 55%;
+  animation-delay: 1.5s;
+  animation-duration: 21s;
+}
+
+.heart-particle:nth-child(15) {
+  left: 65%;
+  animation-delay: 4.5s;
+  animation-duration: 23s;
+}
+
+.heart-particle:nth-child(16) {
+  left: 75%;
+  animation-delay: 7.5s;
+  animation-duration: 18s;
+}
+
+.heart-particle:nth-child(17) {
+  left: 5%;
+  animation-delay: 13s;
+  animation-duration: 26s;
+}
+
+.heart-particle:nth-child(18) {
+  left: 95%;
+  animation-delay: 16s;
+  animation-duration: 22s;
+}
+
+.heart-particle:nth-child(19) {
+  left: 12%;
+  animation-delay: 19s;
+  animation-duration: 24s;
+}
+
+.heart-particle:nth-child(20) {
+  left: 88%;
+  animation-delay: 22s;
+  animation-duration: 20s;
+}
+
+@keyframes heartFloat {
+  0% {
+    transform: translateY(100vh) rotate(0deg) scale(0.5);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  20% {
+    transform: translateY(80vh) rotate(45deg) scale(0.8);
+  }
+
+  50% {
+    transform: translateY(40vh) rotate(180deg) scale(1);
+    opacity: 0.8;
+  }
+
+  80% {
+    transform: translateY(10vh) rotate(270deg) scale(0.6);
+    opacity: 0.4;
+  }
+
+  100% {
+    transform: translateY(-10vh) rotate(360deg) scale(0.3);
+    opacity: 0;
+  }
+}
+
+/* Contenido principal */
+.hero-content-elegant {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  color: white;
+  max-width: 600px;
+  padding: 2rem;
+  /* Sombra sutil al contenido */
+  filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.3));
+}
+
+/* Título principal elegante */
+.hero-title-elegant {
+  font-family: "Sacramento", cursive;
+  font-size: 3.5rem;
+  color: white;
+  margin-bottom: 2rem;
+  font-weight: 400;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+  letter-spacing: 2px;
+  animation: titleFadeIn 2s ease-out;
+}
+
+/* Contenedor de nombres minimalista */
+.couple-names-elegant {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+  animation: namesFadeIn 2s ease-out 0.5s both;
+}
+
+.bride-name-elegant,
+.groom-name-elegant {
+  font-family: "Great Vibes", cursive;
+  font-size: 4rem;
+  color: white;
+  margin: 0;
+  font-weight: 400;
+  text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.8);
+  transition: all 0.3s ease;
+}
+
+.bride-name-elegant:hover,
+.groom-name-elegant:hover {
+  color: #d4af37;
+  transform: scale(1.05);
+}
+
+.ampersand-elegant {
+  font-family: "Great Vibes", cursive;
+  font-size: 3rem;
+  color: #d4af37;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+  opacity: 0.9;
+}
+
+/* Fecha elegante */
+.wedding-date-elegant {
+  font-family: "Patua One", serif;
+  font-size: 1.3rem;
+  color: #ffffff;
+  /* Blanco puro */
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 4rem;
+  font-weight: 400;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9);
+  /* Sombra más fuerte */
+  position: relative;
+  animation: dateFadeIn 2s ease-out 1s both;
+}
+
+/* Líneas decorativas sutiles */
+.wedding-date-elegant::before,
+.wedding-date-elegant::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.5),
+    transparent
+  );
+}
+
+.wedding-date-elegant::before {
+  left: -80px;
+}
+
+.wedding-date-elegant::after {
+  right: -80px;
+}
+
+/* Botón minimalista elegante */
+.btn-elegant {
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  color: white;
+  padding: 18px 45px;
+  font-family: "Patua One", serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+  border-radius: 50px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  animation: buttonFadeIn 2s ease-out 1.5s both;
+  margin-top: 2rem;
+}
+
+.btn-elegant::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transition: left 0.6s ease;
+}
+
+.btn-elegant:hover {
+  border-color: #d4af37;
+  color: #d4af37;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(212, 175, 55, 0.3);
+}
+
+.btn-elegant:hover::before {
+  left: 100%;
+}
+
+.btn-elegant:hover .btn-icon {
+  transform: scale(1.2);
+  color: #d4af37;
+}
+
+.btn-icon {
+  transition: all 0.3s ease;
+}
+
+.btn-text {
+  transition: all 0.3s ease;
+}
+
+/* Animaciones de entrada */
+@keyframes titleFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes namesFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes dateFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes buttonFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ========================================
+   RESPONSIVE DESIGN MINIMALISTA
+   ======================================== */
+
+@media (max-width: 768px) {
+  .hero-content-elegant {
+    padding: 1.5rem;
+  }
+
+  .hero-title-elegant {
+    font-size: 2.8rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .couple-names-elegant {
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .bride-name-elegant,
+  .groom-name-elegant {
+    font-size: 3rem;
+  }
+
+  .ampersand-elegant {
+    font-size: 2.5rem;
+    margin: 0.5rem 0;
+  }
+
+  .wedding-date-elegant {
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    margin-bottom: 3rem;
+  }
+
+  .wedding-date-elegant::before,
+  .wedding-date-elegant::after {
+    width: 40px;
+  }
+
+  .wedding-date-elegant::before {
+    left: -50px;
+  }
+
+  .wedding-date-elegant::after {
+    right: -50px;
+  }
+
+  .btn-elegant {
+    padding: 15px 35px;
+    font-size: 1rem;
+  }
+
+  /* Menos corazones en móvil */
+  .heart-particle:nth-child(n + 6) {
+    display: none;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-title-elegant {
+    font-size: 2.3rem;
+    letter-spacing: 1px;
+  }
+
+  .bride-name-elegant,
+  .groom-name-elegant {
+    font-size: 2.5rem;
+  }
+
+  .ampersand-elegant {
+    font-size: 2rem;
+  }
+
+  .wedding-date-elegant {
+    font-size: 1rem;
+    letter-spacing: 1px;
+    padding: 0 1rem;
+  }
+
+  .wedding-date-elegant::before,
+  .wedding-date-elegant::after {
+    display: none;
+  }
+
+  .btn-elegant {
+    padding: 12px 30px;
+    font-size: 0.95rem;
+    gap: 8px;
+  }
+}
+
+/* Efecto de sombra global mejorado */
+.hero-section-elegant::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.2),
+    inset 0 0 100px rgba(0, 0, 0, 0.1);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ========================================
+   SECCIÓN 2: PRESENTACIÓN ELEGANTE
+   ======================================== */
+
+.presentacion-elegante {
+  padding: 8rem 0 6rem;
+
+  position: relative;
+  overflow: hidden;
+  /* Sombra sutil */
+  box-shadow: inset 0 10px 30px rgba(0, 0, 0, 0.05),
+    0 -5px 20px rgba(0, 0, 0, 0.03);
+}
+
+/* Partículas sutiles de fondo */
+.presentation-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.particle-subtle {
+  position: absolute;
+  color: rgba(212, 175, 55, 0.1);
+  font-size: 18px;
+  animation: subtleFloat 30s infinite linear;
+  opacity: 0;
+}
+
+.particle-subtle:nth-child(1) {
+  left: 15%;
+  animation-delay: 0s;
+  animation-duration: 35s;
+}
+
+.particle-subtle:nth-child(2) {
+  left: 35%;
+  animation-delay: 10s;
+  animation-duration: 28s;
+}
+
+.particle-subtle:nth-child(3) {
+  left: 55%;
+  animation-delay: 20s;
+  animation-duration: 32s;
+}
+
+.particle-subtle:nth-child(4) {
+  left: 75%;
+  animation-delay: 5s;
+  animation-duration: 30s;
+}
+
+.particle-subtle:nth-child(5) {
+  left: 25%;
+  animation-delay: 15s;
+  animation-duration: 33s;
+}
+
+@keyframes subtleFloat {
+  0% {
+    transform: translateY(100vh) rotate(0deg);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.3;
+  }
+
+  50% {
+    opacity: 0.1;
+  }
+
+  90% {
+    opacity: 0.3;
+  }
+
+  100% {
+    transform: translateY(-100px) rotate(180deg);
+    opacity: 0;
+  }
+}
+
+/* Contenedor principal */
+.couple-presentation {
+  margin-bottom: 4rem;
+  position: relative;
+  z-index: 10;
+}
+
+/* Nombres con fuente Great Vibes */
+.couple-names-presentation {
+  font-family: "Great Vibes", cursive !important;
+  /* Cambio a Great Vibes */
+  font-size: 5.5rem;
+  color: #4a2c2a;
+  margin-bottom: 0;
+  font-weight: 400;
+  line-height: 1.2;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  animation: namesSlideIn 2s ease-out;
+}
+
+.name-line {
+  display: block;
+  position: relative;
+  transition: all 0.4s ease;
+}
+
+.name-line:hover {
+  color: #d4af37;
+  transform: scale(1.02);
+}
+
+/* Ampersand elegante */
+.ampersand-presentation {
+  display: block;
+  font-size: 3.5rem;
+  color: #d4af37;
+  margin: 1rem 0;
+  opacity: 0.8;
+  position: relative;
+}
+
+/* Línea decorativa debajo de los nombres */
+.couple-names-presentation::after {
+  content: "";
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #d4af37, transparent);
+  opacity: 0.6;
+}
+
+/* Contenedor del mensaje romántico */
+.romantic-message-container {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto 4rem;
+  padding: 2rem 0;
+}
+
+/* Ornamentos de citas */
+.quote-ornament {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(212, 175, 55, 0.4),
+    transparent
+  );
+  margin: 0 auto;
+  width: 200px;
+  position: relative;
+}
+
+.quote-ornament.top {
+  margin-bottom: 2rem;
+}
+
+.quote-ornament.top::after {
+  content: '"';
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #d4af37;
+  background: rgba(248, 245, 240, 0.95);
+  padding: 0 10px;
+  font-size: 24px;
+  font-family: "Great Vibes", cursive;
+}
+
+.quote-ornament.bottom {
+  margin-top: 2rem;
+}
+
+.quote-ornament.bottom::after {
+  content: '"';
+  position: absolute;
+  bottom: -15px;
+  right: 50%;
+  transform: translateX(50%);
+  color: #d4af37;
+  background: rgba(248, 245, 240, 0.95);
+  padding: 0 10px;
+  font-size: 24px;
+  font-family: "Great Vibes", cursive;
+}
+
+/* Mensaje romántico */
+.romantic-message-elegant {
+  font-family: "Patua One", serif;
+  font-size: 1.3rem;
+  color: #666;
+  line-height: 1.8;
+  font-style: italic;
+  text-align: center;
+  margin: 0;
+  position: relative;
+  z-index: 2;
+}
+
+/* Contenedor de fecha elegante */
+.wedding-date-presentation {
+  position: relative;
+  z-index: 10;
+}
+
+/* SUBIR EL CONTENEDOR DE LA FECHA */
+.date-container {
+  background: transparent !important;
+  padding: 3rem 2rem;
+  border-radius: 20px;
+  box-shadow: none;
+  border: none;
+  max-width: 500px;
+  margin: -8rem auto -6rem auto;
+  /* Cambié el último 0 por -3rem */
+  position: relative;
+  transition: all 0.4s ease;
+}
+
+.date-container:hover {
+  transform: translateY(-5px);
+  box-shadow: none;
+  /* Quita la sombra del hover también */
+}
+
+/* Icono de fecha */
+.date-icon {
+  margin-bottom: 1.5rem;
+}
+
+.date-icon i {
+  font-size: 3rem;
+  color: #d4af37;
+  animation: iconPulse 3s ease-in-out infinite;
+}
+
+@keyframes iconPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* Fecha principal */
+.date-display-elegant {
+  font-family: "Patua One", serif;
+  color: #4a2c2a;
+  font-size: 2rem;
+  margin: 0 0 0.5rem 0;
+  font-weight: 600;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Subtítulo de fecha */
+.date-subtitle {
+  font-family: "Patua One", serif;
+  color: #666;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin: 0;
+  opacity: 0.8;
+}
+
+/* Animaciones de entrada */
+@keyframes namesSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+@media (max-width: 768px) {
+  .presentacion-elegante {
+    padding: 6rem 0 4rem;
+  }
+
+  .couple-names-presentation {
+    font-size: 4rem;
+    margin-bottom: 0;
+  }
+
+  .ampersand-presentation {
+    font-size: 2.8rem;
+    margin: 0.5rem 0;
+  }
+
+  .couple-names-presentation::after {
+    width: 120px;
+    bottom: -15px;
+  }
+
+  .romantic-message-container {
+    margin-bottom: 3rem;
+    padding: 1.5rem 1rem;
+  }
+
+  .romantic-message-elegant {
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+
+  .quote-ornament {
+    width: 150px;
+  }
+
+  .quote-ornament.top::after,
+  .quote-ornament.bottom::after {
+    font-size: 20px;
+    padding: 0 8px;
+  }
+
+  .date-container {
+    padding: 2rem 1.5rem;
+    margin: 0 1rem;
+  }
+
+  .date-icon i {
+    font-size: 2.5rem;
+  }
+
+  .date-display-elegant {
+    font-size: 1.6rem;
+  }
+
+  .date-subtitle {
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+  }
+
+  /* Ocultar partículas en móvil */
+  .particle-subtle {
+    display: none;
+  }
+}
+
+@media (max-width: 576px) {
+  .couple-names-presentation {
+    font-size: 3.2rem;
+  }
+
+  .ampersand-presentation {
+    font-size: 2.3rem;
+  }
+
+  .romantic-message-elegant {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .date-container {
+    padding: 1.5rem 1rem;
+  }
+
+  .date-display-elegant {
+    font-size: 1.4rem;
+  }
+
+  .date-icon i {
+    font-size: 2rem;
+  }
+}
+
+/* Efectos adicionales */
+.presentacion-elegante::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+      circle at 20% 30%,
+      rgba(212, 175, 55, 0.03) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 70%,
+      rgba(212, 175, 55, 0.02) 0%,
+      transparent 50%
+    );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ================================
+   ESTILOS POLAROID - SOBRE NOSOTROS
+   ================================ */
+
+/* Estilos tipo Polaroid para la sección Sobre Nosotros */
+.polaroid-card {
+  background: white;
+  border-radius: 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.15);
+  padding: 20px 20px 30px 20px;
+  transform: rotate(-2deg);
+  transition: all 0.3s ease;
+  max-width: 350px;
+  margin: 0 auto;
+  position: relative;
+  height: auto;
+}
+
+.polaroid-card:nth-child(even) {
+  transform: rotate(1.5deg);
+}
+
+.polaroid-card:hover {
+  transform: rotate(0deg) scale(1.05);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+
+.polaroid-photo {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.polaroid-img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 0;
+  display: block;
+}
+
+.polaroid-age {
+  position: absolute;
+  bottom: -10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 3px;
+  font-family: "Courier New", monospace;
+}
+
+.polaroid-caption {
+  text-align: center;
+  padding-top: 10px;
+}
+
+.polaroid-name {
+  font-family: "Great Vibes", cursive;
+  font-size: 2.2rem;
+  color: #2c3e50;
+  margin-bottom: 15px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.polaroid-details {
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+.polaroid-details p {
+  margin-bottom: 8px;
+  color: #555;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  font-family: "Arial", sans-serif;
+}
+
+.polaroid-details i {
+  color: #d4af37;
+  width: 16px;
+  margin-right: 8px;
+  font-size: 0.9rem;
+}
+
+.polaroid-quote {
+  background: none;
+  padding: 15px 10px 0 10px;
+  border: none;
+  font-style: italic;
+  color: #666;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  text-align: center;
+  position: relative;
+  font-family: "Georgia", serif;
+}
+
+.polaroid-quote::before {
+  content: '"';
+  font-size: 2rem;
+  color: #d4af37;
+  position: absolute;
+  top: -5px;
+  left: 5px;
+  font-family: "Times New Roman", serif;
+}
+
+.polaroid-quote::after {
+  content: '"';
+  font-size: 2rem;
+  color: #d4af37;
+  position: absolute;
+  bottom: -15px;
+  right: 5px;
+  font-family: "Times New Roman", serif;
+}
+
+/* ================================
+   RESPONSIVE DESIGN
+   ================================ */
+
+/* Responsive para polaroids */
+@media (max-width: 768px) {
+  .polaroid-card {
+    max-width: 280px;
+    padding: 15px 15px 25px 15px;
+    transform: rotate(0deg);
+  }
+
+  .polaroid-card:nth-child(even) {
+    transform: rotate(0deg);
+  }
+
+  .polaroid-card:hover {
+    transform: scale(1.02);
+  }
+
+  .polaroid-img {
+    height: 240px;
+  }
+
+  .polaroid-name {
+    font-size: 1.8rem;
+  }
+
+  .polaroid-details p {
+    font-size: 0.85rem;
+  }
+
+  .polaroid-quote {
+    font-size: 0.8rem;
+    padding: 10px 5px 0 5px;
+  }
+}
+
+/* ==========================================================================
+   CARRUSEL MINIMALISTA ELEGANTE - CAPTION POSICIÓN CORREGIDA
+   ========================================================================== */
+
+.enhanced-carousel-container {
+  max-width: 1000px;
+  /* Más ancho para rectangular */
+  margin: 0 auto;
+  position: relative;
+}
+
+.enhanced-carousel {
+  background: rgba(255, 255, 255, 0.95);
+  border: 2px solid var(--primary-color);
+  border-radius: 20px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12), 0 15px 25px rgba(0, 0, 0, 0.08),
+    0 5px 10px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  padding: 8px;
+  position: relative;
+  backdrop-filter: blur(10px);
+  aspect-ratio: 16/10;
+}
+
+/* Línea dorada superior */
+.enhanced-carousel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--primary-color) 0%,
+    #e6c653 50%,
+    var(--primary-color) 100%
+  );
+  border-radius: 20px 20px 0 0;
+  z-index: 2;
+}
+
+/* Efecto de brillo sutil */
+.enhanced-carousel::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  animation: subtleShine 8s infinite;
+  z-index: 1;
+  pointer-events: none;
+}
+
+@keyframes subtleShine {
+  0% {
+    left: -100%;
+  }
+
+  50% {
+    left: -100%;
+  }
+
+  100% {
+    left: 100%;
+  }
+}
+
+/* Imágenes del carrusel */
+.carousel-img {
+  height: 450px;
+  /* Altura ajustada para formato rectangular */
+  object-fit: cover;
+  border-radius: 15px;
+  transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  filter: brightness(0.95) contrast(1.05);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.carousel-item.active .carousel-img {
+  transform: scale(1.01);
+  filter: brightness(1) contrast(1.1);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+}
+
+/* Indicadores minimalistas */
+.enhanced-indicators {
+  bottom: 20px;
+  margin-bottom: 0;
+  z-index: 5;
+}
+
+.enhanced-indicators button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.6);
+  margin: 0 6px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  opacity: 1;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.enhanced-indicators button.active {
+  background-color: var(--primary-color);
+  transform: scale(1.4);
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4),
+    0 0 0 3px rgba(255, 255, 255, 0.8);
+}
+
+.enhanced-indicators button:hover {
+  background-color: rgba(212, 175, 55, 0.8);
+  transform: scale(1.2);
+  box-shadow: 0 3px 12px rgba(212, 175, 55, 0.3);
+}
+
+/* Títulos con borde dorado y líneas diagonales - POSICIÓN CORREGIDA */
+.carousel-caption-custom {
+  position: absolute;
+  bottom: 4px;
+  /* MÁS ESPACIO desde abajo */
+  left: 35px;
+  /* MÁS ESPACIO desde los lados */
+  right: 35px;
+  /* MÁS ESPACIO desde los lados */
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(248, 245, 240, 0.95) 100%
+  );
+  padding: 20px 30px;
+  /* Más padding horizontal */
+  border-radius: 0;
+  border: 3px solid var(--primary-color);
+  outline: 2px solid #e6c653;
+  outline-offset: 4px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(212, 175, 55, 0.3), 0 0 20px rgba(230, 198, 83, 0.9),
+    /* BRILLO DORADO */ 0 0 40px rgba(230, 198, 83, 0.8);
+  /* BRILLO MÁS AMPLIO */
+  transform: translateY(100%);
+  transition: transform 0.6s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(212, 175, 55, 0.3);
+  max-height: 85px;
+  /* Altura más controlada */
+  width: auto;
+  /* Ancho automático para evitar desbordamiento */
+  max-width: calc(100% - 70px);
+  /* Límite máximo de ancho */
+}
+
+/* LÍNEAS DIAGONALES DORADAS DE FONDO */
+.carousel-caption-custom::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent 0px,
+    transparent 8px,
+    rgba(212, 175, 55, 0.1) 8px,
+    rgba(212, 175, 55, 0.1) 10px
+  );
+  opacity: 0.5;
+  z-index: 1;
+}
+
+.carousel-item.active .carousel-caption-custom {
+  transform: translateY(0);
+}
+
+.carousel-caption-custom h5 {
+  font-family: "Sacramento", cursive;
+  font-size: 2rem;
+  /* Ligeramente más pequeño */
+  color: var(--primary-color);
+  margin-bottom: 0.3rem;
+  /* Menos margen */
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  line-height: 1.1;
+  /* Altura de línea más compacta */
+}
+
+.carousel-caption-custom p {
+  font-family: "Patua One", serif;
+  color: #4a2c2a;
+  margin: 0;
+  font-size: 1rem;
+  /* Ligeramente más pequeño */
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  font-weight: 500;
+  line-height: 1.2;
+  /* Altura de línea más compacta */
+}
+
+/* Efecto de enfoque limpio */
+.carousel-item::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  background: rgba(0, 0, 0, 0.1);
+  opacity: 1;
+  transition: opacity 0.6s ease;
+  border-radius: 15px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.carousel-item.active::before {
+  opacity: 0;
+}
+
+/* Hover suave en todo el carrusel */
+.enhanced-carousel:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 35px 70px rgba(0, 0, 0, 0.15), 0 20px 30px rgba(0, 0, 0, 0.1),
+    0 8px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.4s ease;
+}
+
+/* Animación de entrada */
+.enhanced-carousel {
+  animation: fadeInScale 1s ease-out;
+}
+
+@keyframes fadeInScale {
+  0% {
+    opacity: 0;
+    transform: scale(0.95) translateY(20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Responsive optimizado para móvil */
+@media (max-width: 768px) {
+  .enhanced-carousel-container {
+    max-width: 100%;
+    padding: 10px;
+    /* Menos padding para aprovechar más espacio */
+  }
+
+  .enhanced-carousel {
+    padding: 8px;
+    /* Más padding interno */
+    border-radius: 15px;
+    aspect-ratio: 4/3;
+    /* Proporción más alta para móvil */
+  }
+
+  .enhanced-carousel::before {
+    height: 3px;
+    border-radius: 15px 15px 0 0;
+  }
+
+  .carousel-img {
+    height: 380px;
+    /* ALTURA AUMENTADA para móvil */
+    border-radius: 12px;
+  }
+
+  .carousel-caption-custom {
+    bottom: 50px;
+    /* MÁS ESPACIO desde abajo */
+    left: 20px;
+    right: 20px;
+    padding: 18px 25px;
+    /* MÁS PADDING */
+    border-width: 2px;
+    max-height: 90px;
+    /* MÁS ALTURA PERMITIDA */
+    max-width: calc(100% - 40px);
+  }
+
+  .carousel-caption-custom h5 {
+    font-size: 1.5rem;
+    /* FUENTE MÁS GRANDE */
+    margin-bottom: 0.4rem;
+    /* MÁS MARGEN */
+    line-height: 1.2;
+  }
+
+  .carousel-caption-custom p {
+    font-size: 1rem;
+    /* FUENTE MÁS GRANDE */
+    line-height: 1.3;
+  }
+
+  .enhanced-indicators {
+    bottom: 20px;
+    /* MÁS ESPACIO para los indicadores */
+  }
+
+  .enhanced-indicators button {
+    width: 12px;
+    /* INDICADORES MÁS GRANDES */
+    height: 12px;
+    margin: 0 6px;
+  }
+
+  .carousel-item::before {
+    border-radius: 12px;
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+  }
+}
+
+@media (max-width: 576px) {
+  .enhanced-carousel-container {
+    padding: 8px;
+  }
+
+  .enhanced-carousel {
+    padding: 6px;
+    border-radius: 12px;
+    aspect-ratio: 5/4;
+    /* Proporción aún más alta para pantallas pequeñas */
+  }
+
+  .carousel-img {
+    height: 320px;
+    /* ALTURA ADECUADA para pantallas pequeñas */
+    border-radius: 10px;
+  }
+
+  .carousel-caption-custom {
+    bottom: 100px;
+    /* BUEN ESPACIO desde abajo */
+    left: 15px;
+    right: 15px;
+    padding: 15px 20px;
+    /* PADDING ADECUADO */
+    border-width: 2px;
+    max-height: 80px;
+    max-width: calc(100% - 30px);
+  }
+
+  .carousel-caption-custom h5 {
+    font-size: 1.3rem;
+    /* TAMAÑO LEGIBLE */
+    margin-bottom: 0.3rem;
+    line-height: 1.1;
+  }
+
+  .carousel-caption-custom p {
+    font-size: 0.9rem;
+    /* TAMAÑO LEGIBLE */
+    line-height: 1.2;
+  }
+
+  /* Líneas más sutiles en móvil */
+  .carousel-caption-custom::before {
+    background: repeating-linear-gradient(
+      45deg,
+      transparent 0px,
+      transparent 6px,
+      rgba(212, 175, 55, 0.08) 6px,
+      rgba(212, 175, 55, 0.08) 8px
+    );
+  }
+
+  .enhanced-carousel::before {
+    border-radius: 12px 12px 0 0;
+  }
+
+  .carousel-item::before {
+    border-radius: 10px;
+    top: 6px;
+    left: 6px;
+    right: 6px;
+    bottom: 6px;
+  }
+
+  .enhanced-indicators {
+    bottom: 15px;
+  }
+
+  .enhanced-indicators button {
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
+  }
+}
+
+/* Para pantallas muy pequeñas */
+@media (max-width: 400px) {
+  .enhanced-carousel {
+    aspect-ratio: 6/5;
+    /* Más cuadrado para pantallas muy pequeñas */
+  }
+
+  .carousel-img {
+    height: 280px;
+  }
+
+  .carousel-caption-custom {
+    bottom: 35px;
+    left: 12px;
+    right: 12px;
+    padding: 12px 15px;
+    max-height: 70px;
+  }
+
+  .carousel-caption-custom h5 {
+    font-size: 1.1rem;
+  }
+
+  .carousel-caption-custom p {
+    font-size: 0.8rem;
+  }
+}
+
+/* ==========================================================================
+  SECCIÓN SOBRE DE CARTA DISCRETO - ESTILOS PRINCIPALES (SELLO CORREGIDO)
+  ========================================================================== */
+
+.letter-envelope-section {
+  background: transparent;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+/* ==========================================================================
+  CONTENEDOR DEL SOBRE
+  ========================================================================== */
+
+.envelope-container {
+  max-width: 500px;
+  margin: 0 auto;
+  position: relative;
+  perspective: 1000px;
+}
+
+/* ==========================================================================
+  SOBRE PRINCIPAL
+  ========================================================================== */
+
+.envelope {
+  width: 100%;
+  height: 300px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.6s ease;
+  transform-style: preserve-3d;
+}
+
+.envelope:hover {
+  transform: translateY(-5px);
+}
+
+.envelope.opened {
+  transform: translateY(-20px) scale(0.9);
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* Parte trasera del sobre */
+.envelope-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f6f0 100%);
+  border-radius: 5px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1), 0 5px 15px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+/* Frente del sobre */
+.envelope-front {
+  position: absolute;
+  padding-top: 95px;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f6f0 100%);
+  border-radius: 5px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1), 0 5px 15px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+
+/* ==========================================================================
+  SOLAPA DEL SOBRE
+  ========================================================================== */
+
+.envelope-flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 150px;
+  z-index: 3;
+  transform-origin: top center;
+  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.envelope-flap.opened {
+  transform: rotateX(-180deg);
+}
+
+.flap-triangle {
+  width: 100%;
+  height: 150px;
+  background: linear-gradient(135deg, #f0ead7 0%, #e8dcc0 100%);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-bottom: none;
+  box-shadow: inset 0 -5px 10px rgba(0, 0, 0, 0.05),
+    0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* ==========================================================================
+  SELLO DE CERA - MOVIDO A LA PARTE SUPERIOR CENTRADO
+  ========================================================================== */
+
+.envelope-seal {
+  position: absolute;
+  top: 20px;
+  /* Cambiado de bottom: 20px */
+  left: 50%;
+  /* Centrado horizontalmente */
+  transform: translateX(-50%);
+  /* Para centrar perfectamente */
+  z-index: 15;
+  /* Para que aparezca sobre la solapa */
+}
+
+.seal-wax {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #8b6f47 0%, #4a2c2a 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 15px rgba(74, 44, 42, 0.4),
+    inset 0 2px 0 rgba(255, 255, 255, 0.1);
+  border: 2px solid #d4af37;
+  animation: sealPulse 3s ease-in-out infinite;
+}
+
+@keyframes sealPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.seal-initials {
+  color: white;
+  font-family: "Patua One", serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* ==========================================================================
+  DIRECCIÓN EN EL SOBRE - TEXTOS MÁS JUNTOS Y CENTRADOS
+  ========================================================================== */
+
+.envelope-address {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.address-line {
+  font-family: "Patua One", serif;
+  color: #4a2c2a;
+  margin: 0.3rem 0;
+}
+
+.address-line.main-line {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #2c1810;
+}
+
+.address-line.sub-line {
+  font-size: 1rem;
+  color: #666;
+  font-style: italic;
+}
+
+/* ==========================================================================
+  PISTA PARA ABRIR - MÁS JUNTO AL TEXTO
+  ========================================================================== */
+
+.open-letter-hint {
+  text-align: center;
+  color: #d4af37;
+  font-family: "Patua One", serif;
+  font-size: 0.9rem;
+  animation: hintPulse 2s ease-in-out infinite;
+  margin-top: 0.5rem;
+}
+
+.open-letter-hint i {
+  margin-left: 0.5rem;
+  font-size: 1rem;
+}
+
+@keyframes hintPulse {
+  0%,
+  100% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+/* ==========================================================================
+  PAPEL DE LA CARTA
+  ========================================================================== */
+
+.letter-paper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 90%;
+  max-width: 450px;
+  height: auto;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15), 0 10px 25px rgba(0, 0, 0, 0.1);
+  transform: translate(-50%, -50%) scale(0.8);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 10;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.letter-paper.visible {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  visibility: visible;
+}
+
+.paper-content {
+  padding: 2rem;
+  position: relative;
+}
+
+/* ==========================================================================
+  ENCABEZADO DEL PAPEL
+  ========================================================================== */
+
+.paper-header {
+  text-align: right;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.paper-date {
+  font-family: "Patua One", serif;
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.paper-line {
+  width: 100px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #d4af37);
+  margin-left: auto;
+}
+
+/* ==========================================================================
+  CONTENIDO DEL PAPEL
+  ========================================================================== */
+
+.paper-body {
+  line-height: 1.7;
+}
+
+.paper-greeting {
+  font-family: "Great Vibes", cursive;
+  font-size: 1.5rem;
+  color: #4a2c2a;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.paper-paragraph {
+  font-family: "Patua One", serif;
+  font-size: 1rem;
+  color: #4a2c2a;
+  margin-bottom: 1.2rem;
+  text-align: justify;
+  line-height: 1.6;
+}
+
+.paper-paragraph.highlight {
+  background: linear-gradient(
+    90deg,
+    rgba(212, 175, 55, 0.1),
+    rgba(212, 175, 55, 0.05)
+  );
+  padding: 1rem;
+  border-left: 3px solid #d4af37;
+  margin: 1.5rem 0;
+  font-style: italic;
+}
+
+/* ==========================================================================
+  FIRMAS
+  ========================================================================== */
+
+.paper-signatures {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.signature-simple {
+  font-family: "Great Vibes", cursive;
+  font-size: 1.8rem;
+  color: #4a2c2a;
+}
+
+.signature-name {
+  display: inline;
+}
+
+.signature-ampersand {
+  margin: 0 1rem;
+  color: #d4af37;
+}
+
+/* ==========================================================================
+  BOTÓN CERRAR
+  ========================================================================== */
+
+.close-letter {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  color: #999;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+  color: #d4af37;
+  background: rgba(212, 175, 55, 0.1);
+}
+
+/* ==========================================================================
+  RESPONSIVE DESIGN
+  ========================================================================== */
+
+@media (max-width: 768px) {
+  .envelope-container {
+    max-width: 90%;
+  }
+
+  .envelope {
+    height: 250px;
+  }
+
+  .envelope-flap {
+    height: 125px;
+  }
+
+  .flap-triangle {
+    height: 125px;
+  }
+
+  .address-line.main-line {
+    font-size: 1.2rem;
+  }
+
+  .address-line.sub-line {
+    font-size: 0.9rem;
+  }
+
+  .letter-paper {
+    width: 95%;
+    max-width: none;
+  }
+
+  .paper-content {
+    padding: 1.5rem;
+  }
+
+  .paper-greeting {
+    font-size: 1.3rem;
+  }
+
+  .paper-paragraph {
+    font-size: 0.95rem;
+    text-align: left;
+  }
+
+  .signature-simple {
+    font-size: 1.5rem;
+  }
+
+  .seal-wax {
+    width: 40px;
+    height: 40px;
+  }
+
+  .seal-initials {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .letter-envelope-section {
+    min-height: 60vh;
+  }
+
+  .envelope {
+    height: 200px;
+  }
+
+  .envelope-flap {
+    height: 100px;
+  }
+
+  .flap-triangle {
+    height: 100px;
+  }
+
+  .address-line.main-line {
+    font-size: 1rem;
+  }
+
+  .open-letter-hint {
+    font-size: 0.8rem;
+  }
+
+  .paper-content {
+    padding: 1rem;
+  }
+
+  .paper-paragraph {
+    font-size: 0.9rem;
+  }
+
+  .signature-simple {
+    font-size: 1.3rem;
+  }
+
+  .seal-wax {
+    width: 35px;
+    height: 35px;
+  }
+
+  .seal-initials {
+    font-size: 0.6rem;
+  }
+}
+
+/* ==========================================================================
+   SECCIÓN 5: TIMELINE MEJORADO
+   ========================================================================== */
+
+.timeline {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 0;
+}
+
+/* Línea central del timeline - más elegante */
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  background: var(--gradient-primary);
+  border-radius: 3px;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+}
+
+.timeline-item {
+  margin: 4rem 0;
+  position: relative;
+  /* Removemos las animaciones CSS para que funcionen las de AOS */
+}
+
+/* Alternar posiciones - izquierda */
+.timeline-item:nth-child(odd) .timeline-card {
+  margin-right: 55%;
+  text-align: right;
+}
+
+/* Alternar posiciones - derecha */
+.timeline-item:nth-child(even) .timeline-card {
+  margin-left: 55%;
+  text-align: left;
+}
+
+/* Tarjeta del timeline mejorada */
+.timeline-card {
+  background: var(--white);
+  padding: 2.5rem;
+  border-radius: 20px;
+  box-shadow: var(--shadow-card);
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 2px solid transparent;
+  /* Quitamos overflow: hidden y el efecto de brillo */
+}
+
+/* Efecto hover en las tarjetas - simplificado */
+.timeline-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 25px 50px rgba(212, 175, 55, 0.2);
+  border-color: rgba(212, 175, 55, 0.3);
+}
+
+/* ELEMENTOS REMOVIDOS: 
+   - Brillo sutil en hover (timeline-card::before)
+   - Efecto de año en background (year-bg)
+   - Referencias a year-bg en responsive
+*/
+
+/* Flechas de conexión mejoradas */
+.timeline-card::after {
+  content: "";
+  position: absolute;
+  top: 40px;
+  width: 0;
+  height: 0;
+  border: 20px solid transparent;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+/* Flechas para items impares (lado izquierdo) */
+.timeline-item:nth-child(odd) .timeline-card::after {
+  right: -40px;
+  border-left: 20px solid var(--white);
+  border-right: none;
+}
+
+/* Flechas para items pares (lado derecho) */
+.timeline-item:nth-child(even) .timeline-card::after {
+  left: -40px;
+  border-right: 20px solid var(--white);
+  border-left: none;
+}
+
+/* Imagen del timeline mejorada */
+.timeline-img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 15px;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.timeline-card:hover .timeline-img {
+  transform: scale(1.05);
+  border-radius: 20px;
+}
+
+/* Título del timeline */
+.timeline-card h4 {
+  color: #4a2c2a !important;
+  font-family: "Patua One", serif !important;
+  margin-bottom: 1.5rem !important;
+  font-size: 1.6rem !important;
+  font-weight: 600 !important;
+  position: relative;
+  z-index: 2;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Párrafo del timeline */
+.timeline-card p {
+  color: var(--text-light) !important;
+  font-family: "Patua One", serif !important;
+  font-size: 1.1rem !important;
+  line-height: 1.6 !important;
+  position: relative;
+  z-index: 2;
+  margin: 0 !important;
+}
+
+/* Círculos indicadores en la línea central */
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 60px;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 20px;
+  background: var(--white);
+  border: 4px solid var(--primary-color);
+  border-radius: 50%;
+  z-index: 10;
+  box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.2);
+  transition: all 0.3s ease;
+}
+
+/* Efecto hover en los círculos */
+.timeline-item:hover::before {
+  transform: translateX(-50%) scale(1.3);
+  box-shadow: 0 0 0 8px rgba(212, 175, 55, 0.3);
+  background: var(--primary-color);
+}
+
+/* Iconos en los círculos */
+.timeline-item::after {
+  content: "\f004";
+  /* corazón */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  position: absolute;
+  left: 50%;
+  top: 60px;
+  transform: translateX(-50%);
+  color: var(--primary-color);
+  font-size: 10px;
+  z-index: 11;
+  line-height: 20px;
+  transition: all 0.3s ease;
+}
+
+.timeline-item:hover::after {
+  color: var(--white);
+  transform: translateX(-50%) scale(1.3);
+}
+
+/* Diferentes iconos para cada item */
+.timeline-item:nth-child(1)::after {
+  content: "\f7ba";
+}
+
+/* first encounter */
+.timeline-item:nth-child(2)::after {
+  content: "\f004";
+}
+
+/* heart for first date */
+.timeline-item:nth-child(3)::after {
+  content: "\f48b";
+}
+
+/* ring for proposal */
+
+/* Líneas de conexión desde círculos a tarjetas */
+
+/* Animación de entrada */
+@keyframes timelineSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ELEMENTOS REMOVIDOS: Efecto de año en background */
+
+/* ==========================================================================
+   TIMELINE RESPONSIVO
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .timeline {
+    padding: 1rem;
+  }
+
+  /* Línea central móvil */
+  .timeline::before {
+    left: 30px;
+    width: 4px;
+  }
+
+  /* Todos los items alineados a la derecha en móvil */
+  .timeline-item:nth-child(odd) .timeline-card,
+  .timeline-item:nth-child(even) .timeline-card {
+    margin: 0 0 0 70px;
+    text-align: left;
+  }
+
+  /* Flechas uniformes en móvil */
+  .timeline-item:nth-child(odd) .timeline-card::after,
+  .timeline-item:nth-child(even) .timeline-card::after {
+    left: -30px;
+    right: auto;
+    border-right: 15px solid var(--white);
+    border-left: none;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+  }
+
+  /* Círculos en móvil */
+  .timeline-item::before {
+    left: 30px;
+    width: 16px;
+    height: 16px;
+    top: 50px;
+  }
+
+  .timeline-item::after {
+    left: 30px;
+    top: 50px;
+    font-size: 8px;
+    line-height: 16px;
+  }
+
+  /* Tarjetas más pequeñas en móvil */
+  .timeline-card {
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .timeline-img {
+    height: 180px;
+  }
+
+  .timeline-card h4 {
+    font-size: 1.3rem !important;
+  }
+
+  .timeline-card p {
+    font-size: 1rem !important;
+  }
+
+  /* Ocultar líneas conectoras en móvil */
+  .timeline-item .connector-line {
+    display: none;
+  }
+
+  /* ELEMENTOS REMOVIDOS: Referencias a year-bg */
+}
+
+@media (max-width: 576px) {
+  .timeline-card {
+    padding: 1rem;
+  }
+
+  .timeline-img {
+    height: 150px;
+    border-radius: 10px;
+  }
+
+  .timeline-card h4 {
+    font-size: 1.2rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .timeline-card p {
+    font-size: 0.95rem !important;
+  }
+}
+
+/* ==========================================================================
+  SECCIÓN 6: PADRES CON MARCOS DECORATIVOS
+  ========================================================================== */
+
+.parents-card {
+  background: transparent;
+  /* Fondo transparente como originalmente */
+  padding: 3rem 2rem;
+  border-radius: 20px;
+  box-shadow: none;
+  /* Sin sombra inicialmente */
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+  /* IMPORTANTE: para que el brillo no se salga */
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+
+/* Marco dorado decorativo */
+.parents-card::before {
+  content: "";
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  background: linear-gradient(
+    45deg,
+    var(--primary-color) 0%,
+    #e6c653 25%,
+    var(--secondary-color) 50%,
+    #e6c653 75%,
+    var(--primary-color) 100%
+  );
+  border-radius: 20px;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+/* Decoraciones en las esquinas */
+.parents-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.8s ease;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.parents-card:hover::before {
+  opacity: 1;
+}
+
+.parents-card:hover::after {
+  transform: translateX(100%);
+}
+
+.parents-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  /* Aquí aparece el fondo dorado con efectos */
+  background: linear-gradient(145deg, #ffffff 0%, #f8f5f0 50%, #ffffff 100%);
+  box-shadow: 0 25px 60px rgba(212, 175, 55, 0.2),
+    0 15px 40px rgba(0, 0, 0, 0.1), inset 0 2px 0 rgba(255, 255, 255, 0.9),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(212, 175, 55, 0.6);
+  /* AGREGUÉ: Línea de contorno dorada delgada */
+  outline: 2px solid rgba(212, 175, 55, 0.6);
+  outline-offset: -8px;
+}
+
+/* Título con tipografía original */
+.parents-card h4 {
+  color: #4a2c2a !important;
+  font-family: "Patua One", serif !important;
+  font-size: 1.4rem !important;
+  margin-bottom: 1.5rem !important;
+  text-align: center;
+  position: relative;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+  transition: all 0.3s ease;
+  z-index: 2;
+  /* Para que quede encima del brillo */
+}
+
+/* Cambio de color del título al hacer hover */
+.parents-card:hover h4 {
+  color: #b8941f !important;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+/* Línea decorativa debajo del título */
+.parents-card h4::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--primary-color),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.parents-card:hover h4::after {
+  opacity: 1;
+}
+
+/* Nombres de los padres con tipografía original */
+.parents-names {
+  font-family: "Patua One", serif !important;
+  font-size: 1.3rem !important;
+  color: var(--text-light) !important;
+  font-weight: 600 !important;
+  text-align: center;
+  line-height: 1.4;
+  position: relative;
+  padding: 1rem;
+  background: transparent;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+  z-index: 2;
+  /* Para que quede encima del brillo */
+}
+
+.parents-card:hover .parents-names {
+  background: rgba(212, 175, 55, 0.1);
+  border-color: rgba(212, 175, 55, 0.4);
+  color: #b8941f !important;
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.1);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+/* Iconos decorativos */
+.parents-card h4::before {
+  content: "♥";
+  position: absolute;
+  left: -30px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--primary-color);
+  font-size: 1.2rem;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.parents-card:hover h4::before {
+  opacity: 1;
+  left: -25px;
+  color: #f5ba09;
+  /* Dorado más oscuro para el corazón también */
+}
+
+/* Quitar icono de familia */
+/* Icono debajo de los nombres de los padres */
+.parents-names::after {
+  content: "\f004";
+  /* Código del corazón de Font Awesome */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  display: block;
+  text-align: center;
+  font-size: 2.5rem;
+  /* Más grande */
+  color: #4a2c2a;
+  margin-top: 1rem;
+  opacity: 1;
+  /* Siempre visible */
+  transform: translateY(0);
+  /* Sin desplazamiento inicial */
+  transition: all 0.3s ease;
+}
+
+.parents-card:hover .parents-names::after {
+  color: #b8941f;
+  /* Cambia de color en hover */
+  transform: scale(1.1);
+  /* Se agranda ligeramente en hover */
+}
+
+/* Animación de entrada */
+.parents-card {
+  animation: slideInParents 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+.parents-card:nth-child(1) {
+  animation-delay: 0.2s;
+}
+
+.parents-card:nth-child(2) {
+  animation-delay: 0.4s;
+}
+
+@keyframes slideInParents {
+  0% {
+    opacity: 0;
+    transform: translateY(50px) scale(0.9);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .parents-card {
+    padding: 0.1rem 0.1rem;
+    margin-bottom: 0.1rem;
+  }
+
+  .parents-card h4 {
+    font-size: 1.7rem !important;
+  }
+
+  .parents-names {
+    font-size: 1.4rem !important;
+  }
+
+  /* Ocultar iconos decorativos en móvil */
+  .parents-card h4::before {
+    display: none;
+  }
+}
+
+/* ==========================================================================  
+   SECCIÓN PADRINOS CON MARCOS DECORATIVOS  
+   ========================================================================== */
+
+.padrinos-card {
+  background: transparent;
+  padding: 3rem 2rem;
+  border-radius: 20px;
+  box-shadow: none;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+  animation: slideInPadrinos 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+.padrinos-card:nth-child(1) {
+  animation-delay: 0.2s;
+}
+
+.padrinos-card:nth-child(2) {
+  animation-delay: 0.4s;
+}
+
+.padrinos-card:nth-child(3) {
+  animation-delay: 0.6s;
+}
+
+@keyframes slideInPadrinos {
+  0% {
+    opacity: 0;
+    transform: translateY(50px) scale(0.9);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.padrinos-card::before {
+  content: "";
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  background: linear-gradient(
+    45deg,
+    var(--primary-color) 0%,
+    #e6c653 25%,
+    var(--secondary-color) 50%,
+    #e6c653 75%,
+    var(--primary-color) 100%
+  );
+  border-radius: 20px;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.padrinos-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.8s ease;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.padrinos-card:hover::before {
+  opacity: 1;
+}
+
+.padrinos-card:hover::after {
+  transform: translateX(100%);
+}
+
+.padrinos-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  background: linear-gradient(145deg, #ffffff 0%, #f8f5f0 50%, #ffffff 100%);
+  box-shadow: 0 25px 60px rgba(212, 175, 55, 0.2),
+    0 15px 40px rgba(0, 0, 0, 0.1), inset 0 2px 0 rgba(255, 255, 255, 0.9),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(212, 175, 55, 0.6);
+  outline: 2px solid rgba(212, 175, 55, 0.6);
+  outline-offset: -8px;
+}
+
+.padrinos-card h4 {
+  color: #4a2c2a !important;
+  font-family: "Patua One", serif !important;
+  font-size: 1.4rem !important;
+  margin-bottom: 1.5rem !important;
+  text-align: center;
+  position: relative;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+/* Oculta el ícono dentro del título */
+.padrinos-card h4 i {
+  display: none;
+}
+
+.padrinos-card:hover h4 {
+  color: #b8941f !important;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.padrinos-card h4::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--primary-color),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.padrinos-card:hover h4::after {
+  opacity: 1;
+}
+
+.padrinos-names {
+  font-family: "Patua One", serif !important;
+  font-size: 1.3rem !important;
+  color: var(--text-light) !important;
+  font-weight: 600 !important;
+  text-align: center;
+  line-height: 1.4;
+  position: relative;
+  padding: 1rem;
+  background: transparent;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+/* Hover dorado para nombres */
+.padrinos-card:hover .padrinos-names {
+  background: rgba(212, 175, 55, 0.1);
+  border-color: rgba(212, 175, 55, 0.4);
+  color: #b8941f !important;
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.1);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+/* Icono decorativo debajo del nombre */
+.padrinos-names::after {
+  content: attr(data-icono);
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  display: block;
+  text-align: center;
+  font-size: 2.5rem;
+  margin-top: 1rem;
+  color: #4a2c2a;
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.3s ease;
+}
+
+.padrinos-card:hover .padrinos-names::after {
+  color: #b8941f;
+  transform: scale(1.1);
+}
+
+/* ==========================================================================
+   MENSAJE DE GRATITUD
+   ========================================================================== */
+
+.padrinos-gratitude {
+  margin-top: 2.5rem;
+  padding: 2rem;
+  background: linear-gradient(
+    135deg,
+    rgba(212, 175, 55, 0.05),
+    rgba(212, 175, 55, 0.02)
+  );
+  border-radius: 20px;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  text-align: center;
+  position: relative;
+}
+
+.gratitude-ornament {
+  margin-bottom: 1rem;
+}
+
+.gratitude-ornament i {
+  font-size: 2rem;
+  color: #d4af37;
+  animation: ornamentGlow 3s ease-in-out infinite;
+}
+
+@keyframes ornamentGlow {
+  0%,
+  100% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+.gratitude-text {
+  font-family: "Patua One", serif;
+  font-size: 1.1rem;
+  color: #4a2c2a;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+  font-style: italic;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.gratitude-signature {
+  font-family: "Great Vibes", cursive;
+  font-size: 1.3rem;
+  color: #d4af37;
+  margin-top: 0.5rem;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .padrinos-card {
+    padding: 0.1rem 0.1rem;
+    margin-bottom: 0.1rem;
+  }
+
+  .padrinos-card h4 {
+    font-size: 1.7rem !important;
+  }
+
+  .padrinos-names {
+    font-size: 1.4rem !important;
+  }
+
+  .padrinos-gratitude {
+    padding: 2rem 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .gratitude-text {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .padrinos-gratitude {
+    padding: 1.5rem 1rem;
+  }
+
+  .gratitude-text {
+    font-size: 0.95rem;
+  }
+
+  .gratitude-signature {
+    font-size: 1.1rem;
+  }
+}
+
+/* ==========================================================================
+   SECCIÓN 9: ITINERARIO
+   ========================================================================== */
+
+.itinerario-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.itinerario-title {
+  text-align: center;
+  font-family: "Sacramento", cursive;
+  font-size: 4rem;
+  color: var(--primary-color);
+  margin-bottom: 4rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.itinerario-zigzag {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  /* Cambié de 3rem a 2rem para menos espacio vertical */
+  max-width: 600px;
+  /* Agrega esta línea para limitar el ancho total */
+  margin: 0 auto;
+  /* Agrega esta línea para centrarlo */
+}
+
+.itinerario-row {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+/* Alternar posiciones */
+.itinerario-row:nth-child(odd) {
+  justify-content: flex-start;
+}
+
+.itinerario-row:nth-child(even) {
+  justify-content: flex-end;
+}
+
+.evento-card {
+  background: var(--white);
+  border: 3px solid #4a2c2a;
+  border-radius: 20px;
+  padding: 2rem 2.5rem;
+  max-width: 300px;
+  /* Cambié de 350px a 300px para hacerlas más pequeñas */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  position: relative;
+}
+
+.evento-title {
+  font-size: 1.8rem;
+  color: #4a2c2a;
+  margin: 0 0 0.5rem 0;
+  text-align: center;
+  font-family: "Patua One", serif;
+}
+
+.evento-details {
+  font-size: 1.1rem;
+  color: var(--text-light);
+  text-align: center;
+  margin: 0;
+  font-family: "Patua One", serif;
+}
+
+.icon-circle {
+  width: 80px;
+  height: 80px;
+  background: #4a2c2a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.icon-circle i {
+  font-size: 2rem;
+  color: var(--white);
+}
+
+/* Posiciones de iconos para filas impares (izquierda) */
+.itinerario-row:nth-child(odd) .icon-circle {
+  right: -10px;
+  /* Cambié de -120px a -60px para acercar más */
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Posiciones de iconos para filas pares (derecha) */
+.itinerario-row:nth-child(even) .icon-circle {
+  left: -10px;
+  /* Cambié de -120px a -60px para acercar más */
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .itinerario-title {
+    font-size: 3rem;
+  }
+
+  .itinerario-zigzag {
+    gap: 2rem;
+    max-width: 100%;
+    /* Cambiar para usar todo el ancho disponible */
+    padding: 0 60px;
+    /* Agregar padding para dar espacio a los iconos */
+  }
+
+  .itinerario-row {
+    margin-bottom: 1rem;
+  }
+
+  .icon-circle {
+    width: 50px;
+    /* Hacer iconos más pequeños */
+    height: 50px;
+  }
+
+  .icon-circle i {
+    font-size: 1.3rem;
+    /* Iconos más pequeños */
+  }
+
+  /* Posiciones para móvil - filas impares */
+  .itinerario-row:nth-child(odd) .icon-circle {
+    right: -25px;
+    /* Posición que no se salga de pantalla */
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  /* Posiciones para móvil - filas pares */
+  .itinerario-row:nth-child(even) .icon-circle {
+    left: -25px;
+    /* Posición que no se salga de pantalla */
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .evento-card {
+    max-width: 220px;
+    /* Tarjetas más pequeñas */
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  .evento-title {
+    font-size: 1.3rem;
+  }
+
+  .evento-details {
+    font-size: 0.9rem;
+  }
+}
+
+/* ==========================================================================
+   SECCIÓN 10: COUNTDOWN ESTILO HEXAGONAL
+   ========================================================================== */
+
+#countdown {
+  background: radial-gradient(
+    ellipse at center,
+    #5a3e3b 0%,
+    #4a2c2a 50%,
+    #2c1810 100%
+  );
+  position: relative;
+  overflow: hidden;
+}
+
+/* Color específico para el párrafo del countdown */
+#countdown p,
+#countdown .lead {
+  color: #f8f5f0 !important;
+  /* Crema puro */
+}
+
+/* Efecto de ondas doradas */
+#countdown::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+      circle at 25% 25%,
+      rgba(212, 175, 55, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 75% 75%,
+      rgba(212, 175, 55, 0.08) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(212, 175, 55, 0.05) 0%,
+      transparent 70%
+    );
+  animation: rotate 30s linear infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.countdown-display {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.countdown-item {
+  width: 130px;
+  height: 130px;
+  background: linear-gradient(145deg, #f8f5f0 0%, #ffffff 50%, #f8f5f0 100%);
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1),
+    inset 0 2px 5px rgba(255, 255, 255, 0.8),
+    inset 0 -2px 5px rgba(0, 0, 0, 0.1);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.countdown-item::before {
+  content: "";
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  background: linear-gradient(
+    145deg,
+    var(--primary-color),
+    #e6c653,
+    var(--secondary-color)
+  );
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.countdown-item:hover::before {
+  opacity: 1;
+}
+
+.countdown-item:hover {
+  transform: translateY(-8px) scale(1.05);
+  border-radius: 50%;
+  box-shadow: 0 25px 50px rgba(212, 175, 55, 0.3),
+    inset 0 2px 8px rgba(255, 255, 255, 0.9),
+    inset 0 -2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.countdown-item span {
+  font-size: 2.8rem;
+  font-weight: 700;
+  font-family: "Patua One", serif;
+  color: var(--primary-color);
+  line-height: 1;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8), 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 5px;
+  transition: all 0.3s ease;
+}
+
+.countdown-item:hover span {
+  color: #2c1810;
+  transform: scale(1.1);
+}
+
+.countdown-item label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #4a2c2a;
+  font-weight: 600;
+  font-family: "Patua One", serif;
+  text-align: center;
+  line-height: 1.2;
+  transition: color 0.3s ease;
+}
+
+.countdown-item:hover label {
+  color: var(--primary-color);
+}
+
+/* Animación de aparición */
+.countdown-item {
+  animation: bounceIn 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+.countdown-item:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.countdown-item:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.countdown-item:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.countdown-item:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+.countdown-item:nth-child(5) {
+  animation-delay: 0.5s;
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3) translateY(50px);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.05) translateY(-10px);
+  }
+
+  70% {
+    transform: scale(0.9) translateY(0px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0px);
+  }
+}
+
+/* Responsive - centrado inteligente */
+@media (max-width: 768px) {
+  .countdown-display {
+    gap: 1rem;
+    justify-content: space-evenly;
+  }
+
+  .countdown-item {
+    width: 100px;
+    height: 100px;
+  }
+
+  .countdown-item span {
+    font-size: 2.2rem;
+  }
+
+  .countdown-item label {
+    font-size: 0.65rem;
+    letter-spacing: 1px;
+  }
+}
+
+@media (max-width: 576px) {
+  .countdown-display {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 1rem;
+    justify-items: center;
+    align-items: center;
+  }
+
+  /* El último elemento (segundos) se centra en la fila inferior */
+  .countdown-item:nth-child(5) {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .countdown-item {
+    width: 85px;
+    height: 85px;
+  }
+
+  .countdown-item span {
+    font-size: 1.8rem;
+  }
+
+  .countdown-item label {
+    font-size: 0.6rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .countdown-display {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+  }
+
+  .countdown-item:nth-child(5) {
+    grid-column: span 2;
+    grid-row: 3;
+  }
+}
+
+/* ==========================================================================
+   SECCIÓN 11: TRIVIA MEJORADA CON DISEÑO INTUITIVO
+   ========================================================================== */
+
+/* ==========================================================================
+   BARRA DE PROGRESO PERSONALIZADA
+   ========================================================================== */
+
+.trivia-progress-container {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f6f0 100%);
+  border-radius: 20px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  border: 2px solid rgba(212, 175, 55, 0.2);
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-family: "Patua One", serif;
+  font-weight: 600;
+}
+
+.progress-text {
+  color: #4a2c2a;
+  font-size: 1.1rem;
+}
+
+.score-text {
+  color: #d4af37;
+  font-size: 1.1rem;
+}
+
+.progress-bar-custom {
+  position: relative;
+  background: rgba(212, 175, 55, 0.2);
+  height: 8px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #d4af37 0%, #e6c653 100%);
+  width: 0%;
+  border-radius: 10px;
+  transition: width 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+}
+
+.progress-fill::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 10px;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 0 10px 10px 0;
+}
+
+.progress-hearts {
+  position: absolute;
+  top: -8px;
+  left: 0;
+  width: 100%;
+  height: 24px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+}
+
+.progress-heart {
+  width: 24px;
+  height: 24px;
+  background: white;
+  border: 2px solid #ddd;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: #ccc;
+  transition: all 0.4s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.progress-heart.active {
+  background: linear-gradient(135deg, #d4af37 0%, #e6c653 100%);
+  border-color: #d4af37;
+  color: white;
+  transform: scale(1.2);
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+}
+
+.progress-heart.correct {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  border-color: #28a745;
+  color: white;
+  animation: heartBounce 0.6s ease;
+}
+
+.progress-heart.incorrect {
+  background: linear-gradient(135deg, #dc3545 0%, #fd7e14 100%);
+  border-color: #dc3545;
+  color: white;
+  animation: heartShake 0.6s ease;
+}
+
+@keyframes heartBounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: scale(1.2) translateY(0);
+  }
+
+  40% {
+    transform: scale(1.4) translateY(-5px);
+  }
+
+  60% {
+    transform: scale(1.3) translateY(-3px);
+  }
+}
+
+@keyframes heartShake {
+  0%,
+  100% {
+    transform: scale(1.2) translateX(0);
+  }
+
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: scale(1.2) translateX(-2px);
+  }
+
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: scale(1.2) translateX(2px);
+  }
+}
+
+/* ==========================================================================
+   TARJETA DE PREGUNTA MEJORADA
+   ========================================================================== */
+
+.trivia-question-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f6f0 100%);
+  border-radius: 25px;
+  padding: 2.5rem;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1), 0 5px 15px rgba(0, 0, 0, 0.05);
+  border: 2px solid rgba(212, 175, 55, 0.2);
+  position: relative;
+  overflow: hidden;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.trivia-question-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(212, 175, 55, 0.05),
+    transparent
+  );
+  transition: left 0.8s ease;
+  pointer-events: none;
+}
+
+.trivia-question-card:hover::before {
+  left: 100%;
+}
+
+.question-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.question-icon {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #d4af37 0%, #e6c653 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
+  animation: iconPulse 2s ease-in-out infinite;
+}
+
+@keyframes iconPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.question-icon i {
+  color: white;
+  font-size: 1.5rem;
+}
+
+.question-title {
+  color: #4a2c2a !important;
+  font-family: "Patua One", serif !important;
+  font-size: 1.6rem !important;
+  font-weight: 600 !important;
+  text-align: center;
+  line-height: 1.4;
+  margin-bottom: 2rem !important;
+}
+
+/* ==========================================================================
+   OPCIONES DE RESPUESTA MEJORADAS
+   ========================================================================== */
+
+.trivia-options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.trivia-option {
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 15px;
+  padding: 1.2rem 1.5rem;
+  font-family: "Patua One", serif;
+  font-weight: 500;
+  font-size: 1rem;
+  color: #4a2c2a;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.trivia-option::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.trivia-option:hover {
+  border-color: #d4af37;
+  background: rgba(212, 175, 55, 0.05);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(212, 175, 55, 0.2);
+}
+
+.trivia-option:hover::before {
+  left: 100%;
+}
+
+.trivia-option:active {
+  transform: translateY(-1px);
+}
+
+.trivia-option.selected {
+  background: linear-gradient(135deg, #d4af37 0%, #e6c653 100%);
+  border-color: #d4af37;
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
+}
+
+.trivia-option.correct {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  border-color: #28a745;
+  color: white;
+  animation: correctBounce 0.6s ease;
+  pointer-events: none;
+}
+
+.trivia-option.incorrect {
+  background: linear-gradient(135deg, #dc3545 0%, #fd7e14 100%);
+  border-color: #dc3545;
+  color: white;
+  animation: incorrectShake 0.6s ease;
+  pointer-events: none;
+}
+
+@keyframes correctBounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(-3px) scale(1);
+  }
+
+  40% {
+    transform: translateY(-8px) scale(1.05);
+  }
+
+  60% {
+    transform: translateY(-5px) scale(1.02);
+  }
+}
+
+@keyframes incorrectShake {
+  0%,
+  100% {
+    transform: translateY(-3px) translateX(0);
+  }
+
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateY(-3px) translateX(-3px);
+  }
+
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateY(-3px) translateX(3px);
+  }
+}
+
+.question-footer {
+  text-align: center;
+  margin-top: auto;
+}
+
+.timer-container {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #666;
+  font-size: 0.9rem;
+  font-family: "Patua One", serif;
+}
+
+.timer-container i {
+  color: #d4af37;
+}
+
+/* ==========================================================================
+   RESULTADO FINAL MEJORADO
+   ========================================================================== */
+
+.trivia-result-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f6f0 100%);
+  border-radius: 25px;
+  padding: 3rem 2rem;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 8px 25px rgba(0, 0, 0, 0.05);
+  border: 2px solid rgba(212, 175, 55, 0.3);
+  position: relative;
+  overflow: hidden;
+  animation: resultSlideIn 0.8s ease-out;
+}
+
+@keyframes resultSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.trivia-result-card::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(212, 175, 55, 0.05) 45deg,
+    transparent 90deg,
+    rgba(212, 175, 55, 0.03) 135deg,
+    transparent 180deg,
+    rgba(212, 175, 55, 0.05) 225deg,
+    transparent 270deg,
+    rgba(212, 175, 55, 0.03) 315deg,
+    transparent 360deg
+  );
+  animation: resultBackgroundRotate 20s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes resultBackgroundRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.result-header {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 2rem;
+}
+
+.result-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  animation: resultIconSpin 2s ease-in-out;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.result-icon.excellent {
+  background: linear-gradient(135deg, #ffd700 0%, #ffed4a 100%);
+}
+
+.result-icon.good {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+}
+
+.result-icon.average {
+  background: linear-gradient(135deg, #fd7e14 0%, #ffc107 100%);
+}
+
+.result-icon.poor {
+  background: linear-gradient(135deg, #dc3545 0%, #fd7e14 100%);
+}
+
+@keyframes resultIconSpin {
+  0% {
+    transform: rotate(0deg) scale(0.5);
+    opacity: 0;
+  }
+
+  50% {
+    transform: rotate(180deg) scale(1.1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: rotate(360deg) scale(1);
+    opacity: 1;
+  }
+}
+
+.result-icon i {
+  color: white;
+  font-size: 2rem;
+}
+
+#result-title {
+  font-family: "Sacramento", cursive;
+  font-size: 2.5rem;
+  color: #4a2c2a;
+  margin: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.result-score {
+  margin: 2rem 0;
+  position: relative;
+  z-index: 2;
+}
+
+.score-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #d4af37 0%, #e6c653 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  box-shadow: 0 15px 30px rgba(212, 175, 55, 0.3),
+    inset 0 2px 0 rgba(255, 255, 255, 0.3);
+  animation: scoreCirclePulse 1.5s ease-in-out;
+}
+
+@keyframes scoreCirclePulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.score-number {
+  font-family: "Patua One", serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: white;
+  line-height: 1;
+}
+
+.score-total {
+  font-family: "Patua One", serif;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: -5px;
+}
+
+.result-message {
+  margin: 2rem 0;
+  position: relative;
+  z-index: 2;
+}
+
+.result-description {
+  font-family: "Patua One", serif;
+  font-size: 1.2rem;
+  color: #4a2c2a;
+  line-height: 1.6;
+  margin: 0;
+  font-style: italic;
+}
+
+.result-stars {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 2rem 0;
+  position: relative;
+  z-index: 2;
+}
+
+.result-stars i {
+  font-size: 1.5rem;
+  color: #ddd;
+  transition: all 0.3s ease;
+}
+
+.result-stars i.active {
+  color: #ffd700;
+  transform: scale(1.2);
+  animation: starTwinkle 1s ease-in-out;
+}
+
+@keyframes starTwinkle {
+  0%,
+  100% {
+    transform: scale(1.2);
+  }
+
+  50% {
+    transform: scale(1.4);
+  }
+}
+
+.result-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.btn-restart,
+.btn-share {
+  background: transparent;
+  border: 2px solid #4a2c2a;
+  color: #4a2c2a;
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  font-family: "Patua One", serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-restart::before,
+.btn-share::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #4a2c2a 0%, #5a3e3b 100%);
+  transition: left 0.3s ease;
+  z-index: -1;
+}
+
+.btn-restart:hover,
+.btn-share:hover {
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(74, 44, 42, 0.3);
+}
+
+.btn-restart:hover::before,
+.btn-share:hover::before {
+  left: 0;
+}
+
+.btn-share {
+  border-color: #d4af37;
+  color: #d4af37;
+}
+
+.btn-share::before {
+  background: linear-gradient(135deg, #d4af37 0%, #e6c653 100%);
+}
+
+.btn-share:hover {
+  box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .trivia-progress-container {
+    padding: 1.2rem;
+  }
+
+  .progress-header {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+
+  .progress-text,
+  .score-text {
+    font-size: 1rem;
+  }
+
+  .progress-hearts {
+    padding: 0 5px;
+  }
+
+  .progress-heart {
+    width: 20px;
+    height: 20px;
+    font-size: 10px;
+  }
+
+  .trivia-question-card {
+    padding: 2rem 1.5rem;
+    min-height: 350px;
+  }
+
+  .question-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .question-icon i {
+    font-size: 1.2rem;
+  }
+
+  .question-title {
+    font-size: 1.4rem !important;
+  }
+
+  .trivia-options-grid {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+
+  .trivia-option {
+    padding: 1rem;
+    font-size: 0.95rem;
+    min-height: 50px;
+  }
+
+  .trivia-result-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .result-icon {
+    width: 70px;
+    height: 70px;
+  }
+
+  .result-icon i {
+    font-size: 1.8rem;
+  }
+
+  #result-title {
+    font-size: 2rem;
+  }
+
+  .score-circle {
+    width: 100px;
+    height: 100px;
+  }
+
+  .score-number {
+    font-size: 2rem;
+  }
+
+  .result-description {
+    font-size: 1.1rem;
+  }
+
+  .result-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btn-restart,
+  .btn-share {
+    width: 200px;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .trivia-progress-container {
+    padding: 1rem;
+  }
+
+  .trivia-question-card {
+    padding: 1.5rem 1rem;
+    min-height: 300px;
+  }
+
+  .question-title {
+    font-size: 1.2rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  .trivia-option {
+    padding: 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  .trivia-result-card {
+    padding: 1.5rem 1rem;
+  }
+
+  #result-title {
+    font-size: 1.8rem;
+  }
+
+  .score-circle {
+    width: 90px;
+    height: 90px;
+  }
+
+  .score-number {
+    font-size: 1.8rem;
+  }
+
+  .result-description {
+    font-size: 1rem;
+  }
+
+  .result-stars i {
+    font-size: 1.2rem;
+  }
+}
+
+/* ==========================================================================
+   REGALOS SIMPLE Y ELEGANTE - CSS LIMPIO (SIN CÓDIGO INNECESARIO)
+   ========================================================================== */
+
+.regalos-elegant-section {
+  background: transparent;
+  position: relative;
+}
+
+/* ==========================================================================
+   HEADER DE REGALOS
+   ========================================================================== */
+
+.regalos-header {
+  margin-bottom: 3rem;
+}
+
+.regalos-intro {
+  font-family: "Patua One", serif;
+  color: #666;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  font-style: italic;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ==========================================================================
+   CONTENEDOR DE CARDS
+   ========================================================================== */
+
+.regalos-cards-container {
+  margin-bottom: 3rem;
+}
+
+.regalos-cards-container .row {
+  justify-content: center;
+}
+
+/* ==========================================================================
+   CARD SIMPLE ELEGANTE
+   ========================================================================== */
+
+.regalo-card-simple {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f6f0 100%);
+  border: 2px solid rgba(212, 175, 55, 0.2);
+  border-radius: 20px;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08), 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Efecto de brillo sutil */
+.regalo-card-simple::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(212, 175, 55, 0.1),
+    transparent
+  );
+  transition: left 0.8s ease;
+  pointer-events: none;
+}
+
+.regalo-card-simple:hover {
+  transform: translateY(-8px);
+  border-color: rgba(212, 175, 55, 0.4);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12),
+    0 8px 25px rgba(212, 175, 55, 0.15), 0 0 0 1px rgba(212, 175, 55, 0.1);
+}
+
+.regalo-card-simple:hover::before {
+  left: 100%;
+}
+
+/* ==========================================================================
+   ICONO CONTENEDOR
+   ========================================================================== */
+
+.regalo-icon-container {
+  margin-bottom: 1.5rem;
+}
+
+.regalo-icon-circle {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #d4af37 0%, #e6c653 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3),
+    inset 0 2px 0 rgba(255, 255, 255, 0.3);
+  transition: all 0.4s ease;
+  position: relative;
+}
+
+.regalo-card-simple:hover .regalo-icon-circle {
+  transform: scale(1.1);
+  box-shadow: 0 12px 30px rgba(212, 175, 55, 0.4),
+    inset 0 2px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* Estilos para logos (SÍ SE USA) */
+.regalo-logo {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.regalo-card-simple:hover .regalo-logo {
+  transform: scale(1.1);
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2));
+}
+
+/* ==========================================================================
+   CONTENIDO DE LA CARD
+   ========================================================================== */
+
+.regalo-content {
+  flex: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.regalo-name {
+  font-family: "Patua One", serif;
+  color: #4a2c2a;
+  font-size: 1.5rem;
+  margin: 0 0 0.5rem 0;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.regalo-card-simple:hover .regalo-name {
+  color: #d4af37;
+}
+
+.regalo-desc {
+  font-family: "Patua One", serif;
+  color: #666;
+  font-size: 1rem;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   BOTÓN ELEGANTE
+   ========================================================================== */
+
+.regalo-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: auto;
+}
+
+.regalo-button {
+  background: transparent;
+  color: #4a2c2a;
+  border: 2px solid #4a2c2a;
+  padding: 0.8rem 1.8rem;
+  border-radius: 50px;
+  font-family: "Patua One", serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+}
+
+.regalo-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #d4af37 0%, #e6c653 100%);
+  transition: left 0.4s ease;
+  z-index: -1;
+}
+
+.regalo-button:hover {
+  color: white;
+  border-color: #d4af37;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
+  text-decoration: none;
+}
+
+.regalo-button:hover::before {
+  left: 0;
+}
+
+.regalo-button i {
+  font-size: 0.9rem;
+  transition: transform 0.3s ease;
+}
+
+.regalo-button:hover i {
+  transform: translateX(3px);
+}
+
+/* ==========================================================================
+   FOOTER ELEGANTE
+   ========================================================================== */
+
+.regalos-footer {
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.footer-ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+  gap: 1rem;
+}
+
+.ornament-line {
+  width: 80px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #d4af37, transparent);
+}
+
+.ornament-heart {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #d4af37 0%, #e6c653 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: heartGlow 3s ease-in-out infinite;
+}
+
+@keyframes heartGlow {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4);
+  }
+
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 10px rgba(212, 175, 55, 0);
+  }
+}
+
+.ornament-heart i {
+  color: white;
+  font-size: 1.2rem;
+}
+
+.footer-message {
+  font-family: "Patua One", serif;
+  color: #4a2c2a;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin: 0 0 1.5rem 0;
+  font-style: italic;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* NOTA: .footer-signature se eliminó porque no existe en el HTML */
+
+/* ==========================================================================
+   MODAL ELEGANTE
+   ========================================================================== */
+
+.elegant-modal {
+  border-radius: 20px;
+  border: 2px solid rgba(212, 175, 55, 0.3);
+  overflow: hidden;
+}
+
+.elegant-modal-header {
+  background: linear-gradient(135deg, #4a2c2a 0%, #5a3e3b 100%);
+  color: white;
+  border: none;
+  padding: 1.5rem 2rem;
+}
+
+.elegant-modal-header .modal-title {
+  font-family: "Patua One", serif;
+  font-weight: 600;
+  font-size: 1.3rem;
+}
+
+.elegant-modal-body {
+  padding: 2.5rem 2rem;
+  text-align: center;
+}
+
+.modal-icon {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #d4af37 0%, #e6c653 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  animation: modalIconPulse 2s ease-in-out infinite;
+}
+
+@keyframes modalIconPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.modal-icon i {
+  color: white;
+  font-size: 1.5rem;
+}
+
+.modal-text {
+  font-family: "Patua One", serif;
+  color: #4a2c2a;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.modal-highlight {
+  background: linear-gradient(
+    135deg,
+    rgba(212, 175, 55, 0.1),
+    rgba(212, 175, 55, 0.05)
+  );
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  border-left: 4px solid #d4af37;
+  font-family: "Patua One", serif;
+  color: #4a2c2a;
+  font-size: 1rem;
+}
+
+.elegant-modal-footer {
+  border: none;
+  padding: 1.5rem 2rem;
+  background: #f8f6f0;
+  justify-content: center;
+}
+
+.btn-elegant {
+  background: linear-gradient(135deg, #d4af37 0%, #e6c653 100%);
+  color: white;
+  border: none;
+  padding: 0.8rem 2rem;
+  border-radius: 50px;
+  font-family: "Patua One", serif;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+}
+
+.btn-elegant:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+  background: linear-gradient(135deg, #e6c653 0%, #d4af37 100%);
+  color: white;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .regalo-card-simple {
+    padding: 1.5rem;
+  }
+
+  .regalos-intro {
+    font-size: 1.3rem !important;
+    /* Aumentado de 1.1rem */
+    line-height: 1.8 !important;
+  }
+
+  .regalo-icon-container {
+    margin-bottom: 1.2rem;
+  }
+
+  .regalo-icon-circle {
+    width: 70px;
+    height: 70px;
+  }
+
+  .regalo-logo {
+    width: 40px;
+    height: 40px;
+  }
+
+  .regalo-name {
+    font-size: 1.8rem;
+  }
+
+  .regalo-desc {
+    font-size: 1.1rem !important;
+    /* Aumentado de 0.95rem */
+    line-height: 1.6 !important;
+    margin-bottom: 1.2rem;
+  }
+
+  .regalo-button {
+    padding: 0.7rem 1.5rem;
+    font-size: 0.9rem;
+    gap: 0.6rem;
+  }
+
+  .footer-ornament {
+    margin-bottom: 1.5rem;
+  }
+
+  .ornament-line {
+    width: 60px;
+  }
+
+  .ornament-heart {
+    width: 35px;
+    height: 35px;
+  }
+
+  .ornament-heart i {
+    font-size: 1rem;
+  }
+
+  .footer-message {
+    font-size: 1.2rem !important;
+    /* Aumentado de 1rem */
+    line-height: 1.8 !important;
+    margin-bottom: 1rem;
+  }
+
+  .elegant-modal-body {
+    padding: 2rem 1.5rem;
+  }
+
+  .modal-text {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .regalos-elegant-section {
+    padding: 3rem 0;
+  }
+
+  .regalo-card-simple {
+    padding: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .regalo-icon-container {
+    margin-bottom: 1rem;
+  }
+
+  .regalo-icon-circle {
+    width: 60px;
+    height: 60px;
+  }
+
+  .regalo-logo {
+    width: 35px;
+    height: 35px;
+  }
+
+  .regalo-name {
+    font-size: 1.2rem;
+  }
+
+  .regalo-desc {
+    font-size: 0.9rem;
+  }
+
+  .regalo-button {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.85rem;
+  }
+
+  .footer-message {
+    font-size: 0.95rem;
+  }
+
+  .elegant-modal-header {
+    padding: 1.2rem 1.5rem;
+  }
+
+  .elegant-modal-header .modal-title {
+    font-size: 1.1rem;
+  }
+
+  .elegant-modal-body {
+    padding: 1.5rem 1rem;
+  }
+
+  .modal-icon {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 1rem;
+  }
+
+  .modal-icon i {
+    font-size: 1.2rem;
+  }
+}
+
+/* ==========================================================================
+   SECCIÓN 13: INFORMACIÓN IMPORTANTE - CÓDIGO DE VESTIMENTA
+   ========================================================================== */
+
+.dress-code-card {
+  background: var(--white);
+  padding: 2rem 1.5rem;
+  /* Cambié de 3rem 2rem a 2rem 1.5rem */
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.3s ease;
+  height: 100%;
+  text-align: center;
+}
+
+.dress-code-visual {
+  display: flex;
+  justify-content: space-around;
+  align-items: end;
+  margin-bottom: 1.5rem;
+  /* Cambié de 2rem a 1.5rem */
+  padding: 1rem 0;
+  /* Cambié de 2rem 0 a 1rem 0 */
+}
+
+.dress-code-figure {
+  text-align: center;
+  flex: 1;
+}
+
+.dress-code-figure h5 {
+  font-family: "Patua One", serif;
+  color: #4a2c2a;
+  margin-bottom: 0.8rem;
+  /* Cambié de 1rem a 0.8rem */
+  font-size: 1.2rem;
+}
+
+suit-icon,
+.dress-icon {
+  font-size: 3.5rem;
+  /* Cambié de 4rem a 3.5rem */
+  margin-bottom: 0.3rem;
+  /* Cambié de 0.5rem a 0.3rem */
+}
+
+.suit-icon {
+  color: #1a1a2e;
+  /* Azul muy oscuro para el traje */
+  font-size: 4rem !important;
+  /* Específico para el icono de hombres */
+}
+
+.dress-icon {
+  color: #dc3545;
+  /* Rojo para el vestido */
+  font-size: 4rem;
+  /* Mantener el tamaño del vestido */
+}
+
+.colors-section {
+  margin: 1.5rem 0;
+  /* Cambié de 2rem 0 a 1.5rem 0 */
+}
+
+.colors-title {
+  font-family: "Patua One", serif;
+  color: #4a2c2a;
+  font-size: 1rem;
+  /* Cambié de 1.1rem a 1rem */
+  margin-bottom: 0.8rem;
+  /* Cambié de 1rem a 0.8rem */
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.color-palette {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  /* Cambié de 1rem a 0.8rem */
+  margin-bottom: 1.5rem;
+  /* Cambié de 2rem a 1.5rem */
+}
+
+.color-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #ddd;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.color-navy {
+  background-color: #1a1a2e;
+}
+
+.color-red {
+  background-color: #dc3545;
+}
+
+.color-gray {
+  background-color: #6c757d;
+}
+
+.color-darkblue {
+  background-color: #0f3460;
+}
+
+.color-brown {
+  background-color: #8b4513;
+}
+
+.dress-code-text {
+  text-align: left;
+  margin-top: 1.5rem;
+  /* Cambié de 2rem a 1.5rem */
+}
+
+.dress-code-text h4 {
+  color: #4a2c2a;
+  margin-bottom: 1rem;
+  font-family: "Patua One", serif;
+  text-align: center;
+}
+
+.dress-code-img {
+  width: 100px;
+  /* Ajusta el ancho que quieras */
+  height: 100px;
+  /* Ajusta la altura que quieras */
+  object-fit: contain;
+  /* Para que mantenga las proporciones */
+  margin-bottom: 0.3rem;
+}
+
+/* Si quieres que sean responsivas */
+@media (max-width: 768px) {
+  .dress-code-img {
+    width: 60px;
+    height: 75px;
+  }
+}
+
+/* ==========================================================================
+   CÁMARA VINTAGE INTERACTIVA - ESTILOS PRINCIPALES
+   ========================================================================== */
+
+.camera-vintage-section {
+  background: linear-gradient(135deg, #f4f1e8 0%, #e8dcc0 50%, #f4f1e8 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Efecto de textura vintage de fondo */
+.camera-vintage-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+      circle at 25% 25%,
+      rgba(139, 111, 71, 0.03) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 75% 75%,
+      rgba(139, 111, 71, 0.02) 0%,
+      transparent 50%
+    ),
+    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60"><circle cx="30" cy="30" r="1" fill="%23d4af37" opacity="0.1"/><circle cx="10" cy="10" r="0.5" fill="%23d4af37" opacity="0.08"/></svg>');
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   HEADER DEL ÁLBUM
+   ========================================================================== */
+
+.album-header {
+  margin-bottom: 3rem;
+  position: relative;
+  z-index: 2;
+}
+
+.album-intro {
+  font-family: "Patua One", serif;
+  color: #666;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  font-style: italic;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* ==========================================================================
+   CONTENEDOR DE LA CÁMARA
+   ========================================================================== */
+
+.camera-container {
+  position: relative;
+  max-width: 500px;
+  margin: 0 auto 4rem;
+  perspective: 1200px;
+}
+
+/* ==========================================================================
+   CÁMARA VINTAGE 3D
+   ========================================================================== */
+
+.vintage-camera {
+  position: relative;
+  width: 400px;
+  height: 300px;
+  margin: 0 auto;
+  transform-style: preserve-3d;
+  transition: all 0.6s ease;
+  cursor: pointer;
+  animation: cameraFloat 6s ease-in-out infinite;
+}
+
+@keyframes cameraFloat {
+  0%,
+  100% {
+    transform: translateY(0px) rotateY(0deg);
+  }
+
+  50% {
+    transform: translateY(-10px) rotateY(2deg);
+  }
+}
+
+.vintage-camera:hover {
+  transform: scale(1.05) rotateY(5deg);
+}
+
+/* ==========================================================================
+   CUERPO DE LA CÁMARA
+   ========================================================================== */
+
+.camera-body {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(145deg, #2c1810 0%, #4a2c2a 50%, #3a201e 100%);
+  border-radius: 20px 20px 10px 10px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4),
+    inset 0 2px 0 rgba(255, 255, 255, 0.1), inset 0 -2px 0 rgba(0, 0, 0, 0.3);
+  transform: translateZ(50px);
+  border: 2px solid #1a0f0b;
+}
+
+/* ==========================================================================
+   VISOR SUPERIOR
+   ========================================================================== */
+
+.camera-viewfinder {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 60px;
+  background: linear-gradient(145deg, #1a0f0b 0%, #2c1810 100%);
+  border-radius: 8px;
+  border: 1px solid #0d0907;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.viewfinder-glass {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  background: radial-gradient(
+    circle,
+    rgba(100, 149, 237, 0.3) 0%,
+    rgba(70, 130, 180, 0.2) 100%
+  );
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  animation: viewfinderGlow 4s ease-in-out infinite;
+}
+
+@keyframes viewfinderGlow {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+/* ==========================================================================
+   PANEL FRONTAL
+   ========================================================================== */
+
+.camera-front {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px 20px 10px 10px;
+}
+
+/* ==========================================================================
+   LENTE PRINCIPAL
+   ========================================================================== */
+
+.camera-lens {
+  position: absolute;
+  top: 50%;
+  left: 40%;
+  transform: translate(-50%, -50%);
+  width: 120px;
+  height: 120px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+
+.camera-lens:hover {
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.lens-outer-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(145deg, #1a1a1a 0%, #333 50%, #1a1a1a 100%);
+  border-radius: 50%;
+  border: 3px solid #0d0d0d;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5),
+    inset 0 2px 0 rgba(255, 255, 255, 0.1), inset 0 -2px 0 rgba(0, 0, 0, 0.5);
+}
+
+.lens-inner-ring {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+  background: radial-gradient(circle, #0a0a0a 0%, #1a1a1a 100%);
+  border-radius: 50%;
+  border: 2px solid #333;
+  box-shadow: inset 0 5px 15px rgba(0, 0, 0, 0.8);
+}
+
+.lens-center {
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  right: 25px;
+  bottom: 25px;
+  background: radial-gradient(circle, #000 0%, #111 50%, #000 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.lens-aperture {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  animation: apertureRotate 8s linear infinite;
+}
+
+@keyframes apertureRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.aperture-blade {
+  position: absolute;
+  width: 20px;
+  height: 3px;
+  background: #333;
+  border-radius: 2px;
+  top: 50%;
+  left: 50%;
+  transform-origin: 0 0;
+}
+
+.aperture-blade:nth-child(1) {
+  transform: translate(-50%, -50%) rotate(0deg);
+}
+
+.aperture-blade:nth-child(2) {
+  transform: translate(-50%, -50%) rotate(60deg);
+}
+
+.aperture-blade:nth-child(3) {
+  transform: translate(-50%, -50%) rotate(120deg);
+}
+
+.aperture-blade:nth-child(4) {
+  transform: translate(-50%, -50%) rotate(180deg);
+}
+
+.aperture-blade:nth-child(5) {
+  transform: translate(-50%, -50%) rotate(240deg);
+}
+
+.aperture-blade:nth-child(6) {
+  transform: translate(-50%, -50%) rotate(300deg);
+}
+
+/* ==========================================================================
+   FLASH
+   ========================================================================== */
+
+.camera-flash {
+  position: absolute;
+  top: 30px;
+  right: 50px;
+  width: 40px;
+  height: 30px;
+  background: linear-gradient(145deg, #f5f5f5 0%, #e0e0e0 100%);
+  border-radius: 15px;
+  border: 1px solid #ccc;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.camera-flash:hover {
+  transform: scale(1.1);
+}
+
+.flash-bulb {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  right: 4px;
+  bottom: 4px;
+  background: radial-gradient(circle, #fff 0%, #f0f0f0 100%);
+  border-radius: 10px;
+  animation: flashPulse 3s ease-in-out infinite;
+}
+
+@keyframes flashPulse {
+  0%,
+  100% {
+    opacity: 0.8;
+  }
+
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+  }
+}
+
+/* ==========================================================================
+   MARCA Y DETALLES
+   ========================================================================== */
+
+.camera-brand {
+  position: absolute;
+  top: 40px;
+  left: 30px;
+  text-align: left;
+}
+
+.brand-text {
+  display: block;
+  font-family: "Patua One", serif;
+  color: #d4af37;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.brand-model {
+  display: block;
+  font-family: "Patua One", serif;
+  color: #999;
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+  margin-top: 2px;
+}
+
+/* ==========================================================================
+   BOTÓN DISPARADOR
+   ========================================================================== */
+
+.camera-shutter-button {
+  position: absolute;
+  top: 20px;
+  right: 120px;
+  width: 50px;
+  height: 50px;
+  background: radial-gradient(circle, #d4af37 0%, #b8941f 100%);
+  border-radius: 50%;
+  border: 3px solid #8b6f47;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4),
+    inset 0 2px 0 rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  animation: shutterGlow 4s ease-in-out infinite;
+}
+
+@keyframes shutterGlow {
+  0%,
+  100% {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4),
+      inset 0 2px 0 rgba(255, 255, 255, 0.3), 0 0 0 0 rgba(212, 175, 55, 0);
+  }
+
+  50% {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4),
+      inset 0 2px 0 rgba(255, 255, 255, 0.3), 0 0 0 8px rgba(212, 175, 55, 0.3);
+  }
+}
+
+.camera-shutter-button:hover {
+  transform: scale(1.1);
+}
+
+.camera-shutter-button:active {
+  transform: scale(0.95);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4),
+    inset 0 2px 0 rgba(255, 255, 255, 0.3);
+}
+
+.shutter-inner {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  background: radial-gradient(circle, #e6c653 0%, #d4af37 100%);
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* ==========================================================================
+   DETALLES DECORATIVOS
+   ========================================================================== */
+
+.camera-details {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.detail-dial {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  background: radial-gradient(circle, #333 0%, #1a1a1a 100%);
+  border-radius: 50%;
+  border: 2px solid #555;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.dial-1 {
+  top: 80px;
+  left: 30px;
+  animation: dialRotate1 10s linear infinite;
+}
+
+.dial-2 {
+  bottom: 40px;
+  right: 40px;
+  animation: dialRotate2 15s linear infinite reverse;
+}
+
+@keyframes dialRotate1 {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dialRotate2 {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.detail-button {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  background: #666;
+  border-radius: 3px;
+  border: 1px solid #333;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.btn-1 {
+  top: 120px;
+  left: 25px;
+}
+
+.btn-2 {
+  bottom: 60px;
+  right: 30px;
+}
+
+/* ==========================================================================
+   SOMBRA DE LA CÁMARA
+   ========================================================================== */
+
+.camera-shadow {
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  height: 30px;
+  background: radial-gradient(ellipse, rgba(0, 0, 0, 0.3) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: shadowPulse 6s ease-in-out infinite;
+}
+
+@keyframes shadowPulse {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: translateX(-50%) scale(1);
+  }
+
+  50% {
+    opacity: 0.5;
+    transform: translateX(-50%) scale(1.1);
+  }
+}
+
+/* ==========================================================================
+   EFECTOS DE FLASH
+   ========================================================================== */
+
+.flash-effect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.9) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 0.3s ease;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.flash-effect.active {
+  opacity: 1;
+  transform: scale(2);
+  animation: flashBurst 0.5s ease-out;
+}
+
+@keyframes flashBurst {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.5);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(2);
+  }
+}
+
+/* ==========================================================================
+   FOTOS INSTANTÁNEAS
+   ========================================================================== */
+
+.photo-output {
+  position: absolute;
+  bottom: -50px;
+  right: -30px;
+  pointer-events: none;
+}
+
+.instant-photo {
+  position: absolute;
+  width: 80px;
+  height: 100px;
+  background: white;
+  border-radius: 3px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  transform: translateY(100px) rotate(15deg);
+  opacity: 0;
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.instant-photo.show {
+  transform: translateY(0) rotate(5deg);
+  opacity: 1;
+}
+
+.photo-content {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  bottom: 20px;
+  background: #f5f5f5;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.photo-1 {
+  z-index: 3;
+  right: 0;
+}
+
+.photo-2 {
+  z-index: 2;
+  right: 15px;
+  animation-delay: 0.2s;
+}
+
+.photo-3 {
+  z-index: 1;
+  right: 30px;
+  animation-delay: 0.4s;
+}
+
+/* ==========================================================================
+   INFORMACIÓN E INSTRUCCIONES
+   ========================================================================== */
+
+.album-info {
+  margin-top: 4rem;
+  position: relative;
+  z-index: 2;
+}
+
+.photo-instructions {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(248, 245, 240, 0.9) 100%
+  );
+  border-radius: 20px;
+  padding: 2.5rem;
+  margin-bottom: 3rem;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1), 0 5px 15px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.instructions-title {
+  font-family: "Patua One", serif;
+  color: #4a2c2a;
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.instructions-title i {
+  color: #d4af37;
+  font-size: 1.3rem;
+}
+
+.instructions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+}
+
+.instruction-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  text-align: left;
+}
+
+.step-number {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #d4af37 0%, #e6c653 100%);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Patua One", serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+}
+
+.step-content h5 {
+  font-family: "Patua One", serif;
+  color: #4a2c2a;
+  font-size: 1.1rem;
+  margin: 0 0 0.5rem 0;
+  font-weight: 600;
+}
+
+.step-content p {
+  font-family: "Patua One", serif;
+  color: #666;
+  font-size: 0.95rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   BOTONES DE ACCIÓN
+   ========================================================================== */
+
+.album-actions {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.vintage-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  background: linear-gradient(135deg, #d4af37 0%, #e6c653 100%);
+  color: white;
+  text-decoration: none;
+  padding: 1.2rem 2.5rem;
+  border-radius: 50px;
+  font-family: "Patua One", serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.vintage-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.6s ease;
+}
+
+.vintage-button:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 20px 40px rgba(212, 175, 55, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  text-decoration: none;
+  color: white;
+}
+
+.vintage-button:hover::before {
+  left: 100%;
+}
+
+.btn-icon {
+  font-size: 1.3rem;
+}
+
+.btn-arrow {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.vintage-button:hover .btn-arrow {
+  transform: translateX(5px);
+}
+
+.album-extras {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: rgba(212, 175, 55, 0.1);
+  border-radius: 15px;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.hashtag-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.hashtag-label {
+  font-family: "Patua One", serif;
+  color: #4a2c2a;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.hashtag-text {
+  font-family: "Patua One", serif;
+  color: #d4af37;
+  font-size: 1.1rem;
+  font-weight: 700;
+  background: rgba(212, 175, 55, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.hashtag-text:hover {
+  background: rgba(212, 175, 55, 0.2);
+  transform: scale(1.05);
+}
+
+/* ==========================================================================
+   FOOTER DEL ÁLBUM
+   ========================================================================== */
+
+.album-footer {
+  text-align: center;
+  margin-top: 3rem;
+  padding: 2.5rem;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.footer-ornament {
+  margin-bottom: 1.5rem;
+}
+
+.footer-ornament i {
+  font-size: 2.5rem;
+  color: #d4af37;
+  animation: heartBeat 2s ease-in-out infinite;
+}
+
+@keyframes heartBeat {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+.footer-message {
+  font-family: "Patua One", serif;
+  color: #4a2c2a;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin: 0 0 1.5rem 0;
+  font-style: italic;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.footer-signature {
+  font-family: "Great Vibes", cursive;
+  font-size: 1.4rem;
+  color: #d4af37;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .camera-vintage-section {
+    padding: 3rem 0;
+  }
+
+  .vintage-camera {
+    width: 300px;
+    height: 225px;
+  }
+
+  .camera-lens {
+    width: 90px;
+    height: 90px;
+  }
+
+  .lens-inner-ring {
+    top: 12px;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+  }
+
+  .lens-center {
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+  }
+
+  .lens-aperture {
+    width: 35px;
+    height: 35px;
+  }
+
+  .camera-flash {
+    width: 30px;
+    height: 25px;
+    top: 25px;
+    right: 40px;
+  }
+
+  .camera-shutter-button {
+    width: 40px;
+    height: 40px;
+    top: 15px;
+    right: 90px;
+  }
+
+  .shutter-inner {
+    top: 6px;
+    left: 6px;
+    right: 6px;
+    bottom: 6px;
+  }
+
+  .brand-text {
+    font-size: 1rem;
+  }
+
+  .brand-model {
+    font-size: 0.6rem;
+  }
+
+  .photo-instructions {
+    padding: 2rem 1.5rem;
+  }
+
+  .instructions-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .instruction-step {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
+
+  .vintage-button {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+  }
+
+  .hashtag-info {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .album-footer {
+    padding: 2rem 1.5rem;
+  }
+
+  .footer-message {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .vintage-camera {
+    width: 250px;
+    height: 190px;
+  }
+
+  .camera-lens {
+    width: 70px;
+    height: 70px;
+    left: 35%;
+  }
+
+  .lens-inner-ring {
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+  }
+
+  .lens-center {
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+  }
+
+  .lens-aperture {
+    width: 25px;
+    height: 25px;
+  }
+
+  .camera-flash {
+    width: 25px;
+    height: 20px;
+    top: 20px;
+    right: 30px;
+  }
+
+  .camera-shutter-button {
+    width: 35px;
+    height: 35px;
+    top: 10px;
+    right: 70px;
+  }
+
+  .brand-text {
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+  }
+
+  .brand-model {
+    font-size: 0.5rem;
+  }
+
+  .camera-viewfinder {
+    width: 60px;
+    height: 45px;
+    top: -25px;
+  }
+
+  .detail-dial {
+    width: 20px;
+    height: 20px;
+  }
+
+  .detail-button {
+    width: 12px;
+    height: 12px;
+  }
+
+  .instant-photo {
+    width: 60px;
+    height: 75px;
+  }
+
+  .photo-content {
+    font-size: 1.2rem;
+  }
+
+  .photo-instructions {
+    padding: 1.5rem 1rem;
+  }
+
+  .instructions-title {
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .step-number {
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+  }
+
+  .step-content h5 {
+    font-size: 1rem;
+  }
+
+  .step-content p {
+    font-size: 0.9rem;
+  }
+
+  .vintage-button {
+    padding: 0.9rem 1.8rem;
+    font-size: 0.95rem;
+    gap: 0.8rem;
+  }
+
+  .album-footer {
+    padding: 1.5rem 1rem;
+  }
+
+  .footer-ornament i {
+    font-size: 2rem;
+  }
+
+  .footer-message {
+    font-size: 0.95rem;
+  }
+
+  .footer-signature {
+    font-size: 1.2rem;
+  }
+}
+
+/* ==========================================================================
+   CÁMARA VINTAGE INTERACTIVA - ESTILOS PRINCIPALES
+   ========================================================================== */
+
+.camera-vintage-section {
+  background: transparent;
+  /* Cambiado a transparente */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Efecto de textura vintage de fondo */
+.camera-vintage-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+      circle at 25% 25%,
+      rgba(139, 111, 71, 0.03) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 75% 75%,
+      rgba(139, 111, 71, 0.02) 0%,
+      transparent 50%
+    ),
+    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60"><circle cx="30" cy="30" r="1" fill="%23d4af37" opacity="0.1"/><circle cx="10" cy="10" r="0.5" fill="%23d4af37" opacity="0.08"/></svg>');
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   HEADER DEL ÁLBUM
+   ========================================================================== */
+
+.album-header {
+  margin-bottom: 3rem;
+  position: relative;
+  z-index: 2;
+}
+
+.album-intro {
+  font-family: "Patua One", serif;
+  color: #666;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  font-style: italic;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* ==========================================================================
+   CONTENEDOR DE LA CÁMARA
+   ========================================================================== */
+
+.camera-container {
+  position: relative;
+  max-width: 500px;
+  margin: 0 auto 4rem;
+  perspective: 1200px;
+}
+
+/* ==========================================================================
+   CÁMARA VINTAGE 3D
+   ========================================================================== */
+
+.vintage-camera {
+  position: relative;
+  width: 400px;
+  height: 300px;
+  margin: 0 auto;
+  transform-style: preserve-3d;
+  transition: all 0.6s ease;
+  cursor: pointer;
+  animation: cameraFloat 6s ease-in-out infinite;
+}
+
+@keyframes cameraFloat {
+  0%,
+  100% {
+    transform: translateY(0px) rotateY(0deg);
+  }
+
+  50% {
+    transform: translateY(-10px) rotateY(2deg);
+  }
+}
+
+.vintage-camera:hover {
+  transform: scale(1.05) rotateY(5deg);
+}
+
+/* ==========================================================================
+   CUERPO DE LA CÁMARA
+   ========================================================================== */
+
+.camera-body {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(145deg, #2c1810 0%, #4a2c2a 50%, #3a201e 100%);
+  border-radius: 20px 20px 10px 10px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4),
+    inset 0 2px 0 rgba(255, 255, 255, 0.1), inset 0 -2px 0 rgba(0, 0, 0, 0.3);
+  transform: translateZ(50px);
+  border: 2px solid #1a0f0b;
+}
+
+/* ==========================================================================
+   VISOR SUPERIOR
+   ========================================================================== */
+
+.camera-viewfinder {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 60px;
+  background: linear-gradient(145deg, #1a0f0b 0%, #2c1810 100%);
+  border-radius: 8px;
+  border: 1px solid #0d0907;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.viewfinder-glass {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  background: radial-gradient(
+    circle,
+    rgba(100, 149, 237, 0.3) 0%,
+    rgba(70, 130, 180, 0.2) 100%
+  );
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  animation: viewfinderGlow 4s ease-in-out infinite;
+}
+
+@keyframes viewfinderGlow {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+/* ==========================================================================
+   PANEL FRONTAL
+   ========================================================================== */
+
+.camera-front {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px 20px 10px 10px;
+}
+
+/* ==========================================================================
+   LENTE PRINCIPAL
+   ========================================================================== */
+
+.camera-lens {
+  position: absolute;
+  top: 50%;
+  left: 40%;
+  transform: translate(-50%, -50%);
+  width: 120px;
+  height: 120px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+
+.camera-lens:hover {
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.lens-outer-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(145deg, #1a1a1a 0%, #333 50%, #1a1a1a 100%);
+  border-radius: 50%;
+  border: 3px solid #0d0d0d;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5),
+    inset 0 2px 0 rgba(255, 255, 255, 0.1), inset 0 -2px 0 rgba(0, 0, 0, 0.5);
+}
+
+.lens-inner-ring {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+  background: radial-gradient(circle, #0a0a0a 0%, #1a1a1a 100%);
+  border-radius: 50%;
+  border: 2px solid #333;
+  box-shadow: inset 0 5px 15px rgba(0, 0, 0, 0.8);
+}
+
+.lens-center {
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  right: 25px;
+  bottom: 25px;
+  background: radial-gradient(circle, #000 0%, #111 50%, #000 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.lens-aperture {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  animation: apertureRotate 8s linear infinite;
+}
+
+@keyframes apertureRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.aperture-blade {
+  position: absolute;
+  width: 20px;
+  height: 3px;
+  background: #333;
+  border-radius: 2px;
+  top: 50%;
+  left: 50%;
+  transform-origin: 0 0;
+}
+
+.aperture-blade:nth-child(1) {
+  transform: translate(-50%, -50%) rotate(0deg);
+}
+
+.aperture-blade:nth-child(2) {
+  transform: translate(-50%, -50%) rotate(60deg);
+}
+
+.aperture-blade:nth-child(3) {
+  transform: translate(-50%, -50%) rotate(120deg);
+}
+
+.aperture-blade:nth-child(4) {
+  transform: translate(-50%, -50%) rotate(180deg);
+}
+
+.aperture-blade:nth-child(5) {
+  transform: translate(-50%, -50%) rotate(240deg);
+}
+
+.aperture-blade:nth-child(6) {
+  transform: translate(-50%, -50%) rotate(300deg);
+}
+
+/* ==========================================================================
+   FLASH
+   ========================================================================== */
+
+.camera-flash {
+  position: absolute;
+  top: 30px;
+  right: 50px;
+  width: 40px;
+  height: 30px;
+  background: linear-gradient(145deg, #f5f5f5 0%, #e0e0e0 100%);
+  border-radius: 15px;
+  border: 1px solid #ccc;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.camera-flash:hover {
+  transform: scale(1.1);
+}
+
+.flash-bulb {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  right: 4px;
+  bottom: 4px;
+  background: radial-gradient(circle, #fff 0%, #f0f0f0 100%);
+  border-radius: 10px;
+  animation: flashPulse 3s ease-in-out infinite;
+}
+
+@keyframes flashPulse {
+  0%,
+  100% {
+    opacity: 0.8;
+  }
+
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+  }
+}
+
+/* ==========================================================================
+   MARCA Y DETALLES
+   ========================================================================== */
+
+.camera-brand {
+  position: absolute;
+  top: 40px;
+  left: 30px;
+  text-align: left;
+}
+
+.brand-text {
+  display: block;
+  font-family: "Patua One", serif;
+  color: #d4af37;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.brand-model {
+  display: block;
+  font-family: "Patua One", serif;
+  color: #999;
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+  margin-top: 2px;
+}
+
+/* ==========================================================================
+   BOTÓN DISPARADOR
+   ========================================================================== */
+
+.camera-shutter-button {
+  position: absolute;
+  top: 20px;
+  right: 120px;
+  width: 50px;
+  height: 50px;
+  background: radial-gradient(circle, #d4af37 0%, #b8941f 100%);
+  border-radius: 50%;
+  border: 3px solid #8b6f47;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4),
+    inset 0 2px 0 rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  animation: shutterGlow 4s ease-in-out infinite;
+}
+
+@keyframes shutterGlow {
+  0%,
+  100% {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4),
+      inset 0 2px 0 rgba(255, 255, 255, 0.3), 0 0 0 0 rgba(212, 175, 55, 0);
+  }
+
+  50% {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4),
+      inset 0 2px 0 rgba(255, 255, 255, 0.3), 0 0 0 8px rgba(212, 175, 55, 0.3);
+  }
+}
+
+.camera-shutter-button:hover {
+  transform: scale(1.1);
+}
+
+.camera-shutter-button:active {
+  transform: scale(0.95);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4),
+    inset 0 2px 0 rgba(255, 255, 255, 0.3);
+}
+
+.shutter-inner {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  background: radial-gradient(circle, #e6c653 0%, #d4af37 100%);
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* ==========================================================================
+   DETALLES DECORATIVOS
+   ========================================================================== */
+
+.camera-details {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.detail-dial {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  background: radial-gradient(circle, #333 0%, #1a1a1a 100%);
+  border-radius: 50%;
+  border: 2px solid #555;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.dial-1 {
+  top: 80px;
+  left: 30px;
+  animation: dialRotate1 10s linear infinite;
+}
+
+.dial-2 {
+  bottom: 40px;
+  right: 40px;
+  animation: dialRotate2 15s linear infinite reverse;
+}
+
+@keyframes dialRotate1 {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dialRotate2 {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.detail-button {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  background: #666;
+  border-radius: 3px;
+  border: 1px solid #333;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.btn-1 {
+  top: 120px;
+  left: 25px;
+}
+
+.btn-2 {
+  bottom: 60px;
+  right: 30px;
+}
+
+/* ==========================================================================
+   SOMBRA DE LA CÁMARA
+   ========================================================================== */
+
+.camera-shadow {
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  height: 30px;
+  background: radial-gradient(ellipse, rgba(0, 0, 0, 0.3) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: shadowPulse 6s ease-in-out infinite;
+}
+
+@keyframes shadowPulse {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: translateX(-50%) scale(1);
+  }
+
+  50% {
+    opacity: 0.5;
+    transform: translateX(-50%) scale(1.1);
+  }
+}
+
+/* ==========================================================================
+   EFECTOS DE FLASH
+   ========================================================================== */
+
+.flash-effect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.9) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 0.3s ease;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.flash-effect.active {
+  opacity: 1;
+  transform: scale(2);
+  animation: flashBurst 0.5s ease-out;
+}
+
+@keyframes flashBurst {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.5);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(2);
+  }
+}
+
+/* ==========================================================================
+   FOTOS INSTANTÁNEAS
+   ========================================================================== */
+
+.photo-output {
+  position: absolute;
+  bottom: -50px;
+  right: -30px;
+  pointer-events: none;
+}
+
+.instant-photo {
+  position: absolute;
+  width: 80px;
+  height: 100px;
+  background: white;
+  border-radius: 3px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  transform: translateY(100px) rotate(15deg);
+  opacity: 0;
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.instant-photo.show {
+  transform: translateY(0) rotate(5deg);
+  opacity: 1;
+}
+
+.photo-content {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  bottom: 20px;
+  background: #f5f5f5;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.photo-1 {
+  z-index: 3;
+  right: 0;
+}
+
+.photo-2 {
+  z-index: 2;
+  right: 15px;
+  animation-delay: 0.2s;
+}
+
+.photo-3 {
+  z-index: 1;
+  right: 30px;
+  animation-delay: 0.4s;
+}
+
+/* ==========================================================================
+   INFORMACIÓN E INSTRUCCIONES
+   ========================================================================== */
+
+.album-info {
+  margin-top: 4rem;
+  position: relative;
+  z-index: 2;
+}
+
+.photo-instructions {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(248, 245, 240, 0.9) 100%
+  );
+  border-radius: 20px;
+  padding: 2.5rem;
+  margin-bottom: 3rem;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1), 0 5px 15px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.instructions-title {
+  font-family: "Patua One", serif;
+  color: #4a2c2a;
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.instructions-title i {
+  color: #d4af37;
+  font-size: 1.3rem;
+}
+
+.instructions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+}
+
+.instruction-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  text-align: left;
+}
+
+.step-number {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #d4af37 0%, #e6c653 100%);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Patua One", serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+}
+
+.step-content h5 {
+  font-family: "Patua One", serif;
+  color: #4a2c2a;
+  font-size: 1.1rem;
+  margin: 0 0 0.5rem 0;
+  font-weight: 600;
+}
+
+.step-content p {
+  font-family: "Patua One", serif;
+  color: #666;
+  font-size: 0.95rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   BOTONES DE ACCIÓN
+   ========================================================================== */
+
+.album-actions {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.vintage-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  background: linear-gradient(135deg, #d4af37 0%, #e6c653 100%);
+  color: white;
+  text-decoration: none;
+  padding: 1.2rem 2.5rem;
+  border-radius: 50px;
+  font-family: "Patua One", serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.vintage-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.6s ease;
+}
+
+.vintage-button:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 20px 40px rgba(212, 175, 55, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  text-decoration: none;
+  color: white;
+}
+
+.vintage-button:hover::before {
+  left: 100%;
+}
+
+.btn-icon {
+  font-size: 1.3rem;
+}
+
+.btn-arrow {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.vintage-button:hover .btn-arrow {
+  transform: translateX(5px);
+}
+
+.album-extras {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: rgba(212, 175, 55, 0.1);
+  border-radius: 15px;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.hashtag-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.hashtag-label {
+  font-family: "Patua One", serif;
+  color: #4a2c2a;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.hashtag-text {
+  font-family: "Patua One", serif;
+  color: #d4af37;
+  font-size: 1.1rem;
+  font-weight: 700;
+  background: rgba(212, 175, 55, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.hashtag-text:hover {
+  background: rgba(212, 175, 55, 0.2);
+  transform: scale(1.05);
+}
+
+/* ==========================================================================
+   FOOTER DEL ÁLBUM
+   ========================================================================== */
+
+.album-footer {
+  text-align: center;
+  margin-top: 3rem;
+  padding: 2.5rem;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.footer-ornament {
+  margin-bottom: 1.5rem;
+}
+
+.footer-ornament i {
+  font-size: 2.5rem;
+  color: #d4af37;
+  animation: heartBeat 2s ease-in-out infinite;
+}
+
+@keyframes heartBeat {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+.footer-message {
+  font-family: "Patua One", serif;
+  color: #4a2c2a;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin: 0 0 1.5rem 0;
+  font-style: italic;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.footer-signature {
+  font-family: "Great Vibes", cursive;
+  font-size: 1.4rem;
+  color: #d4af37;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .camera-vintage-section {
+    padding: 3rem 0;
+  }
+
+  .vintage-camera {
+    width: 300px;
+    height: 225px;
+  }
+
+  .camera-lens {
+    width: 90px;
+    height: 90px;
+  }
+
+  .lens-inner-ring {
+    top: 12px;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+  }
+
+  .lens-center {
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+  }
+
+  .lens-aperture {
+    width: 35px;
+    height: 35px;
+  }
+
+  .camera-flash {
+    width: 30px;
+    height: 25px;
+    top: 25px;
+    right: 40px;
+  }
+
+  .camera-shutter-button {
+    width: 40px;
+    height: 40px;
+    top: 15px;
+    right: 90px;
+  }
+
+  .shutter-inner {
+    top: 6px;
+    left: 6px;
+    right: 6px;
+    bottom: 6px;
+  }
+
+  .brand-text {
+    font-size: 1rem;
+  }
+
+  .brand-model {
+    font-size: 0.6rem;
+  }
+
+  .photo-instructions {
+    padding: 2rem 1.5rem;
+  }
+
+  .instructions-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .instruction-step {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
+
+  .vintage-button {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+  }
+
+  .hashtag-info {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .album-footer {
+    padding: 2rem 1.5rem;
+  }
+
+  .footer-message {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .vintage-camera {
+    width: 250px;
+    height: 190px;
+  }
+
+  .camera-lens {
+    width: 70px;
+    height: 70px;
+    left: 35%;
+  }
+
+  .lens-inner-ring {
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+  }
+
+  .lens-center {
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+  }
+
+  .lens-aperture {
+    width: 25px;
+    height: 25px;
+  }
+
+  .camera-flash {
+    width: 25px;
+    height: 20px;
+    top: 20px;
+    right: 30px;
+  }
+
+  .camera-shutter-button {
+    width: 35px;
+    height: 35px;
+    top: 10px;
+    right: 70px;
+  }
+
+  .brand-text {
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+  }
+
+  .brand-model {
+    font-size: 0.5rem;
+  }
+
+  .camera-viewfinder {
+    width: 60px;
+    height: 45px;
+    top: -25px;
+  }
+
+  .detail-dial {
+    width: 20px;
+    height: 20px;
+  }
+
+  .detail-button {
+    width: 12px;
+    height: 12px;
+  }
+
+  .instant-photo {
+    width: 60px;
+    height: 75px;
+  }
+
+  .photo-content {
+    font-size: 1.2rem;
+  }
+
+  .photo-instructions {
+    padding: 1.5rem 1rem;
+  }
+
+  .instructions-title {
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .step-number {
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+  }
+
+  .step-content h5 {
+    font-size: 1rem;
+  }
+
+  .step-content p {
+    font-size: 0.9rem;
+  }
+
+  .vintage-button {
+    padding: 0.9rem 1.8rem;
+    font-size: 0.95rem;
+    gap: 0.8rem;
+  }
+
+  .album-footer {
+    padding: 1.5rem 1rem;
+  }
+
+  .footer-ornament i {
+    font-size: 2rem;
+  }
+
+  .footer-message {
+    font-size: 0.95rem;
+  }
+
+  .footer-signature {
+    font-size: 1.2rem;
+  }
+}
+
+/* ==========================================================================
+   BOTONES Y ELEMENTOS INTERACTIVOS
+   ========================================================================== */
+
+.btn-primary {
+  background: var(--gradient-primary);
+  border: none;
+  padding: 12px 30px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-soft);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
+  background: linear-gradient(135deg, #e6c653 0%, #d4af37 100%);
+}
+
+.btn-outline-primary {
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+  background: transparent;
+  padding: 10px 25px;
+  font-weight: 600;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover {
+  background: var(--primary-color);
+  color: var(--white);
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   SECCIONES DE FONDO
+   ========================================================================== */
+
+.bg-light {
+  background-color: var(--accent-color) !important;
+}
+
+.bg-primary {
+  background: var(--gradient-primary) !important;
+}
+
+/* ==========================================================================
+   ANIMACIONES
+   ========================================================================== */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ==========================================================================
+   SECCIÓN FOOTER: NUESTROS RECUERDOS CON POLAROIDS (SIMPLIFICADO)
+   ========================================================================== */
+
+.footer-container {
+  position: relative;
+  background: #4a2c2a;
+  color: white;
+  padding: 6rem 2rem 3rem;
+  margin-top: 2rem;
+  overflow: hidden;
+}
+
+/* Polaroids dispersas en el fondo */
+.polaroid {
+  position: absolute;
+  width: 120px;
+  height: 140px;
+  background: white;
+  padding: 10px 10px 40px 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+  transform-origin: center;
+  opacity: 0.8;
+  /* Temporalmente más alto para que las veas */
+  z-index: 1;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.polaroid::before {
+  content: "";
+  width: 100%;
+  height: 80px;
+  background-color: transparent;
+  display: block;
+  border-radius: 2px;
+}
+
+.polaroid::after {
+  content: attr(data-text);
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: "Patua One", serif;
+  font-size: 12px;
+  color: #333;
+  text-align: center;
+}
+
+/* Posiciones y rotaciones aleatorias para las polaroids */
+.polaroid:nth-child(1) {
+  top: 20px;
+  left: 5%;
+  transform: rotate(-15deg);
+}
+
+.polaroid:nth-child(2) {
+  top: 40px;
+  right: 8%;
+  transform: rotate(12deg);
+}
+
+.polaroid:nth-child(3) {
+  top: 80px;
+  left: 15%;
+  transform: rotate(8deg);
+}
+
+.polaroid:nth-child(4) {
+  bottom: 80px;
+  right: 15%;
+  transform: rotate(-10deg);
+}
+
+.polaroid:nth-child(5) {
+  bottom: 60px;
+  left: 10%;
+  transform: rotate(18deg);
+}
+
+.polaroid:nth-child(6) {
+  top: 60px;
+  left: 45%;
+  transform: rotate(-8deg);
+}
+
+.polaroid:nth-child(7) {
+  bottom: 120px;
+  right: 40%;
+  transform: rotate(15deg);
+}
+
+.polaroid:nth-child(8) {
+  top: 30px;
+  right: 25%;
+  transform: rotate(-12deg);
+}
+
+/* Contenido principal del footer */
+.footer-content {
+  position: relative;
+  z-index: 10;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  background: rgba(74, 44, 42, 0.6);
+  padding: 3rem 2rem;
+  border-radius: 20px;
+  backdrop-filter: blur(5px);
+}
+
+.footer-title {
+  font-family: "Sacramento", cursive;
+  font-size: 3.5rem;
+  color: #d4af37;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.footer-subtitle {
+  font-size: 1.3rem;
+  color: #f8f5f0;
+  margin-bottom: 2.5rem;
+  font-style: italic;
+  opacity: 0.9;
+  font-family: "Patua One", serif;
+}
+
+/* Galería de polaroids destacadas */
+.polaroid-gallery {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2rem 0;
+  flex-wrap: wrap;
+}
+
+.polaroid-featured {
+  width: 120px;
+  /* Cambié de 80px a 120px */
+  height: 140px;
+  /* Cambié de 95px a 140px */
+  background: white;
+  padding: 12px 12px 35px 12px;
+  /* Aumenté el padding */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+  border-radius: 3px;
+  transform: rotate(var(--rotation, 0deg));
+  transition: all 0.3s ease;
+  cursor: pointer;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.polaroid-featured:hover {
+  transform: rotate(0deg) scale(1.1);
+  z-index: 20;
+}
+
+.polaroid-featured::before {
+  content: "";
+  width: 100%;
+  height: 80px;
+  /* Aumenté de 50px a 80px */
+  background-color: transparent;
+  display: block;
+  border-radius: 2px;
+}
+
+.polaroid-featured:nth-child(1) {
+  --rotation: -8deg;
+}
+
+.polaroid-featured:nth-child(2) {
+  --rotation: 5deg;
+}
+
+.polaroid-featured:nth-child(3) {
+  --rotation: -3deg;
+}
+
+.polaroid-featured:nth-child(4) {
+  --rotation: 7deg;
+}
+
+.polaroid-featured:nth-child(5) {
+  --rotation: -5deg;
+}
+
+@media (max-width: 768px) {
+  .footer-container {
+    padding: 4rem 1rem 2rem;
+  }
+
+  .footer-title {
+    font-size: 2.8rem;
+  }
+
+  .footer-content {
+    padding: 2rem 1rem;
+  }
+
+  .polaroid-gallery {
+    gap: 1rem;
+    /* Cambié de 0.5rem a 1rem para más espacio */
+    justify-content: center;
+  }
+
+  .polaroid-featured {
+    width: 100px;
+    /* Cambié de 90px a 100px */
+    height: 120px;
+    /* Cambié de 110px a 120px */
+    padding: 10px 10px 30px 10px;
+    /* Más padding */
+  }
+
+  .polaroid-featured::before {
+    height: 65px;
+    /* Cambié de 60px a 65px */
+  }
+
+  /* Ocultar algunas polaroids de fondo en móvil */
+  .polaroid:nth-child(n + 6) {
+    display: none;
+  }
+
+  /* Mostrar solo 3 polaroids destacadas en móvil */
+  .polaroid-featured:nth-child(n + 6) {
+    display: none;
+  }
+}
+
+/* ================================
+   BOTÓN RSVP MINIMALISTA MODERNO
+   ================================ */
+
+.btn-rsvp-minimal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 18px 35px;
+  background: white;
+  color: #2c3e50;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  border: 2px solid #2c3e50;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-rsvp-minimal i {
+  font-size: 18px;
+  color: #27ae60;
+}
+
+.btn-rsvp-minimal::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: #2c3e50;
+  transition: left 0.3s ease;
+  z-index: -1;
+}
+
+.btn-rsvp-minimal:hover {
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(44, 62, 80, 0.3);
+  text-decoration: none;
+}
+
+.btn-rsvp-minimal:hover i {
+  color: #2ecc71;
+}
+
+.btn-rsvp-minimal:hover::before {
+  left: 0;
+}
+
+.btn-rsvp-minimal:active {
+  transform: translateY(0px);
+}
+
+/* ================================
+   RESPONSIVE DESIGN
+   ================================ */
+
+@media (max-width: 768px) {
+  .btn-rsvp-minimal {
+    padding: 15px 30px;
+    font-size: 16px;
+    gap: 10px;
+  }
+
+  .btn-rsvp-minimal i {
+    font-size: 16px;
+  }
+}
+
+/* ==========================================================================
+   RESPONSIVO
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .couple-names {
+    font-size: 1.8rem;
+  }
+
+  .hero-couple-photo {
+    width: 150px;
+    height: 150px;
+  }
+
+  .section-title {
+    font-size: 4.5rem !important;
+  }
+
+  .timeline::before {
+    left: 20px;
+  }
+
+  .timeline-item:nth-child(odd) .timeline-card,
+  .timeline-item:nth-child(even) .timeline-card {
+    margin: 0 0 0 60px;
+    text-align: left;
+  }
+
+  .timeline-item:nth-child(odd) .timeline-card::before,
+  .timeline-item:nth-child(even) .timeline-card::before {
+    left: -30px;
+    border-right-color: var(--white);
+    border-left-color: transparent;
+  }
+
+  .countdown-display {
+    gap: 1rem;
+  }
+
+  .countdown-item {
+    padding: 1rem;
+    min-width: 80px;
+  }
+
+  .countdown-item span {
+    font-size: 2rem;
+  }
+
+  .itinerario-timeline::before {
+    left: 60px;
+  }
+
+  .itinerario-item .time {
+    width: 100px;
+    padding: 0.8rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-content {
+    padding: 1rem;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .couple-names {
+    font-size: 4rem !important;
+  }
+
+  .countdown-item span {
+    font-size: 1.5rem;
+  }
+
+  .carousel-img {
+    height: 300px;
+  }
+}
+
+/* ==========================================================================
+   UTILIDADES
+   ========================================================================== */
+
+.text-primary {
+  color: var(--primary-color) !important;
+}
+
+.bg-white {
+  background-color: var(--white) !important;
+}
+
+.shadow-custom {
+  box-shadow: var(--shadow-card) !important;
+}
+
+/* Smooth scroll personalizado */
+section {
+  scroll-margin-top: 20px;
+}
+
+/* ========================================
+   CORAZONES CAYENDO - 10 CORAZONES DISTRIBUIDOS
+   ======================================== */
+
+.falling-hearts-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  pointer-events: none;
+  z-index: -1;
+  /* Detrás del contenido */
+  overflow: hidden;
+}
+
+/* Estilos base para corazones */
+.falling-heart {
+  position: absolute;
+  color: rgba(212, 175, 55, 0.4);
+  /* Color dorado semitransparente */
+  font-size: 18px;
+  animation: heartFall linear infinite;
+  opacity: 0;
+  top: -50px;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Animación principal de caída */
+@keyframes heartFall {
+  0% {
+    transform: translateY(-50px) rotate(0deg) scale(0.5);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+    transform: translateY(0px) rotate(45deg) scale(0.8);
+  }
+
+  90% {
+    opacity: 1;
+    transform: translateY(100vh) rotate(315deg) scale(1.2);
+  }
+
+  100% {
+    transform: translateY(120vh) rotate(360deg) scale(0.5);
+    opacity: 0;
+  }
+}
+
+/* 10 corazones perfectamente distribuidos */
+.falling-heart:nth-child(1) {
+  left: 5%;
+  animation-duration: 12s;
+  animation-delay: 0s;
+  font-size: 16px;
+}
+
+.falling-heart:nth-child(2) {
+  left: 15%;
+  animation-duration: 10s;
+  animation-delay: 2s;
+  font-size: 20px;
+}
+
+.falling-heart:nth-child(3) {
+  left: 25%;
+  animation-duration: 14s;
+  animation-delay: 4s;
+  font-size: 18px;
+}
+
+.falling-heart:nth-child(4) {
+  left: 35%;
+  animation-duration: 9s;
+  animation-delay: 1s;
+  font-size: 22px;
+}
+
+.falling-heart:nth-child(5) {
+  left: 45%;
+  animation-duration: 13s;
+  animation-delay: 6s;
+  font-size: 17px;
+}
+
+.falling-heart:nth-child(6) {
+  left: 55%;
+  animation-duration: 11s;
+  animation-delay: 3s;
+  font-size: 19px;
+}
+
+.falling-heart:nth-child(7) {
+  left: 65%;
+  animation-duration: 15s;
+  animation-delay: 8s;
+  font-size: 16px;
+}
+
+.falling-heart:nth-child(8) {
+  left: 75%;
+  animation-duration: 8s;
+  animation-delay: 5s;
+  font-size: 21px;
+}
+
+.falling-heart:nth-child(9) {
+  left: 85%;
+  animation-duration: 12s;
+  animation-delay: 7s;
+  font-size: 18px;
+}
+
+.falling-heart:nth-child(10) {
+  left: 95%;
+  animation-duration: 10s;
+  animation-delay: 9s;
+  font-size: 20px;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+  .falling-heart {
+    font-size: 14px;
+    /* Más pequeños en móvil */
+  }
+
+  /* Redistribuir 5 corazones en móvil */
+  .falling-heart:nth-child(1) {
+    left: 10%;
+  }
+
+  .falling-heart:nth-child(2) {
+    left: 30%;
+  }
+
+  .falling-heart:nth-child(3) {
+    left: 50%;
+  }
+
+  .falling-heart:nth-child(4) {
+    left: 70%;
+  }
+
+  .falling-heart:nth-child(5) {
+    left: 90%;
+  }
+
+  /* Ocultar el resto */
+  .falling-heart:nth-child(n + 6) {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Redistribuir 4 corazones en pantallas muy pequeñas */
+  .falling-heart:nth-child(1) {
+    left: 15%;
+  }
+
+  .falling-heart:nth-child(2) {
+    left: 40%;
+  }
+
+  .falling-heart:nth-child(3) {
+    left: 65%;
+  }
+
+  .falling-heart:nth-child(4) {
+    left: 90%;
+  }
+
+  /* Ocultar el resto */
+  .falling-heart:nth-child(n + 5) {
+    display: none;
+  }
+
+  .falling-heart {
+    font-size: 12px;
+  }
+}
+
+/* ========================================
+   VERSIONES DE INTENSIDAD (OPCIONALES)
+   ======================================== */
+
+/* VERSIÓN SUTIL - Más transparentes */
+.falling-hearts-container.subtle .falling-heart {
+  color: rgba(212, 175, 55, 0.2);
+}
+
+/* VERSIÓN INTENSA - Más visibles y rápidos */
+.falling-hearts-container.intense .falling-heart {
+  color: rgba(212, 175, 55, 0.7);
+  animation-duration: 6s !important;
+  /* Caen más rápido */
+}
+
+/* ========================================
+   CONTROL DE PAUSA (OPCIONAL)
+   ======================================== */
+
+/* Clase para pausar los corazones */
+.falling-hearts-container.paused .falling-heart {
+  animation-play-state: paused;
+}
+
+/* ==========================================================================
+   VOLTEAR IMAGEN DE LA ESQUINA DERECHA
+   ========================================================================== */
+
+/* IMAGEN ESQUINA SUPERIOR DERECHA - VOLTEADA HORIZONTALMENTE */
+.corner-image-top-right {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  width: 350px;
+  height: 350px;
+  z-index: 1000;
+  opacity: 0.9;
+  transition: all 0.3s ease;
+  border-radius: 0;
+  box-shadow: none;
+  border: none;
+  background: none;
+  pointer-events: none;
+
+  /* VOLTEAR HORIZONTALMENTE (EFECTO ESPEJO) */
+  transform: scaleX(-1);
+}
+
+.corner-image-top-right:hover {
+  opacity: 1;
+  transform: scaleX(-1) scale(1.02);
+  /* Mantener el volteo en el hover */
+}
+
+/* ALTERNATIVA: Si quieres rotarla 180 grados en lugar de voltearla */
+/*
+.corner-image-top-right {
+    transform: rotate(180deg);
+}
+
+.corner-image-top-right:hover {
+    transform: rotate(180deg) scale(1.02);
+}
+*/
+
+/* ALTERNATIVA: Si quieres voltearla verticalmente */
+/*
+.corner-image-top-right {
+    transform: scaleY(-1);
+}
+
+.corner-image-top-right:hover {
+    transform: scaleY(-1) scale(1.02);
+}
+*/
+
+/* ALTERNATIVA: Si quieres voltearla tanto horizontal como verticalmente */
+/*
+.corner-image-top-right {
+    transform: scaleX(-1) scaleY(-1);
+}
+
+.corner-image-top-right:hover {
+    transform: scaleX(-1) scaleY(-1) scale(1.02);
+}
+*/
+
+/* IMAGEN ESQUINA SUPERIOR IZQUIERDA - SIN CAMBIOS */
+.corner-image-top-left {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  width: 350px;
+  height: 350px;
+  z-index: 1000;
+  opacity: 0.9;
+  transition: all 0.3s ease;
+  border-radius: 0;
+  box-shadow: none;
+  border: none;
+  background: none;
+  pointer-events: none;
+}
+
+.corner-image-top-left:hover {
+  opacity: 1;
+  transform: scale(1.02);
+}
+
+/* RESPONSIVE: Ocultar en móviles y tablets */
+@media (max-width: 1024px) {
+  .corner-image-top-left,
+  .corner-image-top-right {
+    display: none;
+  }
+}
+
+/* AJUSTES PARA PANTALLAS MUY GRANDES */
+@media (min-width: 1400px) {
+  .corner-image-top-left {
+    width: 300px;
+  }
+
+  .corner-image-top-right {
+    width: 300px;
+    transform: scaleX(-1);
+    /* Mantener el volteo en pantallas grandes */
+  }
+
+  .corner-image-top-right:hover {
+    transform: scaleX(-1) scale(1.02);
+  }
+}
+
+/* AJUSTES PARA PANTALLAS MEDIANAS */
+@media (max-width: 1200px) {
+  .corner-image-top-left {
+    width: 200px;
+  }
+
+  .corner-image-top-right {
+    width: 200px;
+    transform: scaleX(-1);
+    /* Mantener el volteo en pantallas medianas */
+  }
+
+  .corner-image-top-right:hover {
+    transform: scaleX(-1) scale(1.02);
+  }
+}
+
+/* ==========================================================================
+   CSS MÍNIMO PARA VENUE SIN CARDS
+   ========================================================================== */
+
+.venue-simple-title {
+  font-family: "Patua One", serif;
+  color: #4a2c2a;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+/* Imágenes del mismo tamaño */
+.venue-image-fixed {
+  width: 100%;
+  max-width: 400px;
+  height: 250px;
+  object-fit: cover;
+  margin: 0 auto;
+  display: block;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .venue-simple-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .venue-image-fixed {
+    height: 200px;
+    max-width: 350px;
+  }
+}
+
+@media (max-width: 576px) {
+  .venue-image-fixed {
+    height: 180px;
+    max-width: 300px;
+  }
+}
+
+/* Efecto activado por scroll en móvil para cards de regalos */
+@media (max-width: 768px) {
+  .regalo-card-simple.mobile-active {
+    transform: translateY(-8px);
+    border-color: rgba(212, 175, 55, 0.4);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12),
+      0 8px 25px rgba(212, 175, 55, 0.15), 0 0 0 1px rgba(212, 175, 55, 0.1);
+  }
+
+  .regalo-card-simple.mobile-active::before {
+    left: 100%;
+    /* Activar el efecto de brillo */
+  }
+
+  .regalo-card-simple.mobile-active .regalo-icon-circle {
+    transform: scale(1.1);
+    box-shadow: 0 12px 30px rgba(212, 175, 55, 0.4),
+      inset 0 2px 0 rgba(255, 255, 255, 0.4);
+  }
+
+  .regalo-card-simple.mobile-active .regalo-name {
+    color: #d4af37;
+  }
+
+  .regalo-card-simple.mobile-active .regalo-logo {
+    transform: scale(1.1);
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2));
+  }
+}
+
+/* Morphing Text Animation - TODO PERFECTAMENTE CENTRADO */
+.couple-presentation {
+  position: relative;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  perspective: 1000px;
+  padding: 3rem 1rem;
+  min-height: 250px;
+  width: 100%;
+  overflow: visible;
+  text-align: center !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+/* Contenedor para el morphing - CENTRADO */
+.morphing-text-container {
+  position: relative;
+  display: block;
+  overflow: visible;
+  padding: 2rem;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center !important;
+}
+
+/* Texto principal (nombres) - CENTRADO */
+.couple-names-presentation {
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform-origin: center;
+  text-align: center !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+  display: block !important;
+}
+
+/* Texto romántico que aparece - PERFECTAMENTE CENTRADO */
+.romantic-morph-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0) rotateX(90deg);
+
+  /* CENTRADO PERFECTO */
+  text-align: center !important;
+  width: 100%;
+  margin: 0 auto;
+
+  /* FUENTE Y ESTILOS */
+  font-family: "Great Vibes", cursive;
+  font-size: 5rem !important;
+  font-weight: inherit;
+
+  /* COLORES FORMALES Y ELEGANTES */
+  color: transparent;
+  background: linear-gradient(
+    45deg,
+    #d4af37,
+    /* Dorado elegante */ #8b6f47,
+    /* Marrón sofisticado */ #f8f5f0,
+    /* Crema suave */ #b8941f /* Dorado más oscuro */
+  );
+  background-size: 300% 300%;
+  background-clip: text;
+  -webkit-background-clip: text;
+
+  white-space: nowrap;
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation: elegantGradientShift 4s ease infinite;
+  pointer-events: none;
+  z-index: 2;
+
+  /* Sombra sutil */
+  text-shadow: 0 3px 6px rgba(212, 175, 55, 0.15);
+}
+
+/* Estados del morphing */
+.couple-presentation.morphing .couple-names-presentation {
+  transform: scale(0.8) rotateX(-90deg);
+  opacity: 0;
+}
+
+.couple-presentation.morphing .romantic-morph-text {
+  transform: translate(-50%, -50%) scale(1) rotateX(0deg);
+  opacity: 1;
+}
+
+/* Gradiente elegante */
+@keyframes elegantGradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Brillo sutil y elegante */
+.couple-presentation.morphing::before {
+  content: "";
+  position: absolute;
+  top: -60px;
+  left: -60px;
+  right: -60px;
+  bottom: -60px;
+  background: radial-gradient(
+    circle,
+    rgba(212, 175, 55, 0.1) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  opacity: 0;
+  animation: elegantGlow 3s ease-in-out infinite;
+  z-index: -1;
+}
+
+@keyframes elegantGlow {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+/* Partículas elegantes doradas */
+.floating-particles {
+  position: absolute;
+  top: -50px;
+  left: -50px;
+  width: calc(100% + 100px);
+  height: calc(100% + 100px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.floating-particle {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background: rgba(212, 175, 55, 0.5);
+  border-radius: 50%;
+  opacity: 0;
+  animation: elegantFloat 4s ease-in-out infinite;
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
+}
+
+.floating-particle:nth-child(even) {
+  width: 4px;
+  height: 4px;
+  background: rgba(139, 111, 71, 0.4);
+  box-shadow: 0 0 6px rgba(139, 111, 71, 0.3);
+}
+
+@keyframes elegantFloat {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) translateX(0px) scale(0);
+  }
+
+  25% {
+    opacity: 0.6;
+    transform: translateY(15px) translateX(25px) scale(1);
+  }
+
+  75% {
+    opacity: 0.8;
+    transform: translateY(-25px) translateX(-20px) scale(1.3);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-60px) translateX(35px) scale(0);
+  }
+}
+
+/* Responsive - CENTRADO EN TODOS LOS TAMAÑOS */
+@media (max-width: 768px) {
+  .couple-presentation {
+    padding: 2rem 0.5rem;
+    min-height: 200px;
+  }
+
+  .morphing-text-container {
+    padding: 1.5rem;
+  }
+
+  .romantic-morph-text {
+    font-size: 4rem !important;
+    width: 100%;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .couple-presentation {
+    padding: 1.5rem 0.2rem;
+    min-height: 180px;
+  }
+
+  .morphing-text-container {
+    padding: 1rem;
+  }
+
+  .romantic-morph-text {
+    font-size: 3.5rem !important;
+    width: 100%;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 360px) {
+  .couple-presentation {
+    padding: 1rem 0.1rem;
+    min-height: 160px;
+  }
+
+  .morphing-text-container {
+    padding: 0.8rem;
+  }
+
+  .romantic-morph-text {
+    font-size: 3rem !important;
+    width: 100%;
+    margin: 0 auto;
+  }
+}
+
+/* Asegurar que la sección contenedora no limite el centrado */
+#presentacion .container {
+  max-width: none !important;
+  width: 100% !important;
+  padding: 0 !important;
+  text-align: center !important;
+}
+
+#presentacion .col-lg-10 {
+  max-width: 100% !important;
+  width: 100% !important;
+  padding: 0 !important;
+  text-align: center !important;
+}
+
+/* Centrado de la sección padre */
+#presentacion {
+  text-align: center !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
