@@ -168,6 +168,116 @@ class Database {
         ");
         return $stmt->execute([$id_invitado, $token_usado, $ubicacion_gps]);
     }
+    
+    // ===== NUEVAS FUNCIONES PARA EL SISTEMA DE LOGIN =====
+    
+    // Función para autenticar usuario admin
+    public function autenticarAdmin($usuario, $password) {
+        $stmt = $this->connection->prepare("
+            SELECT id_usuario, usuario, password, nombre_completo, activo 
+            FROM usuarios_admin 
+            WHERE usuario = ? AND activo = 1
+        ");
+        $stmt->execute([$usuario]);
+        $user = $stmt->fetch();
+        
+        if ($user && password_verify($password, $user['password'])) {
+            // Actualizar último acceso
+            $stmt = $this->connection->prepare("UPDATE usuarios_admin SET ultimo_acceso = NOW() WHERE id_usuario = ?");
+            $stmt->execute([$user['id_usuario']]);
+            
+            return $user;
+        }
+        
+        return false;
+    }
+    
+    // Función para crear nuevo usuario admin
+    public function crearUsuarioAdmin($usuario, $password, $nombre_completo) {
+        $password_hash = password_hash($password, PASSWORD_DEFAULT);
+        
+        $stmt = $this->connection->prepare("
+            INSERT INTO usuarios_admin (usuario, password, nombre_completo, activo)
+            VALUES (?, ?, ?, 1)
+        ");
+        
+        return $stmt->execute([$usuario, $password_hash, $nombre_completo]);
+    }
+    
+    // Función para obtener estadísticas generales
+    public function getEstadisticasGenerales() {
+        $stats = [];
+        
+        // Total de invitados
+        $stmt = $this->connection->prepare("SELECT COUNT(*) as total FROM invitados");
+        $stmt->execute();
+        $stats['total_invitados'] = $stmt->fetchColumn();
+        
+        // Total confirmados
+        $stmt = $this->connection->prepare("SELECT COUNT(*) as total FROM confirmaciones");
+        $stmt->execute();
+        $stats['total_confirmados'] = $stmt->fetchColumn();
+        
+        // Total de cupos disponibles
+        $stmt = $this->connection->prepare("SELECT SUM(cupos_disponibles) as total FROM invitados");
+        $stmt->execute();
+        $stats['total_cupos'] = $stmt->fetchColumn() ?: 0;
+        
+        // Total de cupos confirmados
+        $stmt = $this->connection->prepare("SELECT SUM(cantidad_confirmada) as total FROM confirmaciones");
+        $stmt->execute();
+        $stats['total_cupos_confirmados'] = $stmt->fetchColumn() ?: 0;
+        
+        // Porcentaje de confirmación
+        $stats['porcentaje_confirmacion'] = $stats['total_invitados'] > 0 ? 
+            round(($stats['total_confirmados'] / $stats['total_invitados']) * 100, 1) : 0;
+        
+        return $stats;
+    }
+    
+    // Función para obtener invitados con filtros
+    public function getInvitadosConFiltros($filtros = []) {
+        $where_conditions = [];
+        $params = [];
+        
+        if (!empty($filtros['mesa'])) {
+            $where_conditions[] = "i.mesa = ?";
+            $params[] = $filtros['mesa'];
+        }
+        
+        if (!empty($filtros['tipo'])) {
+            $where_conditions[] = "i.tipo_invitado = ?";
+            $params[] = $filtros['tipo'];
+        }
+        
+        if (!empty($filtros['buscar'])) {
+            $where_conditions[] = "(i.nombre_completo LIKE ? OR i.telefono LIKE ?)";
+            $params[] = "%{$filtros['buscar']}%";
+            $params[] = "%{$filtros['buscar']}%";
+        }
+        
+        if (isset($filtros['confirmado'])) {
+            if ($filtros['confirmado'] == '1') {
+                $where_conditions[] = "c.id_confirmacion IS NOT NULL";
+            } else {
+                $where_conditions[] = "c.id_confirmacion IS NULL";
+            }
+        }
+        
+        $where_clause = !empty($where_conditions) ? 'WHERE ' . implode(' AND ', $where_conditions) : '';
+        
+        $query = "
+            SELECT i.*, c.cantidad_confirmada, c.fecha_confirmacion
+            FROM invitados i
+            LEFT JOIN confirmaciones c ON i.id_invitado = c.id_invitado
+            $where_clause
+            ORDER BY i.nombre_completo
+        ";
+        
+        $stmt = $this->connection->prepare($query);
+        $stmt->execute($params);
+        return $stmt->fetchAll();
+    }
 }
 
 // Función helper para obtener la instancia de la base de datos
@@ -197,5 +307,69 @@ function sanitizeInput($input) {
 function isValidTokenFormat($token) {
     // Formato: XXXX-XXXX-XXXX o XXXX-XXXX-XXXX-XXXX
     return preg_match('/^[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}(-[A-Z0-9]{4})?$/', $token);
+}
+
+// ===== FUNCIONES AUXILIARES NUEVAS =====
+
+// Función para validar formato de teléfono
+function validarTelefono($telefono) {
+    // Remover espacios y caracteres especiales
+    $telefono_limpio = preg_replace('/[^0-9]/', '', $telefono);
+    
+    // Verificar que tenga al menos 10 dígitos
+    return strlen($telefono_limpio) >= 10 ? $telefono_limpio : false;
+}
+
+// Función para formatear números
+function formatearNumero($numero) {
+    return number_format($numero, 0, '.', ',');
+}
+
+// Función para generar URL de WhatsApp
+function generarUrlWhatsApp($telefono, $mensaje) {
+    $telefono_limpio = preg_replace('/[^0-9]/', '', $telefono);
+    $mensaje_encoded = urlencode($mensaje);
+    return "https://wa.me/$telefono_limpio?text=$mensaje_encoded";
+}
+
+// Función para generar mensaje de WhatsApp personalizado
+function generarMensajeWhatsApp($invitado) {
+    $mensaje = "🎉 ¡Estás invitado/a! 🎉\n\n";
+    $mensaje .= "Hola " . $invitado['nombre_completo'] . ",\n\n";
+    $mensaje .= "Nos complace invitarte a nuestro evento especial.\n\n";
+    $mensaje .= "🎫 Tu código de invitación: *" . $invitado['token'] . "*\n";
+    
+    if ($invitado['cupos_disponibles'] > 1) {
+        $mensaje .= "👥 Cupos disponibles: " . $invitado['cupos_disponibles'] . " personas\n";
+    }
+    
+    if ($invitado['mesa']) {
+        $mensaje .= "🪑 Mesa asignada: " . $invitado['mesa'] . "\n";
+    }
+    
+    $mensaje .= "\n📱 Para confirmar tu asistencia, ingresa a:\n";
+    $mensaje .= "https://tudominio.com/rsvp/confirmar.php?token=" . $invitado['token'] . "\n\n";
+    $mensaje .= "¡Esperamos verte pronto! 🌟";
+    
+    return $mensaje;
+}
+
+// Función para log de actividades (opcional)
+function logActividad($accion, $detalles = '', $id_usuario = null) {
+    if (!$id_usuario && isset($_SESSION['admin_id'])) {
+        $id_usuario = $_SESSION['admin_id'];
+    }
+    
+    $db = getDB();
+    try {
+        $stmt = $db->getConnection()->prepare("
+            INSERT INTO log_actividades (id_usuario, accion, detalles, ip_address, timestamp)
+            VALUES (?, ?, ?, ?, NOW())
+        ");
+        $stmt->execute([$id_usuario, $accion, $detalles, $_SERVER['REMOTE_ADDR']]);
+    } catch (Exception $e) {
+        // Error en log no debe afectar la funcionalidad principal
+        error_log("Error en log de actividad: " . $e->getMessage());
+    }
 }
 ?>

@@ -23,7 +23,7 @@ if ($_POST) {
         $token = sanitizeInput($_POST['token']);
     }
     
-    // Procesar confirmación
+    // Procesar confirmación - verificar si se envió el botón de confirmar
     if (isset($_POST['confirmar_asistencia'])) {
         try {
             $id_invitado = (int)$_POST['id_invitado'];
@@ -359,7 +359,7 @@ if ($token && !$invitado) {
                         
                     <?php else: ?>
                         <!-- Formulario de confirmación - Solo si NO ha confirmado -->
-                        <form method="POST" action="">
+                        <form id="formConfirmacion" method="POST" action="">
                             <input type="hidden" name="token" value="<?php echo htmlspecialchars($token); ?>">
                             <input type="hidden" name="id_invitado" value="<?php echo $invitado['id_invitado']; ?>">
                             
@@ -379,8 +379,7 @@ if ($token && !$invitado) {
                                 </select>
                             </div>
                         
-                            
-                            <button type="submit" name="confirmar_asistencia" class="btn btn-primary w-100">
+                            <button type="submit" name="confirmar_asistencia" class="btn btn-primary w-100" id="btnConfirmar">
                                 <i class="fas fa-check me-2"></i>
                                 Confirmar Asistencia
                             </button>
@@ -401,6 +400,117 @@ if ($token && !$invitado) {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 
 <script>
+/**
+ * FUNCIÓN PARA ACTUALIZAR AUTOMÁTICAMENTE LA TABLA DE INVITADOS
+ * Esta función se ejecuta DESPUÉS de que se procese la confirmación
+ * y actualiza la tabla en el dashboard sin necesidad de recargar la página
+ */
+function actualizarTablaInvitados(idInvitado, cantidadConfirmada, token) {
+    console.log('🔄 Iniciando actualización automática de tabla...', {
+        idInvitado,
+        cantidadConfirmada,
+        token
+    });
+    
+    // Función para actualizar la tabla en el dashboard (si está abierto)
+    function actualizarDashboard() {
+        // Buscar si hay una ventana del dashboard abierta
+        const dashboardWindows = window.opener || window.parent;
+        
+        if (dashboardWindows && dashboardWindows !== window) {
+            try {
+                console.log('🔍 Buscando dashboard abierto...');
+                
+                // Intentar actualizar la tabla en el dashboard
+                if (typeof dashboardWindows.actualizarFilaInvitado === 'function') {
+                    dashboardWindows.actualizarFilaInvitado(idInvitado, {
+                        cantidad_confirmada: cantidadConfirmada,
+                        fecha_confirmacion: new Date().toISOString(),
+                        estado: 'confirmado'
+                    });
+                    console.log('✅ Tabla del dashboard actualizada exitosamente');
+                } else {
+                    console.log('ℹ️ Función de actualización no disponible en el dashboard');
+                }
+            } catch (error) {
+                console.log('ℹ️ No se pudo actualizar el dashboard:', error.message);
+            }
+        } else {
+            console.log('ℹ️ No se encontró ventana del dashboard abierta');
+        }
+    }
+    
+    // Función para mostrar indicador visual de actualización
+    function mostrarIndicadorActualizacion() {
+        // Crear un indicador visual temporal
+        const indicador = document.createElement('div');
+        indicador.id = 'indicador-actualizacion';
+        indicador.innerHTML = `
+            <div style="
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(45deg, #28a745, #20c997);
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 10px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                z-index: 9999;
+                font-weight: 500;
+                animation: slideInRight 0.3s ease;
+            ">
+                <i class="fas fa-sync-alt me-2"></i>
+                Actualizando tabla de invitados...
+            </div>
+        `;
+        
+        // Agregar estilos CSS para la animación
+        if (!document.getElementById('estilos-actualizacion')) {
+            const estilos = document.createElement('style');
+            estilos.id = 'estilos-actualizacion';
+            estilos.textContent = `
+                @keyframes slideInRight {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+                @keyframes slideOutRight {
+                    from { transform: translateX(0); opacity: 1; }
+                    to { transform: translateX(100%); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(estilos);
+        }
+        
+        document.body.appendChild(indicador);
+        
+        // Remover el indicador después de 3 segundos
+        setTimeout(() => {
+            if (indicador.parentNode) {
+                indicador.style.animation = 'slideOutRight 0.3s ease';
+                setTimeout(() => {
+                    if (indicador.parentNode) {
+                        indicador.parentNode.removeChild(indicador);
+                    }
+                }, 300);
+            }
+        }, 3000);
+    }
+    
+    // Ejecutar todas las funciones de actualización
+    try {
+        // Mostrar indicador visual
+        mostrarIndicadorActualizacion();
+        
+        // Actualizar dashboard (si está abierto)
+        actualizarDashboard();
+        
+        console.log('🎉 Proceso de actualización completado exitosamente');
+        
+    } catch (error) {
+        console.error('❌ Error durante la actualización:', error);
+    }
+}
+
 // Generar QR Code si existe el token
 <?php if ($invitado && $invitado['fecha_confirmacion']): ?>
     <?php $tokenQR = getDB()->getTokenQR($invitado['id_invitado']); ?>
@@ -649,6 +759,141 @@ document.addEventListener('DOMContentLoaded', function() {
             
             e.target.value = formatted;
         });
+    }
+    
+    // Manejar formulario de confirmación si existe
+    const formConfirmacion = document.getElementById('formConfirmacion');
+    if (formConfirmacion) {
+        console.log('📝 Formulario de confirmación encontrado, configurando AJAX...');
+        
+        formConfirmacion.addEventListener('submit', function(e) {
+            e.preventDefault();
+            console.log('🔄 Enviando formulario con AJAX...');
+            
+            const form = this;
+            const formData = new FormData(form);
+            const btnConfirmar = document.getElementById('btnConfirmar');
+            
+            // Obtener datos del formulario
+            const idInvitado = formData.get('id_invitado');
+            const cantidadConfirmada = formData.get('cantidad_confirmada');
+            const token = formData.get('token');
+            
+            // Agregar manualmente el valor del botón (necesario para que PHP lo detecte)
+            formData.append('confirmar_asistencia', 'Confirmar Asistencia');
+            
+            console.log('📊 Datos del formulario:', { idInvitado, cantidadConfirmada, token });
+            
+            // Deshabilitar botón y mostrar loading
+            btnConfirmar.disabled = true;
+            btnConfirmar.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Procesando...';
+            
+            // Enviar formulario con AJAX
+            fetch('', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                console.log('📨 Respuesta recibida:', response.status);
+                return response.text();
+            })
+            .then(html => {
+                console.log('📄 HTML recibido, analizando...');
+                console.log('📄 HTML completo recibido:', html);
+                
+                // Crear un elemento temporal para parsear el HTML
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = html;
+                
+                // Buscar el mensaje de éxito
+                const successAlert = tempDiv.querySelector('.alert-success');
+                if (successAlert) {
+                    console.log('✅ Confirmación exitosa detectada');
+                    
+                    // Mostrar mensaje de éxito
+                    const alertContainer = document.createElement('div');
+                    alertContainer.innerHTML = successAlert.outerHTML;
+                    form.parentNode.insertBefore(alertContainer, form);
+                    
+                    // Ocultar formulario
+                    form.style.display = 'none';
+                    
+                    // Actualizar dashboard inmediatamente
+                    console.log('🎉 Actualizando dashboard...');
+                    actualizarTablaInvitados(idInvitado, cantidadConfirmada, token);
+                    
+                    // Notificar a otras pestañas que hubo una confirmación
+                    if ('BroadcastChannel' in window) {
+                        const channel = new BroadcastChannel('confirmaciones_boda');
+                        channel.postMessage({
+                            tipo: 'confirmacion',
+                            idInvitado,
+                            cantidadConfirmada,
+                            token
+                        });
+                        channel.close();
+                    }
+                    
+                    // Recargar la página después de 3 segundos para mostrar el QR
+                    setTimeout(() => {
+                        console.log('🔄 Recargando página para mostrar QR...');
+                        window.location.reload();
+                    }, 3000);
+                    
+                } else {
+                    console.log('❌ No se encontró mensaje de éxito');
+                    console.log('🔍 Buscando otros elementos en el HTML...');
+                    
+                    // Buscar cualquier alerta
+                    const anyAlert = tempDiv.querySelector('.alert');
+                    if (anyAlert) {
+                        console.log('⚠️ Se encontró una alerta:', anyAlert.className, anyAlert.textContent);
+                    }
+                    
+                    // Buscar mensajes de error
+                    const errorAlert = tempDiv.querySelector('.alert-danger');
+                    if (errorAlert) {
+                        console.log('❌ Se encontró error:', errorAlert.textContent);
+                        const alertContainer = document.createElement('div');
+                        alertContainer.innerHTML = errorAlert.outerHTML;
+                        form.parentNode.insertBefore(alertContainer, form);
+                    } else {
+                        // Mostrar error genérico
+                        const alertContainer = document.createElement('div');
+                        alertContainer.innerHTML = `
+                            <div class="alert alert-danger">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                Error al procesar la confirmación. Intenta nuevamente.
+                            </div>
+                        `;
+                        form.parentNode.insertBefore(alertContainer, form);
+                    }
+                    
+                    // Restaurar botón
+                    btnConfirmar.disabled = false;
+                    btnConfirmar.innerHTML = '<i class="fas fa-check me-2"></i>Confirmar Asistencia';
+                }
+            })
+            .catch(error => {
+                console.error('❌ Error en la petición AJAX:', error);
+                
+                // Mostrar error genérico
+                const alertContainer = document.createElement('div');
+                alertContainer.innerHTML = `
+                    <div class="alert alert-danger">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        Error al procesar la confirmación. Intenta nuevamente.
+                    </div>
+                `;
+                form.parentNode.insertBefore(alertContainer, form);
+                
+                // Restaurar botón
+                btnConfirmar.disabled = false;
+                btnConfirmar.innerHTML = '<i class="fas fa-check me-2"></i>Confirmar Asistencia';
+            });
+        });
+    } else {
+        console.log('ℹ️ No se encontró formulario de confirmación');
     }
 });
 </script>
