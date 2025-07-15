@@ -253,7 +253,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['act
             ORDER BY fecha DESC
         ");
         $stmt->execute();
-        $confirmaciones_recientes = $stmt->fetchAll();
+        $confirmaciones_recientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        // Formatear fecha para JS
+        foreach ($confirmaciones_recientes as &$conf) {
+            $conf['fecha'] = date('d/m/Y', strtotime($conf['fecha']));
+        }
         
         echo json_encode([
             'success' => true,
@@ -263,6 +267,95 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['act
             'confirmaciones_recientes' => $confirmaciones_recientes
         ]);
         
+    } catch (Exception $e) {
+        echo json_encode(['success' => false, 'error' => $e->getMessage()]);
+    }
+    exit;
+}
+
+// Manejar peticiones AJAX para actualización parcial de invitado y stats
+if (
+    $_SERVER['REQUEST_METHOD'] === 'GET' &&
+    isset($_GET['action']) &&
+    $_GET['action'] === 'obtener_invitado_y_stats' &&
+    isset($_GET['id'])
+) {
+    header('Content-Type: application/json');
+    try {
+        $id = (int)$_GET['id'];
+        // Obtener datos del invitado
+        $stmt = $conn->prepare("SELECT i.*, c.cantidad_confirmada, c.fecha_confirmacion FROM invitados i LEFT JOIN confirmaciones c ON i.id_invitado = c.id_invitado WHERE i.id_invitado = ?");
+        $stmt->execute([$id]);
+        $invitado = $stmt->fetch(PDO::FETCH_ASSOC);
+        if (!$invitado) throw new Exception('Invitado no encontrado');
+
+        // Obtener estadísticas actualizadas
+        $stats = [];
+        $stmt = $conn->prepare("SELECT COUNT(*) as total FROM invitados");
+        $stmt->execute();
+        $stats['total_invitados'] = $stmt->fetchColumn();
+        $stmt = $conn->prepare("SELECT COUNT(*) as total FROM confirmaciones");
+        $stmt->execute();
+        $stats['total_confirmados'] = $stmt->fetchColumn();
+        $stmt = $conn->prepare("SELECT SUM(cupos_disponibles) as total FROM invitados");
+        $stmt->execute();
+        $stats['total_cupos'] = $stmt->fetchColumn();
+        $stmt = $conn->prepare("SELECT SUM(cantidad_confirmada) as total FROM confirmaciones");
+        $stmt->execute();
+        $stats['total_cupos_confirmados'] = $stmt->fetchColumn() ?: 0;
+
+        // Buscar la mesa del invitado
+        $mesa = $invitado['mesa'] ?? null;
+        $mesaDatos = null;
+        if ($mesa) {
+            $stmt = $conn->prepare("
+                SELECT 
+                    COALESCE(i.mesa, 'Sin asignar') as mesa,
+                    COUNT(i.id_invitado) as total_invitados,
+                    SUM(i.cupos_disponibles) as total_cupos,
+                    COUNT(c.id_confirmacion) as confirmados,
+                    SUM(COALESCE(c.cantidad_confirmada, 0)) as cupos_confirmados
+                FROM invitados i
+                LEFT JOIN confirmaciones c ON i.id_invitado = c.id_invitado
+                WHERE COALESCE(i.mesa, 'Sin asignar') = ?
+                GROUP BY COALESCE(i.mesa, 'Sin asignar')
+            ");
+            $stmt->execute([$mesa]);
+            $mesaDatos = $stmt->fetch(PDO::FETCH_ASSOC);
+        }
+
+        // Obtener confirmaciones recientes (últimos 7 días)
+        $stmt = $conn->prepare("
+            SELECT DATE(fecha_confirmacion) as fecha, COUNT(*) as cantidad
+            FROM confirmaciones 
+            WHERE fecha_confirmacion >= DATE_SUB(NOW(), INTERVAL 7 DAY)
+            GROUP BY DATE(fecha_confirmacion)
+            ORDER BY fecha DESC
+        ");
+        $stmt->execute();
+        $confirmaciones_recientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        // Formatear fecha para JS
+        foreach ($confirmaciones_recientes as &$conf) {
+            $conf['fecha'] = date('d/m/Y', strtotime($conf['fecha']));
+        }
+
+        // Preparar datos para JS
+        $datosInvitado = [
+            'cantidad_confirmada' => $invitado['cantidad_confirmada'],
+            'estado' => $invitado['cantidad_confirmada'] > 0 ? 'confirmado' : 'pendiente',
+            'fecha_confirmacion' => $invitado['fecha_confirmacion'],
+            'stats' => $stats,
+            'mesa' => $mesa,
+            'mesaDatos' => $mesaDatos
+        ];
+        echo json_encode([
+            'success' => true,
+            'invitado' => $datosInvitado,
+            'stats' => $stats,
+            'mesa' => $mesa,
+            'mesaDatos' => $mesaDatos,
+            'confirmaciones_recientes' => $confirmaciones_recientes
+        ]);
     } catch (Exception $e) {
         echo json_encode(['success' => false, 'error' => $e->getMessage()]);
     }
@@ -1162,6 +1255,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['act
             border-color: var(--danger-color);
             box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.1);
         }
+
+        .search-filters-section {
+            background: var(--light-gray);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            border: 1px solid var(--border-color);
+            margin-bottom: 1rem;
+        }
+        .search-filters-section .form-label {
+            margin-bottom: 0.25rem;
+            font-weight: 500;
+        }
+        .search-filters-section .form-select-sm,
+        .search-filters-section .form-control {
+            border-color: var(--border-color);
+        }
+        .search-filters-section .form-select-sm:focus,
+        .search-filters-section .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.1);
+        }
+        .search-filters-section .input-group-text {
+            background: white;
+            border-color: var(--border-color);
+        }
     </style>
 </head>
 <body>
@@ -1306,6 +1424,80 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['act
                         <i class="bi bi-plus-lg"></i>
                         Agregar Invitado
                     </a>
+                </div>
+            </div>
+            <!-- Sección de búsqueda y filtros -->
+            <div class="search-filters-section mb-3">
+                <!-- Barra de búsqueda general -->
+                <div class="row mb-3">
+                    <div class="col-md-8">
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="bi bi-search"></i>
+                            </span>
+                            <input type="text" class="form-control" id="searchInput" placeholder="Buscar por nombre, teléfono, token...">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <button class="btn btn-outline-secondary w-100" onclick="limpiarTodosFiltros()">
+                            <i class="bi bi-x-circle"></i> Limpiar todos los filtros
+                        </button>
+                    </div>
+                </div>
+                <!-- Filtros por categorías -->
+                <div class="row g-2">
+                    <div class="col-md-2">
+                        <label class="form-label small text-muted">Mesa:</label>
+                        <select class="form-select form-select-sm" id="filterMesa">
+                            <option value="">Todas las mesas</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label small text-muted">Estado:</label>
+                        <select class="form-select form-select-sm" id="filterEstado">
+                            <option value="">Todos los estados</option>
+                            <option value="confirmado">Confirmados</option>
+                            <option value="pendiente">Pendientes</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label small text-muted">Tipo:</label>
+                        <select class="form-select form-select-sm" id="filterTipo">
+                            <option value="">Todos los tipos</option>
+                            <option value="general">General</option>
+                            <option value="familia">Familia</option>
+                            <option value="amigo">Amigo</option>
+                            <option value="trabajo">Trabajo</option>
+                            <option value="padrinos">Padrinos</option>
+                            <option value="padres">Padres</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label small text-muted">Cupos:</label>
+                        <select class="form-select form-select-sm" id="filterCupos">
+                            <option value="">Todos los cupos</option>
+                            <option value="1">1 cupo</option>
+                            <option value="2">2 cupos</option>
+                            <option value="3">3 cupos</option>
+                            <option value="4+">4+ cupos</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label small text-muted">Teléfono:</label>
+                        <select class="form-select form-select-sm" id="filterTelefono">
+                            <option value="">Todos</option>
+                            <option value="con_telefono">Con teléfono</option>
+                            <option value="sin_telefono">Sin teléfono</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label small text-muted">Token:</label>
+                        <select class="form-select form-select-sm" id="filterToken">
+                            <option value="">Todos</option>
+                            <option value="con_token">Con token</option>
+                            <option value="sin_token">Sin token</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="card-body-custom">
@@ -1936,66 +2128,113 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['act
          * FUNCIÓN PARA RECIBIR ACTUALIZACIONES EN TIEMPO REAL
          */
         function actualizarFilaInvitado(idInvitado, datos) {
-            console.log('🔄 Recibiendo actualización para invitado:', idInvitado, datos);
-            
-            try {
-                const fila = document.querySelector(`tr[data-id="${idInvitado}"]`);
-                if (!fila) {
-                    console.log('ℹ️ Fila del invitado no encontrada en la tabla actual');
-                    return;
+            const scrollY = window.scrollY;
+            const activo = document.activeElement;
+            const idActivo = activo ? activo.id : null;
+
+            const fila = document.querySelector(`tr[data-id="${idInvitado}"]`);
+            if (!fila) return;
+
+            // Actualizar solo las celdas necesarias
+            const celdaConfirmados = fila.cells[4];
+            if (celdaConfirmados && datos.cantidad_confirmada !== undefined) {
+                celdaConfirmados.innerHTML = datos.cantidad_confirmada > 0 ?
+                    `<strong class="text-success">${datos.cantidad_confirmada}</strong>` :
+                    '<span class="text-muted">0</span>';
+            }
+            const celdaEstado = fila.cells[6];
+            if (celdaEstado && datos.estado === 'confirmado') {
+                const fecha = datos.fecha_confirmacion ?
+                    new Date(datos.fecha_confirmacion).toLocaleDateString('es-ES') :
+                    new Date().toLocaleDateString('es-ES');
+                celdaEstado.innerHTML = `
+                    <span class="badge badge-success-custom">
+                        <i class="bi bi-check-circle"></i> Confirmado
+                    </span>
+                    <br><small class="text-muted">${fecha}</small>
+                `;
+            }
+
+            if (datos.stats) {
+                actualizarEstadisticasDesdeDatos(datos.stats);
+            }
+            if (datos.mesa && datos.mesaDatos) {
+                actualizarFilaMesa(datos.mesa, datos.mesaDatos);
+            }
+            window.scrollTo({ top: scrollY });
+            if (idActivo) {
+                const nuevoActivo = document.getElementById(idActivo);
+                if (nuevoActivo) nuevoActivo.focus();
+            }
+            showNotification(`¡Nueva confirmación! Invitado #${idInvitado} actualizado`, 'success');
+        }
+
+        function actualizarFilaMesa(mesa, datos) {
+            const filas = document.querySelectorAll('.content-card table.table-custom tbody tr');
+            for (const fila of filas) {
+                const celdaMesa = fila.cells[0];
+                if (celdaMesa && celdaMesa.textContent.includes(mesa)) {
+                    fila.cells[1].textContent = datos.total_invitados;
+                    fila.cells[2].textContent = datos.confirmados;
+                    fila.cells[3].textContent = datos.total_cupos;
+                    fila.cells[4].textContent = datos.cupos_confirmados;
+                    // Actualizar % confirmación y estado
+                    const porcentaje = datos.total_invitados > 0 ? Math.round((datos.confirmados / datos.total_invitados) * 100) : 0;
+                    let estado = 'Preocupante', badge = 'badge-danger-custom', progress = 'progress-danger';
+                    if (porcentaje >= 70) { estado = 'Excelente'; badge = 'badge-success-custom'; progress = 'progress-success'; }
+                    else if (porcentaje >= 40) { estado = 'Regular'; badge = 'badge-warning-custom'; progress = 'progress-warning'; }
+                    fila.cells[5].innerHTML = `<div class=\"d-flex align-items-center gap-2\"><div class=\"progress-custom\" style=\"width: 100px;\"><div class=\"progress-bar-custom ${progress}\" style=\"width: ${porcentaje}%\"></div></div><strong>${porcentaje}%</strong></div>`;
+                    fila.cells[6].innerHTML = `<span class=\"badge ${badge}\">${estado}</span>`;
+                    break;
                 }
-                
-                // Actualizar celda de cupos confirmados (columna 4)
-                const celdaConfirmados = fila.cells[4];
-                if (celdaConfirmados && datos.cantidad_confirmada !== undefined) {
-                    const cantidad = datos.cantidad_confirmada;
-                    celdaConfirmados.innerHTML = cantidad > 0 ? 
-                        `<strong class="text-success">${cantidad}</strong>` : 
-                        '<span class="text-muted">0</span>';
-                    
-                    celdaConfirmados.style.backgroundColor = 'rgba(16, 185, 129, 0.1)';
-                    celdaConfirmados.style.transition = 'background-color 0.3s ease';
-                    
-                    setTimeout(() => {
-                        celdaConfirmados.style.backgroundColor = '';
-                    }, 2000);
-                }
-                
-                // Actualizar celda de estado (columna 6)
-                const celdaEstado = fila.cells[6];
-                if (celdaEstado && datos.estado === 'confirmado') {
-                    const fecha = datos.fecha_confirmacion ? 
-                        new Date(datos.fecha_confirmacion).toLocaleDateString('es-ES') : 
-                        new Date().toLocaleDateString('es-ES');
-                    
-                    celdaEstado.innerHTML = `
-                        <span class="badge badge-success-custom">
-                            <i class="bi bi-check-circle"></i> Confirmado
-                        </span>
-                        <br><small class="text-muted">${fecha}</small>
-                    `;
-                    
-                    celdaEstado.style.backgroundColor = 'rgba(16, 185, 129, 0.1)';
-                    celdaEstado.style.transition = 'background-color 0.3s ease';
-                    
-                    setTimeout(() => {
-                        celdaEstado.style.backgroundColor = '';
-                    }, 2000);
-                }
-                
-                if (datos.stats) {
-                    actualizarEstadisticasDesdeDatos(datos.stats);
-                }
-                
-                showNotification(`¡Nueva confirmación! Invitado #${idInvitado} actualizado`, 'success');
-                
-                console.log('✅ Fila del invitado actualizada exitosamente');
-                
-            } catch (error) {
-                console.error('❌ Error al actualizar fila del invitado:', error);
             }
         }
-        
+
+        // Nueva función para actualizar confirmaciones recientes dinámicamente
+        function actualizarConfirmacionesRecientes(confirmaciones) {
+            const contenedor = document.querySelector('.content-card .card-body-custom .row.g-3');
+            if (!contenedor) return;
+            contenedor.innerHTML = '';
+            if (Array.isArray(confirmaciones) && confirmaciones.length > 0) {
+                confirmaciones.forEach(conf => {
+                    const col = document.createElement('div');
+                    col.className = 'col-md-6 col-lg-4';
+                    col.innerHTML = `
+                        <div class=\"p-3 border rounded-3 bg-light\">
+                            <div class=\"d-flex justify-content-between align-items-center\">
+                                <div>
+                                    <h5 class=\"mb-1\">${conf.cantidad} confirmaciones</h5>
+                                    <small class=\"text-muted\">${conf.fecha}</small>
+                                </div>
+                                <i class=\"bi bi-calendar-check text-success\" style=\"font-size: 1.5rem;\"></i>
+                            </div>
+                        </div>
+                    `;
+                    contenedor.appendChild(col);
+                });
+            } else {
+                contenedor.innerHTML = '<div class="text-center text-muted">Sin confirmaciones recientes</div>';
+            }
+        }
+
+        // Optimizar BroadcastChannel para actualización parcial
+        if ('BroadcastChannel' in window) {
+            const channel = new BroadcastChannel('confirmaciones_boda');
+            channel.onmessage = function(event) {
+                if (event.data && event.data.tipo === 'confirmacion') {
+                    // Petición AJAX para obtener solo los datos necesarios
+                    fetch(`dashboard.php?action=obtener_invitado_y_stats&id=${event.data.idInvitado}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            actualizarFilaInvitado(event.data.idInvitado, data.invitado);
+                            if (data.stats) actualizarEstadisticasDesdeDatos(data.stats);
+                            if (data.mesa && data.mesaDatos) actualizarFilaMesa(data.mesa, data.mesaDatos);
+                            if (data.confirmaciones_recientes) actualizarConfirmacionesRecientes(data.confirmaciones_recientes);
+                        });
+                }
+            };
+        }
+
         /**
          * FUNCIÓN PARA ACTUALIZAR ESTADÍSTICAS DESDE DATOS EXTERNOS
          */
@@ -2042,17 +2281,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['act
             } catch (error) {
                 console.error('❌ Error al actualizar estadísticas:', error);
             }
-        }
-
-        // Escuchar confirmaciones desde otras pestañas
-        if ('BroadcastChannel' in window) {
-            const channel = new BroadcastChannel('confirmaciones_boda');
-            channel.onmessage = function(event) {
-                if (event.data && event.data.tipo === 'confirmacion') {
-                    console.log('🔔 Nueva confirmación detectada desde otra pestaña:', event.data);
-                    location.reload();
-                }
-            };
         }
 
         // Función para refrescar datos del dashboard
@@ -2115,6 +2343,139 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['act
         
         // Add smooth scroll behavior
         document.documentElement.style.scrollBehavior = 'smooth';
+
+        // Inicializar filtros al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            inicializarFiltros();
+            configurarEventListeners();
+        });
+        function inicializarFiltros() {
+            // Llenar el filtro de mesas con las mesas disponibles
+            const selectMesa = document.getElementById('filterMesa');
+            const mesas = new Set();
+            document.querySelectorAll('.table-custom tbody tr:not([class*="edit-form-row"])').forEach(row => {
+                const mesaCell = row.cells[2];
+                if (mesaCell) {
+                    const mesaText = mesaCell.textContent.trim();
+                    if (mesaText && !mesaText.includes('Sin asignar')) {
+                        const mesaNum = mesaText.replace('Mesa ', '');
+                        mesas.add(mesaNum);
+                    }
+                }
+            });
+            // Ordenar mesas numéricamente
+            Array.from(mesas).sort((a, b) => parseInt(a) - parseInt(b)).forEach(mesa => {
+                const option = document.createElement('option');
+                option.value = mesa;
+                option.textContent = `Mesa ${mesa}`;
+                selectMesa.appendChild(option);
+            });
+            // Agregar opción "Sin asignar"
+            const optionSinAsignar = document.createElement('option');
+            optionSinAsignar.value = 'sin_asignar';
+            optionSinAsignar.textContent = 'Sin asignar';
+            selectMesa.appendChild(optionSinAsignar);
+        }
+        function configurarEventListeners() {
+            // Event listeners para todos los filtros
+            document.getElementById('searchInput').addEventListener('input', aplicarFiltros);
+            document.getElementById('filterMesa').addEventListener('change', aplicarFiltros);
+            document.getElementById('filterEstado').addEventListener('change', aplicarFiltros);
+            document.getElementById('filterTipo').addEventListener('change', aplicarFiltros);
+            document.getElementById('filterCupos').addEventListener('change', aplicarFiltros);
+            document.getElementById('filterTelefono').addEventListener('change', aplicarFiltros);
+            document.getElementById('filterToken').addEventListener('change', aplicarFiltros);
+        }
+        function aplicarFiltros() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const filterMesa = document.getElementById('filterMesa').value;
+            const filterEstado = document.getElementById('filterEstado').value;
+            const filterTipo = document.getElementById('filterTipo').value;
+            const filterCupos = document.getElementById('filterCupos').value;
+            const filterTelefono = document.getElementById('filterTelefono').value;
+            const filterToken = document.getElementById('filterToken').value;
+            const rows = document.querySelectorAll('.table-custom tbody tr:not([class*="edit-form-row"])');
+            let visibleCount = 0;
+            rows.forEach(row => {
+                let shouldShow = true;
+                // Filtro de búsqueda general
+                if (searchTerm) {
+                    const cells = row.querySelectorAll('td');
+                    const rowText = Array.from(cells).map(cell => cell.textContent.toLowerCase()).join(' ');
+                    shouldShow = shouldShow && rowText.includes(searchTerm);
+                }
+                // Filtro por mesa
+                if (filterMesa && shouldShow) {
+                    const mesaCell = row.cells[2].textContent.trim();
+                    if (filterMesa === 'sin_asignar') {
+                        shouldShow = mesaCell.includes('Sin asignar');
+                    } else {
+                        shouldShow = mesaCell.includes(`Mesa ${filterMesa}`);
+                    }
+                }
+                // Filtro por estado
+                if (filterEstado && shouldShow) {
+                    const estadoCell = row.cells[6].textContent.toLowerCase();
+                    if (filterEstado === 'confirmado') {
+                        shouldShow = estadoCell.includes('confirmado');
+                    } else if (filterEstado === 'pendiente') {
+                        shouldShow = estadoCell.includes('pendiente');
+                    }
+                }
+                // Filtro por tipo
+                if (filterTipo && shouldShow) {
+                    const tipoCell = row.cells[0].textContent.toLowerCase();
+                    shouldShow = tipoCell.includes(filterTipo);
+                }
+                // Filtro por cupos
+                if (filterCupos && shouldShow) {
+                    const cuposCell = row.cells[3].textContent.trim();
+                    const cuposNum = parseInt(cuposCell);
+                    if (filterCupos === '4+') {
+                        shouldShow = cuposNum >= 4;
+                    } else {
+                        shouldShow = cuposNum === parseInt(filterCupos);
+                    }
+                }
+                // Filtro por teléfono
+                if (filterTelefono && shouldShow) {
+                    const telefonoCell = row.cells[1].textContent.trim();
+                    if (filterTelefono === 'con_telefono') {
+                        shouldShow = !telefonoCell.includes('Sin teléfono');
+                    } else if (filterTelefono === 'sin_telefono') {
+                        shouldShow = telefonoCell.includes('Sin teléfono');
+                    }
+                }
+                // Filtro por token
+                if (filterToken && shouldShow) {
+                    const tokenCell = row.cells[5].textContent.trim();
+                    if (filterToken === 'con_token') {
+                        shouldShow = !tokenCell.includes('Sin token');
+                    } else if (filterToken === 'sin_token') {
+                        shouldShow = tokenCell.includes('Sin token');
+                    }
+                }
+                row.style.display = shouldShow ? '' : 'none';
+                if (shouldShow) visibleCount++;
+            });
+            // Actualizar contador
+            actualizarContadorFiltros(visibleCount);
+        }
+        function limpiarTodosFiltros() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('filterMesa').value = '';
+            document.getElementById('filterEstado').value = '';
+            document.getElementById('filterTipo').value = '';
+            document.getElementById('filterCupos').value = '';
+            document.getElementById('filterTelefono').value = '';
+            document.getElementById('filterToken').value = '';
+            aplicarFiltros();
+        }
+        function actualizarContadorFiltros(count) {
+            const titulo = document.querySelector('.card-header-custom h3');
+            const textoOriginal = titulo.textContent.split('(')[0];
+            titulo.innerHTML = `<i class="bi bi-list-ul me-2"></i>${textoOriginal}(${count})`;
+        }
     </script>
 
     <!-- Modal de Confirmación -->
@@ -2170,5 +2531,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['act
             </div>
         </div>
     </div>
+
+    <script>
+    (function() {
+        if (!!window.EventSource) {
+            let lastId = 0;
+            const source = new EventSource('sse_confirmaciones.php');
+            source.onmessage = function(event) {
+                if (event.data) {
+                    const data = JSON.parse(event.data);
+                    if (data && data.id_invitado) {
+                        // Petición AJAX para obtener datos completos y actualizados del invitado
+                        fetch(`dashboard.php?action=obtener_invitado_y_stats&id=${data.id_invitado}`)
+                            .then(res => res.json())
+                            .then(resp => {
+                                if (resp && resp.invitado) {
+                                    actualizarFilaInvitado(data.id_invitado, resp.invitado);
+                                    if (resp.stats) actualizarEstadisticasDesdeDatos(resp.stats);
+                                    if (resp.mesa && resp.mesaDatos) actualizarFilaMesa(resp.mesa, resp.mesaDatos);
+                                    if (resp.confirmaciones_recientes) actualizarConfirmacionesRecientes(resp.confirmaciones_recientes);
+                                }
+                            });
+                        lastId = data.id_confirmacion;
+                    }
+                }
+            };
+            source.onerror = function(e) {
+                console.log('SSE error:', e);
+            };
+        }
+    })();
+    </script>
 </body>
 </html>
