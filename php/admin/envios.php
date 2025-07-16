@@ -159,7 +159,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
+        /* ===== PALETA DE COLORES MODO OSCURO ELEGANTE ===== */
         :root {
+            /* Colores principales (mantienen identidad de marca) */
             --primary-color: #6366f1;
             --primary-dark: #4f46e5;
             --secondary-color: #8b5cf6;
@@ -168,10 +170,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             --danger-color: #ef4444;
             --whatsapp-color: #25D366;
             --whatsapp-dark: #128C7E;
-            --light-gray: #f8fafc;
+            
+            /* Paleta oscura elegante */
+            --light-gray: rgba(30, 30, 50, 0.9);
             --dark-gray: #64748b;
-            --text-dark: #1e293b;
-            --border-color: #e2e8f0;
+            --text-dark: #e2e8f0;
+            --border-color: rgba(255, 255, 255, 0.1);
+            
+            /* Fondos específicos modo oscuro */
+            --body-background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            --card-background: rgba(30, 30, 50, 0.8);
+            --header-background: rgba(30, 30, 50, 0.8);
+            --input-background: rgba(30, 30, 50, 0.9);
+            --modal-background: rgba(30, 30, 50, 0.95);
+            --table-background: rgba(30, 30, 50, 0.8);
+            --variables-background: rgba(30, 30, 50, 0.8);
+            --variable-item-background: rgba(30, 30, 50, 0.9);
+            --mensaje-preview-background: rgba(30, 30, 50, 0.9);
+            
+            /* Sombras elegantes */
+            --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --shadow-strong: 0 15px 35px rgba(0, 0, 0, 0.3);
+            --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --shadow-modal: 0 20px 60px rgba(0, 0, 0, 0.5);
+            
+            /* Header especial (morado pastel) */
+            --card-header-background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(99, 102, 241, 0.2));
+            
+            /* Estados hover */
+            --table-hover-background: rgba(255, 255, 255, 0.05);
+            
+            /* Layout */
             --sidebar-width: 280px;
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -184,9 +213,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: var(--light-gray);
+            background: var(--body-background);
             color: var(--text-dark);
             line-height: 1.6;
+            min-height: 100vh;
         }
 
         /* ===== SIDEBAR ===== */
@@ -347,7 +377,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(2px);
             z-index: 1030;
             opacity: 0;
@@ -362,8 +392,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
         /* ===== HEADER ===== */
         .main-header {
-            background: white;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            background: var(--header-background);
+            backdrop-filter: blur(20px);
+            box-shadow: var(--shadow-soft);
+            border-bottom: 1px solid var(--border-color);
             position: sticky;
             top: 0;
             z-index: 1020;
@@ -404,7 +436,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         .header-title {
             font-size: 1.75rem;
             font-weight: 700;
-            color: var(--text-dark);
+            color: rgba(255, 255, 255, 0.9);
             margin: 0;
         }
 
@@ -434,7 +466,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
         .user-name {
             font-weight: 500;
-            color: var(--text-dark);
+            color: rgba(255, 255, 255, 0.9);
             margin: 0;
         }
 
@@ -481,10 +513,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         }
 
         .stat-card {
-            background: white;
+            background: var(--card-background);
+            backdrop-filter: blur(20px);
             border-radius: 1rem;
             padding: 1.5rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow-card);
             border: 1px solid var(--border-color);
             transition: var(--transition);
             position: relative;
@@ -503,7 +536,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
         .stat-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            box-shadow: var(--shadow-strong);
         }
 
         .stat-header {
@@ -530,7 +563,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         .stat-number {
             font-size: 2rem;
             font-weight: 700;
-            color: var(--text-dark);
+            color: rgba(255, 255, 255, 0.9);
             margin: 0;
         }
 
@@ -543,17 +576,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
         /* ===== CARDS ===== */
         .content-card {
-            background: white;
+            background: var(--card-background);
+            backdrop-filter: blur(20px);
             border-radius: 1rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow-card);
             border: 1px solid var(--border-color);
-            margin-bottom: 2rem;
         }
 
         .card-header-custom {
             padding: 1.5rem 2rem;
             border-bottom: 1px solid var(--border-color);
-            background: var(--light-gray);
+            background: var(--card-header-background);
+            backdrop-filter: blur(10px);
             border-radius: 1rem 1rem 0 0;
             display: flex;
             justify-content: space-between;
@@ -564,7 +598,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             margin: 0;
             font-size: 1.25rem;
             font-weight: 600;
-            color: var(--text-dark);
+            color: rgba(255, 255, 255, 0.9);
         }
 
         .card-body-custom {
@@ -596,14 +630,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             border-radius: 0.5rem;
             font-size: 0.875rem;
             transition: var(--transition);
-            background: white;
+            background: var(--input-background);
+            color: rgba(255, 255, 255, 0.9);
         }
 
         .form-group input:focus,
         .form-group select:focus {
             outline: none;
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        .form-group input::placeholder {
+            color: var(--dark-gray);
+            opacity: 0.7;
         }
 
         .filters-grid {
@@ -694,31 +734,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             margin-bottom: 1.5rem;
             border: 1px solid;
             font-size: 0.875rem;
+            backdrop-filter: blur(10px);
         }
 
         .alert-success-custom {
-            background: rgba(16, 185, 129, 0.1);
-            color: #047857;
-            border-color: rgba(16, 185, 129, 0.2);
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success-color);
+            border-color: rgba(16, 185, 129, 0.3);
         }
 
         .alert-danger-custom {
-            background: rgba(239, 68, 68, 0.1);
-            color: #dc2626;
-            border-color: rgba(239, 68, 68, 0.2);
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger-color);
+            border-color: rgba(239, 68, 68, 0.3);
         }
 
         .alert-warning-custom {
-            background: rgba(245, 158, 11, 0.1);
-            color: #d97706;
-            border-color: rgba(245, 158, 11, 0.2);
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning-color);
+            border-color: rgba(245, 158, 11, 0.3);
         }
 
         /* ===== TABLE ===== */
         .table-responsive-custom {
             border-radius: 0.5rem;
             overflow: hidden;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow-soft);
             max-height: 600px;
             overflow-y: auto;
         }
@@ -727,14 +768,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             margin: 0;
             width: 100%;
             border-collapse: collapse;
+            background: var(--table-background);
         }
 
         .table-custom th {
             background: var(--light-gray);
+            backdrop-filter: blur(10px);
             border: none;
             padding: 1rem;
             font-weight: 600;
-            color: var(--text-dark);
+            color: rgba(255, 255, 255, 0.9);
             font-size: 0.875rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
@@ -747,10 +790,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             padding: 1rem;
             border-bottom: 1px solid var(--border-color);
             vertical-align: middle;
+            background: var(--table-background);
+            color: var(--text-dark);
         }
 
         .table-custom tbody tr:hover {
-            background: var(--light-gray);
+            background: var(--table-hover-background);
+        }
+
+        .table-custom tbody tr:hover td {
+            background: var(--table-hover-background);
         }
 
         .checkbox-column {
@@ -767,23 +816,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         }
 
         .badge-success-custom {
-            background: rgba(16, 185, 129, 0.1);
+            background: rgba(16, 185, 129, 0.2);
             color: var(--success-color);
+            border: 1px solid rgba(16, 185, 129, 0.3);
         }
 
         .badge-warning-custom {
-            background: rgba(245, 158, 11, 0.1);
+            background: rgba(245, 158, 11, 0.2);
             color: var(--warning-color);
+            border: 1px solid rgba(245, 158, 11, 0.3);
         }
 
         .badge-info-custom {
-            background: rgba(99, 102, 241, 0.1);
+            background: rgba(99, 102, 241, 0.2);
             color: var(--primary-color);
+            border: 1px solid rgba(99, 102, 241, 0.3);
         }
 
         .token-code {
             font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-            background: var(--light-gray);
+            background: var(--input-background);
             padding: 0.25rem 0.5rem;
             border-radius: 0.25rem;
             font-size: 0.75rem;
@@ -792,242 +844,104 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         }
 
         /* ===== MODAL ===== */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(2px);
-    z-index: 1060;
-    display: none;
-    align-items: center;
-    justify-content: center;
-}
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            z-index: 1060;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
 
-.modal-content-custom {
-    background: white;
-    border-radius: 1rem;
-    padding: 1.5rem;
-    max-width: 450px;
-    width: 90%;
-    max-height: 70vh;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-    display: flex;
-    flex-direction: column;
-}
+        .modal-content-custom {
+            background: var(--modal-background);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            max-width: 450px;
+            width: 90%;
+            max-height: 70vh;
+            box-shadow: var(--shadow-modal);
+            display: flex;
+            flex-direction: column;
+        }
 
         .modal-header-custom {
             margin-bottom: 1.5rem;
+            flex-shrink: 0;
         }
 
         .modal-header-custom h3 {
             margin: 0;
             font-size: 1.25rem;
             font-weight: 600;
-            color: var(--text-dark);
+            color: rgba(255, 255, 255, 0.9);
         }
 
         .modal-body-custom {
             margin-bottom: 1.5rem;
+            flex: 1;
+            overflow: hidden;
         }
 
         .mensaje-preview {
-    background: var(--light-gray);
-    padding: 1rem;
-    border-radius: 0.5rem;
-    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-    font-size: 0.875rem;
-    white-space: pre-line;
-    border: 1px solid var(--border-color);
-    max-height: 300px;
-    overflow-y: auto;
-    line-height: 1.5;
-}
-
-/* Scrollbar personalizado para el mensaje */
-.mensaje-preview::-webkit-scrollbar {
-    width: 8px;
-}
-
-.mensaje-preview::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 4px;
-}
-
-.mensaje-preview::-webkit-scrollbar-thumb {
-    background: var(--primary-color);
-    border-radius: 4px;
-}
-
-.mensaje-preview::-webkit-scrollbar-thumb:hover {
-    background: var(--primary-dark);
-}
-
-.modal-header-custom {
-    margin-bottom: 1rem;
-    flex-shrink: 0;
-}
-
-.modal-body-custom {
-    margin-bottom: 1rem;
-    flex: 1;
-    overflow: hidden;
-}
-
-.modal-footer-custom {
-    display: flex;
-    gap: 1rem;
-    justify-content: flex-end;
-    flex-shrink: 0;
-}
-
-@media (max-width: 768px) {
-    .main-content {
-        margin-left: 0;
-        padding: 1rem;
-        padding-top: 80px; /* Espacio para el botón hamburguesa */
-    }
-
-    .main-header {
-        margin-left: 0;
-        margin-top: 70px; /* Espacio para el botón hamburguesa */
-    }
-
-    /* Ocultar la sección de usuario del header en móvil */
-    .header-content .user-section {
-        display: none !important;
-    }
-
-    /* Mostrar la sección de usuario en la sidebar en móvil */
-    .sidebar-user-section {
-        display: block !important;
-    }
-
-    /* Ajustar el header content para que se centre mejor */
-    .header-content {
-        padding: 1rem;
-        justify-content: center !important;
-        text-align: center;
-        position: relative;
-    }
-
-    .header-center {
-        position: static;
-        transform: none;
-    }
-
-    .dashboard-title {
-        font-size: 1.25rem;
-    }
-
-    .stats-grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-    }
-
-    .filters-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .card-header-custom {
-        flex-direction: column;
-        gap: 1rem;
-        align-items: stretch;
-    }
-
-    .card-header-custom .d-flex {
-        flex-wrap: wrap;
-        gap: 0.5rem;
-    }
-
-    .table-custom th,
-    .table-custom td {
-        padding: 0.75rem 0.5rem;
-        font-size: 0.875rem;
-    }
-
-    /* Ocultar sidebar icons en móvil */
-    .sidebar-icons {
-        display: none;
-    }
-
-    .sidebar-trigger {
-        display: none;
-    }
-
-    /* Mostrar botón hamburguesa en móvil */
-    .mobile-menu-btn {
-        display: flex;
-    }
-
-    /* Sidebar ocupa toda la pantalla en móvil */
-    .sidebar {
-        width: 100vw;
-        left: -100vw;
-        border-radius: 0;
-    }
-
-    .sidebar.show {
-        left: 0;
-    }
-
-    .sidebar-header {
-        padding-top: 80px; /* Espacio para el botón hamburguesa */
-    }
-
-    /* Ajustar el contenido de la sidebar para dar espacio a la sección de usuario */
-    .sidebar-nav {
-        padding: 1rem 0 200px 0 !important; /* Más espacio para la sección de usuario */
-    }
-}
-
-        /* ===== ANIMATIONS ===== */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            background: var(--mensaje-preview-background);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.875rem;
+            white-space: pre-line;
+            border: 1px solid var(--border-color);
+            max-height: 300px;
+            overflow-y: auto;
+            line-height: 1.5;
+            color: var(--text-dark);
         }
 
-        .animate-fade-in {
-            animation: fadeInUp 0.6s ease-out;
-        }
-
-        /* Personalización del scrollbar */
-        .table-responsive-custom::-webkit-scrollbar {
+        /* Scrollbar personalizado para el mensaje */
+        .mensaje-preview::-webkit-scrollbar {
             width: 8px;
         }
 
-        .table-responsive-custom::-webkit-scrollbar-track {
-            background: var(--light-gray);
+        .mensaje-preview::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 4px;
         }
 
-        .table-responsive-custom::-webkit-scrollbar-thumb {
+        .mensaje-preview::-webkit-scrollbar-thumb {
             background: var(--primary-color);
             border-radius: 4px;
         }
 
-        .table-responsive-custom::-webkit-scrollbar-thumb:hover {
+        .mensaje-preview::-webkit-scrollbar-thumb:hover {
             background: var(--primary-dark);
         }
 
-        /* ===== VARIABLES DINÁMICAS - DISEÑO ELEGANTE ===== */
+        .modal-footer-custom {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            flex-shrink: 0;
+        }
+
+        /* ===== VARIABLES DINÁMICAS - DISEÑO ELEGANTE OSCURO ===== */
         .variables-container {
-            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+            background: var(--variables-background);
+            backdrop-filter: blur(20px);
             border: 1px solid var(--border-color);
             border-radius: 1rem;
             padding: 2rem;
             margin-bottom: 2rem;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            box-shadow: var(--shadow-card);
         }
 
         .variables-container::before {
@@ -1040,17 +954,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
         }
 
-        /* ===== AVISO IMPORTANTE ===== */
+        /* ===== AVISO IMPORTANTE OSCURO ===== */
         .variables-warning {
-            background: linear-gradient(135deg, #fef3c7, #fde68a);
-            border: 1px solid #f59e0b;
+            background: rgba(245, 158, 11, 0.2);
+            border: 1px solid rgba(245, 158, 11, 0.3);
             border-radius: 0.75rem;
             padding: 1rem 1.25rem;
             margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
             gap: 1rem;
-            box-shadow: 0 2px 4px rgba(245, 158, 11, 0.1);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
+            backdrop-filter: blur(10px);
         }
 
         .warning-icon {
@@ -1071,14 +986,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         }
 
         .warning-title {
-            color: #92400e;
+            color: var(--warning-color);
             font-weight: 600;
             margin-bottom: 0.25rem;
             font-size: 0.95rem;
         }
 
         .warning-text {
-            color: #92400e;
+            color: var(--warning-color);
             margin: 0;
             font-size: 0.875rem;
             line-height: 1.4;
@@ -1086,7 +1001,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
         .warning-text strong {
             font-weight: 700;
-            color: #78350f;
+            color: var(--warning-color);
         }
 
         /* ===== HEADER DE VARIABLES ===== */
@@ -1114,13 +1029,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
         .variables-title h5 {
             font-weight: 600;
-            color: var(--text-dark);
+            color: rgba(255, 255, 255, 0.9);
             font-size: 1.1rem;
+            margin: 0;
         }
 
         .variables-title p {
             font-size: 0.875rem;
             color: var(--dark-gray);
+            margin: 0;
         }
 
         /* ===== GRID DE VARIABLES ===== */
@@ -1132,19 +1049,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         }
 
         .variable-item {
-            background: white;
+            background: var(--variable-item-background);
+            backdrop-filter: blur(10px);
             border: 1px solid var(--border-color);
             border-radius: 0.75rem;
             padding: 1.25rem;
             text-align: center;
             transition: var(--transition);
             position: relative;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
 
         .variable-item:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
             border-color: var(--primary-color);
         }
 
@@ -1158,7 +1076,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             font-weight: 600;
             margin-bottom: 0.75rem;
             display: inline-block;
-            box-shadow: 0 2px 4px rgba(99, 102, 241, 0.2);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
         }
 
         .variable-label {
@@ -1170,8 +1088,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
         /* ===== NOTA INFORMATIVA ===== */
         .variables-note {
-            background: rgba(99, 102, 241, 0.05);
-            border: 1px solid rgba(99, 102, 241, 0.1);
+            background: rgba(99, 102, 241, 0.2);
+            border: 1px solid rgba(99, 102, 241, 0.3);
             border-radius: 0.5rem;
             padding: 1rem;
             font-size: 0.875rem;
@@ -1179,10 +1097,103 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             display: flex;
             align-items: center;
             font-weight: 500;
+            backdrop-filter: blur(10px);
         }
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
+            .main-content {
+                margin-left: 0;
+                padding: 1rem;
+                padding-top: 80px;
+            }
+
+            .main-header {
+                margin-left: 0;
+                margin-top: 70px;
+            }
+
+            .header-content .user-section {
+                display: none !important;
+            }
+
+            .sidebar-user-section {
+                display: block !important;
+            }
+
+            .header-content {
+                padding: 1rem;
+                justify-content: center !important;
+                text-align: center;
+                position: relative;
+            }
+
+            .header-center {
+                position: static;
+                transform: none;
+            }
+
+            .dashboard-title {
+                font-size: 1.25rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-header-custom {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: stretch;
+            }
+
+            .card-header-custom .d-flex {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            .table-custom th,
+            .table-custom td {
+                padding: 0.75rem 0.5rem;
+                font-size: 0.875rem;
+            }
+
+            .sidebar-icons {
+                display: none;
+            }
+
+            .sidebar-trigger {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .sidebar {
+                width: 100vw;
+                left: -100vw;
+                border-radius: 0;
+            }
+
+            .sidebar.show {
+                left: 0;
+            }
+
+            .sidebar-header {
+                padding-top: 80px;
+            }
+
+            .sidebar-nav {
+                padding: 1rem 0 200px 0 !important;
+            }
+
+            /* Variables responsive */
             .variables-container {
                 padding: 1.5rem;
             }
@@ -1241,88 +1252,391 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             }
         }
 
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Personalización del scrollbar */
+        .table-responsive-custom::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .table-responsive-custom::-webkit-scrollbar-track {
+            background: var(--light-gray);
+            border-radius: 4px;
+        }
+
+        .table-responsive-custom::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 4px;
+        }
+
+        .table-responsive-custom::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
+        }
+
         /* Botón hamburguesa para móviles */
-.mobile-menu-btn {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    width: 50px;
-    height: 50px;
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    border: none;
-    border-radius: 12px;
-    color: white;
-    font-size: 1.5rem;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 1060;
-    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
-    transition: all 0.2s ease;
-    cursor: pointer;
-}
+        .mobile-menu-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 1.5rem;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1060;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
 
-.mobile-menu-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
-}
+        .mobile-menu-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+        }
 
-.mobile-menu-btn:active {
-    transform: scale(0.95);
-}
+        .mobile-menu-btn:active {
+            transform: scale(0.95);
+        }
 
-/* Sección de usuario en la sidebar */
-.sidebar-user-section {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 1.5rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(0, 0, 0, 0.1);
-    display: none; /* Oculto por defecto */
-}
+        /* Sección de usuario en la sidebar */
+        .sidebar-user-section {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.1);
+            display: none;
+        }
 
-.sidebar-user-info {
-    color: white;
-    text-align: center;
-    margin-bottom: 1rem;
-}
+        .sidebar-user-info {
+            color: white;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
 
-.sidebar-user-name {
-    font-weight: 600;
-    color: white;
-    margin: 0 0 0.25rem 0;
-    font-size: 1rem;
-}
+        .sidebar-user-name {
+            font-weight: 600;
+            color: white;
+            margin: 0 0 0.25rem 0;
+            font-size: 1rem;
+        }
 
-.sidebar-user-role {
+        .sidebar-user-role {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin: 0;
+        }
+
+        .sidebar-logout-btn {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+        }
+
+        .sidebar-logout-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-1px);
+        }
+
+      /* ===== TEXTAREA ESPECÍFICO PARA MENSAJE ===== */
+#mensajeGeneral {
+    background: rgba(40, 40, 65, 0.9) !important; /* Más claro que el fondo general */
+    color: rgba(255, 255, 255, 0.9) !important;
+    border: 1px solid var(--border-color) !important;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace !important;
     font-size: 0.875rem;
-    color: rgba(255, 255, 255, 0.7);
-    margin: 0;
+    line-height: 1.5;
+    padding: 1rem !important;
+    border-radius: 0.5rem !important;
+    resize: vertical;
+    min-height: 180px;
 }
 
-.sidebar-logout-btn {
-    background: rgba(255, 255, 255, 0.15);
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.75rem;
-    text-decoration: none;
+#mensajeGeneral:focus {
+    outline: none !important;
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2) !important;
+    background: rgba(45, 45, 70, 0.95) !important; /* Ligeramente más claro en focus */
+    color: rgba(255, 255, 255, 0.95) !important;
+}
+
+#mensajeGeneral::placeholder {
+    color: var(--dark-gray) !important;
+    opacity: 0.7;
+}
+
+/* ===== SCROLLBAR PARA EL TEXTAREA ===== */
+#mensajeGeneral::-webkit-scrollbar {
+    width: 8px;
+}
+
+#mensajeGeneral::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+#mensajeGeneral::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+}
+
+#mensajeGeneral::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-dark);
+}
+
+/* ===== LABEL DEL TEXTAREA ===== */
+label[for="mensajeGeneral"] {
+    color: var(--text-dark) !important;
     font-weight: 500;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    width: 100%;
+    margin-bottom: 0.5rem;
 }
 
-.sidebar-logout-btn:hover {
-    background: rgba(255, 255, 255, 0.25);
-    color: white;
-    border-color: rgba(255, 255, 255, 0.4);
-    transform: translateY(-1px);
+/* ===== PREVIEW DEL MENSAJE ===== */
+#previewMensaje {
+    background: rgba(40, 40, 65, 0.9) !important; /* Mismo fondo que el textarea */
+    color: rgba(255, 255, 255, 0.9) !important;
+    border: 1px solid var(--border-color) !important;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace !important;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    padding: 1rem !important;
+    border-radius: 0.5rem !important;
+    min-height: 180px;
+    white-space: pre-line;
+    overflow-y: auto;
+}
+
+/* ===== SCROLLBAR PARA EL PREVIEW ===== */
+#previewMensaje::-webkit-scrollbar {
+    width: 8px;
+}
+
+#previewMensaje::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+#previewMensaje::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+}
+
+#previewMensaje::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-dark);
+}
+
+/* ===== LABEL DEL PREVIEW ===== */
+label[class="form-label"]:has(+ #previewMensaje),
+.col-md-6 label.form-label {
+    color: var(--text-dark) !important;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+/* ===== ALTERNATIVA MÁS ESPECÍFICA ===== */
+.col-md-6 .form-label {
+    color: var(--text-dark) !important;
+}
+
+#previewMensaje.mensaje-preview {
+    background: rgba(40, 40, 65, 0.9) !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    border: 1px solid var(--border-color) !important;
+}
+
+/* ===== CARD DE FILTROS ===== */
+.card.shadow-sm.border-0.mb-4 {
+    background: var(--card-background) !important;
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-color) !important;
+    box-shadow: var(--shadow-card) !important;
+}
+
+/* ===== HEADER DE FILTROS ===== */
+.card-header.bg-gradient {
+    background: var(--card-header-background) !important;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color) !important;
+}
+
+.card-header.bg-gradient h5 {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.card-header.bg-gradient small {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.card-header.bg-gradient i {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* ===== BODY DE FILTROS ===== */
+.card-body.bg-light {
+    background: transparent !important;
+    padding: 2rem;
+}
+
+/* ===== LABELS DE FILTROS ===== */
+.card-body .form-label {
+    color: var(--text-dark) !important;
+    font-weight: 500;
+}
+
+.card-body .form-label i {
+    color: var(--text-dark) !important;
+}
+
+/* ===== INPUTS DE FILTROS ===== */
+.card-body .form-control,
+.card-body .form-select {
+    background: var(--input-background) !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    border: 1px solid var(--border-color) !important;
+}
+
+.card-body .form-control:focus,
+.card-body .form-select:focus {
+    background: var(--input-background) !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2) !important;
+}
+
+.card-body .form-control::placeholder {
+    color: var(--dark-gray) !important;
+    opacity: 0.7;
+}
+
+/* ===== INPUT GROUP ===== */
+.card-body .input-group-text {
+    background: var(--input-background) !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-dark) !important;
+}
+
+.card-body .input-group-text.bg-white {
+    background: var(--input-background) !important;
+}
+
+.card-body .input-group-text i {
+    color: var(--dark-gray) !important;
+}
+
+/* ===== BOTONES DE FILTROS ===== */
+.card-body .btn-outline-secondary {
+    background: transparent;
+    color: var(--dark-gray) !important;
+    border-color: var(--border-color) !important;
+}
+
+.card-body .btn-outline-secondary:hover {
+    background: var(--dark-gray) !important;
+    color: white !important;
+    border-color: var(--dark-gray) !important;
+}
+
+.card-body .btn-outline-danger {
+    background: transparent;
+    color: var(--danger-color) !important;
+    border-color: rgba(239, 68, 68, 0.3) !important;
+}
+
+.card-body .btn-outline-danger:hover {
+    background: var(--danger-color) !important;
+    color: white !important;
+    border-color: var(--danger-color) !important;
+}
+
+/* ===== TEXTO INFORMATIVO ===== */
+.card-body .text-muted {
+    color: var(--dark-gray) !important;
+}
+
+.card-body .text-muted i {
+    color: var(--dark-gray) !important;
+}
+
+/* ===== CONTADOR DE RESULTADOS ===== */
+#resultadosContador {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* ===== EFECTO GLOW MORADO PARA STAT-CARDS ===== */
+.stat-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 
+        var(--shadow-strong),
+        0 0 30px rgba(99, 102, 241, 0.4),
+        0 0 60px rgba(139, 92, 246, 0.2) !important;
+    border-color: rgba(99, 102, 241, 0.6) !important;
+}
+
+/* ===== EFECTO GLOW MÁS INTENSO (OPCIONAL) ===== */
+.stat-card:hover::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(139, 92, 246, 0.3));
+    border-radius: 1rem;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.stat-card:hover::before {
+    opacity: 1;
+}
+
+/* ===== VERSIÓN SIMPLE (RECOMENDADA) ===== */
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 
+        0 15px 35px rgba(0, 0, 0, 0.3),
+        0 0 25px rgba(99, 102, 241, 0.5),
+        0 0 50px rgba(139, 92, 246, 0.3) !important;
+    border-color: rgba(99, 102, 241, 0.7) !important;
 }
     </style>
 </head>
@@ -1355,7 +1669,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
  <!-- Sidebar -->
 <nav class="sidebar" id="sidebar">
     <div class="sidebar-header">
-        <h4 class="sidebar-title">🎉 Panel de Control</h4>
+        <h4 class="sidebar-title">Panel de Control</h4>
         <p class="sidebar-subtitle">Sistema de Invitaciones</p>
     </div>
     <div class="sidebar-nav">
@@ -1600,7 +1914,7 @@ Guillermo y Wendy 👰🏻‍♀️🤵🏻‍♂️💒</textarea>
         </script>
         <!-- Filters Card -->
        <!-- Filtros Simplificados -->
-<div class="card shadow-sm border-0 mb-4 animate-fade-in">
+<div class="card shadow-sm border-0 mt-4 mb-4 animate-fade-in">
     <div class="card-header bg-gradient text-white border-0" style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));">
         <div class="d-flex align-items-center">
             <i class="bi bi-funnel-fill me-2 fs-5"></i>
