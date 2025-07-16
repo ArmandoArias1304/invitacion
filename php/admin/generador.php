@@ -215,176 +215,279 @@ $con_telefono = $stmt->fetchColumn();
         }
 
         /* ===== SIDEBAR ===== */
-        .sidebar {
-            position: fixed;
-            left: -280px;
-            top: 0;
-            width: var(--sidebar-width);
-            height: 100vh;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            backdrop-filter: blur(10px);
-            z-index: 1050;
-            transition: all 0.2s ease;
-            box-shadow: 4px 0 20px rgba(99, 102, 241, 0.2);
-            border-radius: 0 12px 12px 0;
-        }
+.sidebar {
+    position: fixed;
+    left: -280px;
+    top: 0;
+    width: var(--sidebar-width);
+    height: 100vh;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    backdrop-filter: blur(10px);
+    z-index: 1050;
+    transition: all 0.2s ease;
+    box-shadow: 4px 0 20px rgba(99, 102, 241, 0.2);
+    border-radius: 0 12px 12px 0;
+}
 
-        .sidebar.show {
-            left: 0;
-        }
+.sidebar.show {
+    left: 0;
+}
 
-        .sidebar-icons {
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 60px;
-            height: 100vh;
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.95), rgba(139, 92, 246, 0.95));
-            backdrop-filter: blur(10px);
-            z-index: 1045;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 140px;
-            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-            transition: all 0.15s ease;
-            border-radius: 0 12px 12px 0;
-        }
+.sidebar-icons {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 60px;
+    height: 100vh;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.95), rgba(139, 92, 246, 0.95));
+    backdrop-filter: blur(10px);
+    z-index: 1045;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 140px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.15s ease;
+    border-radius: 0 12px 12px 0;
+}
 
-        .sidebar-icons.hide {
-            left: -60px;
-        }
+.sidebar-icons.hide {
+    left: -60px;
+}
 
-        .sidebar-icon-item {
-            width: 44px;
-            height: 44px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0.5rem 0;
-            border-radius: 12px;
-            color: rgba(255, 255, 255, 0.9);
-            background: rgba(255, 255, 255, 0.15);
-            cursor: pointer;
-            transition: all 0.15s ease;
-            text-decoration: none;
-            font-size: 1.2rem;
-            position: relative;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
+.sidebar-icon-item {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0.5rem 0;
+    border-radius: 12px;
+    color: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.15);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    text-decoration: none;
+    font-size: 1.2rem;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
 
-        .sidebar-icon-item:hover {
-            background: rgba(255, 255, 255, 0.25);
-            color: white;
-            transform: scale(1.05);
-            border-color: rgba(255, 255, 255, 0.3);
-        }
+.sidebar-icon-item:hover {
+    background: rgba(255, 255, 255, 0.25);
+    color: white;
+    transform: scale(1.05);
+    border-color: rgba(255, 255, 255, 0.3);
+}
 
-        .sidebar-icon-item.active {
-            background: rgba(255, 255, 255, 0.3);
-            color: white;
-            border-color: rgba(255, 255, 255, 0.4);
-        }
+.sidebar-icon-item.active {
+    background: rgba(255, 255, 255, 0.3);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.4);
+}
 
-        .sidebar-icon-item::after {
-            content: attr(data-tooltip);
-            position: absolute;
-            left: 60px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 0.5rem 0.75rem;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            white-space: nowrap;
-            opacity: 0;
-            visibility: hidden;
-            transition: var(--transition);
-            z-index: 1060;
-        }
+.sidebar-icon-item::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: 60px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+    z-index: 1060;
+}
 
-        .sidebar-icon-item:hover::after {
-            opacity: 1;
-            visibility: visible;
-        }
+.sidebar-icon-item:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
 
-        .sidebar-trigger {
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 60px;
-            height: 100vh;
-            z-index: 1040;
-            background: transparent;
-            cursor: pointer;
-        }
+.sidebar-trigger {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 60px;
+    height: 100vh;
+    z-index: 1040;
+    background: transparent;
+    cursor: pointer;
+}
 
-        .sidebar-header {
-            padding: 2rem 1.5rem 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
+/* Botón hamburguesa para móviles */
+.mobile-menu-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-size: 1.5rem;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1060;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
 
-        .sidebar-title {
-            color: white;
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
+.mobile-menu-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+}
 
-        .sidebar-subtitle {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.875rem;
-        }
+.mobile-menu-btn:active {
+    transform: scale(0.95);
+}
 
-        .sidebar-nav {
-            padding: 1rem 0;
-        }
+.sidebar-header {
+    padding: 2rem 1.5rem 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
 
-        .sidebar-nav-item {
-            display: block;
-            padding: 1rem 1.5rem;
-            color: rgba(255, 255, 255, 0.9);
-            text-decoration: none;
-            transition: var(--transition);
-            border-left: 3px solid transparent;
-            height: 64px;
-            display: flex;
-            align-items: center;
-        }
+.sidebar-title {
+    color: white;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
 
-        .sidebar-nav-item:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border-left-color: white;
-            transform: translateX(5px);
-        }
+.sidebar-subtitle {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.875rem;
+}
 
-        .sidebar-nav-item i {
-            width: 20px;
-            margin-right: 0.75rem;
-            font-size: 1.2rem;
-        }
+.sidebar-nav {
+    padding: 1rem 0;
+}
 
-        .sidebar-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(2px);
-            z-index: 1030;
-            opacity: 0;
-            visibility: hidden;
-            transition: var(--transition);
-        }
+.sidebar-nav-item {
+    display: block;
+    padding: 1rem 1.5rem;
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    transition: var(--transition);
+    border-left: 3px solid transparent;
+    height: 64px;
+    display: flex;
+    align-items: center;
+}
 
-        .sidebar-overlay.show {
-            opacity: 1;
-            visibility: visible;
-        }
+.sidebar-nav-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-left-color: white;
+    transform: translateX(5px);
+}
 
+.sidebar-nav-item i {
+    width: 20px;
+    margin-right: 0.75rem;
+    font-size: 1.2rem;
+}
+
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(2px);
+    z-index: 1030;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+}
+
+.sidebar-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .main-content {
+    margin-left: 0;
+    padding: 1rem;
+    padding-top: 80px; /* Espacio para el botón hamburguesa */
+}
+
+.main-header {
+    margin-left: 0;
+    margin-top: 70px; /* Espacio para el botón hamburguesa */
+}   
+
+    .header-content {
+        padding: 1rem;
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+        position: relative;
+    }
+
+    .header-center {
+        position: static;
+        transform: none;
+    }
+
+    .dashboard-title {
+        font-size: 1.25rem;
+    }
+
+    .user-section {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Ocultar sidebar icons en móvil */
+    .sidebar-icons {
+        display: none;
+    }
+
+    .sidebar-trigger {
+        display: none;
+    }
+
+    /* Mostrar botón hamburguesa en móvil */
+    .mobile-menu-btn {
+        display: flex;
+    }
+
+    /* Sidebar ocupa toda la pantalla en móvil */
+    .sidebar {
+        width: 100vw;
+        left: -100vw;
+        border-radius: 0;
+    }
+
+    .sidebar.show {
+        left: 0;
+    }
+
+    .sidebar-header {
+        padding-top: 80px; /* Espacio para el botón hamburguesa */
+    }
+}
         /* ===== HEADER ===== */
         .main-header {
             background: white;
@@ -882,6 +985,41 @@ $con_telefono = $stmt->fetchColumn();
             .sidebar-trigger {
                 width: 50px;
             }
+            /* Ocultar la sección de usuario del header en móvil */
+.header-content .user-section {
+    display: none;
+}
+
+/* Mostrar la sección de usuario en la sidebar en móvil */
+.sidebar-user-section {
+    display: block;
+}
+
+/* Ajustar el contenido de la sidebar para dar espacio a la sección de usuario */
+.sidebar-nav {
+    padding: 1rem 0 180px 0; /* Padding bottom para la sección de usuario */
+}
+.header-content .user-section {
+        display: none !important;
+    }
+
+    /* Mostrar la sección de usuario en la sidebar en móvil */
+    .sidebar-user-section {
+        display: block !important;
+    }
+
+    /* Ajustar el header content para que se centre mejor */
+    .header-content {
+        padding: 1rem;
+        justify-content: center !important;
+        text-align: center;
+        position: relative;
+    }
+
+    /* Ajustar el contenido de la sidebar para dar espacio a la sección de usuario */
+    .sidebar-nav {
+        padding: 1rem 0 200px 0 !important; /* Más espacio para la sección de usuario */
+    }
         }
 
         /* ===== ANIMATIONS ===== */
@@ -899,9 +1037,66 @@ $con_telefono = $stmt->fetchColumn();
         .animate-fade-in {
             animation: fadeInUp 0.6s ease-out;
         }
+
+        /* Sección de usuario en la sidebar */
+.sidebar-user-section {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.1);
+    display: none; /* Oculto por defecto */
+}
+
+.sidebar-user-info {
+    color: white;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.sidebar-user-name {
+    font-weight: 600;
+    color: white;
+    margin: 0 0 0.25rem 0;
+    font-size: 1rem;
+}
+
+.sidebar-user-role {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+}
+
+.sidebar-logout-btn {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.sidebar-logout-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-1px);
+}
     </style>
 </head>
 <body>
+<button class="mobile-menu-btn" id="mobileMenuBtn">
+    <i class="bi bi-list"></i>
+</button>
     <!-- Sidebar Icons (always visible) -->
     <div class="sidebar-icons" id="sidebarIcons">
         <a href="dashboard.php" class="sidebar-icon-item" data-tooltip="Dashboard">
@@ -925,39 +1120,52 @@ $con_telefono = $stmt->fetchColumn();
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
     
     <!-- Sidebar -->
-    <nav class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <h4 class="sidebar-title">🎉 Panel de Control</h4>
-            <p class="sidebar-subtitle">Sistema de Invitaciones</p>
+    <!-- Sidebar -->
+<nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <h4 class="sidebar-title">Panel de Control</h4>
+        <p class="sidebar-subtitle">Sistema de Invitaciones</p>
+    </div>
+    <div class="sidebar-nav">
+        <a href="dashboard.php" class="sidebar-nav-item">
+            <i class="bi bi-house"></i>
+            Dashboard
+        </a>
+        <a href="generador.php" class="sidebar-nav-item">
+            <i class="bi bi-person-plus"></i>
+            Generar Invitados
+        </a>
+        <a href="envios.php" class="sidebar-nav-item">
+            <i class="bi bi-whatsapp"></i>
+            Enviar Invitaciones
+        </a>
+        <a href="estadisticas.php" class="sidebar-nav-item">
+            <i class="bi bi-graph-up"></i>
+            Ver Estadísticas
+        </a>
+    </div>
+    
+    <!-- Sección de usuario en la sidebar (solo visible en móvil) -->
+    <div class="sidebar-user-section">
+        <div class="sidebar-user-info">
+            <p class="sidebar-user-name"><?php echo htmlspecialchars($_SESSION['admin_nombre']); ?></p>
+            <p class="sidebar-user-role">Administrador</p>
         </div>
-        <div class="sidebar-nav">
-            <a href="dashboard.php" class="sidebar-nav-item">
-                <i class="bi bi-house"></i>
-                Dashboard
-            </a>
-            <a href="generador.php" class="sidebar-nav-item">
-                <i class="bi bi-person-plus"></i>
-                Generar Invitados
-            </a>
-            <a href="envios.php" class="sidebar-nav-item">
-                <i class="bi bi-whatsapp"></i>
-                Enviar Invitaciones
-            </a>
-            <a href="estadisticas.php" class="sidebar-nav-item">
-                <i class="bi bi-graph-up"></i>
-                Ver Estadísticas
-            </a>
-        </div>
-    </nav>
+        <a href="../../logout.php" class="sidebar-logout-btn">
+            <i class="bi bi-box-arrow-right"></i>
+            Cerrar Sesión
+        </a>
+    </div>
+</nav>
 
     <!-- Main Header -->
     <header class="main-header" id="mainHeader">
         <div class="header-content">
             <div class="header-brand">
                 <div class="header-logo">
-                    FI
+                    Fn
                 </div>
-                <h1 class="header-title">FastInvite</h1>
+                <h1 class="header-title">Fastnvite</h1>
             </div>
             
             <div class="header-center">
@@ -1194,95 +1402,177 @@ Ana Martínez, 5555555555, 3, , padrinos</textarea>
     
     <script>
         // Sidebar functionality
-        const sidebar = document.getElementById('sidebar');
-        const sidebarTrigger = document.getElementById('sidebarTrigger');
-        const sidebarOverlay = document.getElementById('sidebarOverlay');
-        const sidebarIcons = document.getElementById('sidebarIcons');
-        const mainContent = document.getElementById('mainContent');
-        const mainHeader = document.getElementById('mainHeader');
-        let sidebarTimeout;
+const sidebar = document.getElementById('sidebar');
+const sidebarTrigger = document.getElementById('sidebarTrigger');
+const sidebarOverlay = document.getElementById('sidebarOverlay');
+const sidebarIcons = document.getElementById('sidebarIcons');
+const mainContent = document.getElementById('mainContent');
+const mainHeader = document.getElementById('mainHeader');
+const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+let sidebarTimeout;
 
-        // Función para mostrar sidebar
-        function showSidebar() {
-            clearTimeout(sidebarTimeout);
-            sidebar.classList.add('show');
-            sidebarOverlay.classList.add('show');
-            sidebarIcons.classList.add('hide');
-            if (mainContent) mainContent.classList.add('sidebar-open');
-            if (mainHeader) mainHeader.classList.add('sidebar-open');
-        }
+// Detectar si estamos en móvil
+function isMobile() {
+    return window.innerWidth <= 768;
+}
 
-        // Función para ocultar sidebar
-        function hideSidebar() {
-            sidebar.classList.remove('show');
-            sidebarOverlay.classList.remove('show');
-            sidebarIcons.classList.remove('hide');
-            if (mainContent) mainContent.classList.remove('sidebar-open');
-            if (mainHeader) mainHeader.classList.remove('sidebar-open');
-        }
+// Función para mostrar sidebar
+function showSidebar() {
+    clearTimeout(sidebarTimeout);
+    sidebar.classList.add('show');
+    sidebarOverlay.classList.add('show');
+    
+    if (!isMobile()) {
+        sidebarIcons.classList.add('hide');
+        if (mainContent) mainContent.classList.add('sidebar-open');
+        if (mainHeader) mainHeader.classList.add('sidebar-open');
+    }
+    
+    // Cambiar icono del botón hamburguesa
+    if (mobileMenuBtn) {
+        const icon = mobileMenuBtn.querySelector('i');
+        icon.className = 'bi bi-x';
+    }
+}
 
-        // Eventos para mostrar sidebar (hover en iconos)
-        sidebarIcons.addEventListener('mouseenter', () => {
+// Función para ocultar sidebar
+function hideSidebar() {
+    sidebar.classList.remove('show');
+    sidebarOverlay.classList.remove('show');
+    
+    if (!isMobile()) {
+        sidebarIcons.classList.remove('hide');
+        if (mainContent) mainContent.classList.remove('sidebar-open');
+        if (mainHeader) mainHeader.classList.remove('sidebar-open');
+    }
+    
+    // Restaurar icono del botón hamburguesa
+    if (mobileMenuBtn) {
+        const icon = mobileMenuBtn.querySelector('i');
+        icon.className = 'bi bi-list';
+    }
+}
+
+// Eventos solo para desktop (hover)
+if (!isMobile()) {
+    // Eventos para mostrar sidebar (hover en iconos)
+    sidebarIcons.addEventListener('mouseenter', () => {
+        showSidebar();
+    });
+
+    // Eventos para el área de trigger
+    sidebarTrigger.addEventListener('mouseenter', () => {
+        showSidebar();
+    });
+
+    // Mantener sidebar abierto cuando el mouse está sobre él
+    sidebar.addEventListener('mouseenter', () => {
+        clearTimeout(sidebarTimeout);
+    });
+
+    // Ocultar sidebar cuando el mouse sale
+    sidebar.addEventListener('mouseleave', () => {
+        sidebarTimeout = setTimeout(() => {
+            hideSidebar();
+        }, 300);
+    });
+
+    // Ocultar cuando sale del área de trigger
+    sidebarTrigger.addEventListener('mouseleave', () => {
+        sidebarTimeout = setTimeout(() => {
+            if (!sidebar.matches(':hover') && !sidebarIcons.matches(':hover')) {
+                hideSidebar();
+            }
+        }, 500);
+    });
+
+    // Ocultar cuando sale de los iconos
+    sidebarIcons.addEventListener('mouseleave', () => {
+        sidebarTimeout = setTimeout(() => {
+            if (!sidebar.matches(':hover')) {
+                hideSidebar();
+            }
+        }, 300);
+    });
+}
+
+// Evento para botón hamburguesa (móvil)
+if (mobileMenuBtn) {
+    mobileMenuBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (sidebar.classList.contains('show')) {
+            hideSidebar();
+        } else {
             showSidebar();
-        });
+        }
+    });
+}
 
-        // Eventos para el área de trigger
-        sidebarTrigger.addEventListener('mouseenter', () => {
-            showSidebar();
-        });
-
-        // Click en trigger para dispositivos táctiles
-        sidebarTrigger.addEventListener('click', () => {
+// Click en trigger para dispositivos táctiles (solo desktop)
+if (sidebarTrigger) {
+    sidebarTrigger.addEventListener('click', () => {
+        if (!isMobile()) {
             if (sidebar.classList.contains('show')) {
                 hideSidebar();
             } else {
                 showSidebar();
             }
-        });
+        }
+    });
+}
 
-        // Mantener sidebar abierto cuando el mouse está sobre él
-        sidebar.addEventListener('mouseenter', () => {
-            clearTimeout(sidebarTimeout);
-        });
+// Ocultar sidebar al hacer click en overlay
+sidebarOverlay.addEventListener('click', () => {
+    hideSidebar();
+});
 
-        // Ocultar sidebar cuando el mouse sale
-        sidebar.addEventListener('mouseleave', () => {
-            sidebarTimeout = setTimeout(() => {
-                hideSidebar();
-            }, 300);
-        });
-
-        // Ocultar cuando sale del área de trigger
-        sidebarTrigger.addEventListener('mouseleave', () => {
-            sidebarTimeout = setTimeout(() => {
-                if (!sidebar.matches(':hover') && !sidebarIcons.matches(':hover')) {
-                    hideSidebar();
-                }
-            }, 500);
-        });
-
-        // Ocultar cuando sale de los iconos
-        sidebarIcons.addEventListener('mouseleave', () => {
-            sidebarTimeout = setTimeout(() => {
-                if (!sidebar.matches(':hover')) {
-                    hideSidebar();
-                }
-            }, 300);
-        });
-
-        // Ocultar sidebar al hacer click en overlay
-        sidebarOverlay.addEventListener('click', () => {
+// Ocultar sidebar al hacer click en un enlace de navegación
+document.querySelectorAll('.sidebar-nav-item').forEach(item => {
+    item.addEventListener('click', (e) => {
+        setTimeout(() => {
             hideSidebar();
-        });
+        }, 100);
+    });
+});
 
-        // Ocultar sidebar al hacer click en un enlace de navegación
-        document.querySelectorAll('.sidebar-nav-item').forEach(item => {
-            item.addEventListener('click', (e) => {
-                setTimeout(() => {
-                    hideSidebar();
-                }, 100);
-            });
-        });
+// Ajustar comportamiento al cambiar tamaño de pantalla
+window.addEventListener('resize', () => {
+    // Si cambiamos de móvil a desktop, resetear estado
+    if (window.innerWidth > 768) {
+        // Restaurar elementos de desktop
+        if (sidebarIcons) sidebarIcons.style.display = 'flex';
+        if (sidebarTrigger) sidebarTrigger.style.display = 'block';
+        if (mobileMenuBtn) mobileMenuBtn.style.display = 'none';
+        
+        // Resetear clases de contenido
+        if (mainContent) {
+            mainContent.style.paddingTop = '';
+            mainContent.classList.remove('sidebar-open');
+        }
+        if (mainHeader) {
+            mainHeader.style.marginTop = '';
+            mainHeader.classList.remove('sidebar-open');
+        }
+        
+        // Ocultar sidebar si está abierto
+        hideSidebar();
+    } else {
+        // Ocultar elementos de desktop en móvil
+        if (sidebarIcons) sidebarIcons.style.display = 'none';
+        if (sidebarTrigger) sidebarTrigger.style.display = 'none';
+        if (mobileMenuBtn) mobileMenuBtn.style.display = 'flex';
+        
+        // Asegurar espaciado para botón hamburguesa
+        if (mainContent) {
+            mainContent.style.paddingTop = '80px';
+            mainContent.classList.remove('sidebar-open');
+        }
+        if (mainHeader) {
+            mainHeader.style.marginTop = '70px';
+            mainHeader.classList.remove('sidebar-open');
+        }
+    }
+});
 
         // Phone validation
         let validacionTimeout;

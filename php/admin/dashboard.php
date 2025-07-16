@@ -1053,84 +1053,99 @@ if (
             background: var(--text-dark);
         }
 
-        /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
-            .main-content {
-                margin-left: 0;
-                padding: 1rem;
-            }
+    .main-content {
+        margin-left: 0;
+        padding: 1rem;
+        padding-top: 80px; /* Espacio para el botón hamburguesa */
+    }
 
-            .main-header {
-                margin-left: 0;
-            }
+    .main-header {
+        margin-left: 0;
+        margin-top: 70px; /* Espacio para el botón hamburguesa */
+    }
 
-            .header-content {
-                padding: 1rem;
-                flex-direction: column;
-                gap: 1rem;
-                text-align: center;
-                position: relative;
-            }
+    /* Ocultar la sección de usuario del header en móvil */
+    .header-content .user-section {
+        display: none !important;
+    }
 
-            .header-center {
-                position: static;
-                transform: none;
-            }
+    /* Mostrar la sección de usuario en la sidebar en móvil */
+    .sidebar-user-section {
+        display: block !important;
+    }
 
-            .dashboard-title {
-                font-size: 1.25rem;
-            }
+    /* Ajustar el header content para que se centre mejor */
+    .header-content {
+        padding: 1rem;
+        justify-content: center !important;
+        text-align: center;
+        position: relative;
+    }
 
-            .user-section {
-                width: 100%;
-                justify-content: center;
-            }
+    .header-center {
+        position: static;
+        transform: none;
+    }
 
-            .stats-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
+    .dashboard-title {
+        font-size: 1.25rem;
+    }
 
-            .stat-card {
-                padding: 1.5rem;
-            }
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
 
-            .card-header-custom,
-            .card-body-custom {
-                padding: 1rem;
-            }
+    .stat-card {
+        padding: 1.5rem;
+    }
 
-            .table-custom th,
-            .table-custom td {
-                padding: 0.75rem 0.5rem;
-                font-size: 0.875rem;
-            }
+    .card-header-custom,
+    .card-body-custom {
+        padding: 1rem;
+    }
 
-            .sidebar {
-                width: 100vw;
-                left: -100vw;
-            }
+    .table-custom th,
+    .table-custom td {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.875rem;
+    }
 
-            .sidebar.show {
-                left: 0;
-            }
+    /* Ocultar sidebar icons en móvil */
+    .sidebar-icons {
+        display: none;
+    }
 
-            .sidebar-icons {
-                width: 50px;
-                padding-top: 100px; /* Menos padding en móviles */
-            }
+    .sidebar-trigger {
+        display: none;
+    }
 
-            .sidebar-icon-item {
-                width: 36px;
-                height: 36px;
-                font-size: 1rem;
-                margin: 0.25rem 0;
-            }
+    /* Mostrar botón hamburguesa en móvil */
+    .mobile-menu-btn {
+        display: flex;
+    }
 
-            .sidebar-trigger {
-                width: 50px;
-            }
-        }
+    /* Sidebar ocupa toda la pantalla en móvil */
+    .sidebar {
+        width: 100vw;
+        left: -100vw;
+        border-radius: 0;
+    }
+
+    .sidebar.show {
+        left: 0;
+    }
+
+    .sidebar-header {
+        padding-top: 80px; /* Espacio para el botón hamburguesa */
+    }
+
+    /* Ajustar el contenido de la sidebar para dar espacio a la sección de usuario */
+    .sidebar-nav {
+        padding: 1rem 0 200px 0 !important; /* Más espacio para la sección de usuario */
+    }
+}
 
         /* ===== ANIMATIONS ===== */
         @keyframes fadeInUp {
@@ -1280,9 +1295,96 @@ if (
             background: white;
             border-color: var(--border-color);
         }
+
+        /* Botón hamburguesa para móviles */
+.mobile-menu-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-size: 1.5rem;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1060;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.mobile-menu-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+}
+
+.mobile-menu-btn:active {
+    transform: scale(0.95);
+}
+
+/* Sección de usuario en la sidebar */
+.sidebar-user-section {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.1);
+    display: none; /* Oculto por defecto */
+}
+
+.sidebar-user-info {
+    color: white;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.sidebar-user-name {
+    font-weight: 600;
+    color: white;
+    margin: 0 0 0.25rem 0;
+    font-size: 1rem;
+}
+
+.sidebar-user-role {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+}
+
+.sidebar-logout-btn {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.sidebar-logout-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-1px);
+}
     </style>
 </head>
 <body>
+<button class="mobile-menu-btn" id="mobileMenuBtn">
+    <i class="bi bi-list"></i>
+</button>
     <!-- Sidebar Icons (always visible) -->
     <div class="sidebar-icons" id="sidebarIcons">
         <a href="dashboard.php" class="sidebar-icon-item active" data-tooltip="Dashboard">
@@ -1306,43 +1408,55 @@ if (
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
     
     <!-- Sidebar -->
-    <nav class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <h4 class="sidebar-title">🎉 Panel de Control</h4>
-            <p class="sidebar-subtitle">Sistema de Invitaciones</p>
+<nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <h4 class="sidebar-title">Panel de Control</h4>
+        <p class="sidebar-subtitle">Sistema de Invitaciones</p>
+    </div>
+    <div class="sidebar-nav">
+        <a href="dashboard.php" class="sidebar-nav-item">
+            <i class="bi bi-house"></i>
+            Dashboard
+        </a>
+        <a href="generador.php" class="sidebar-nav-item">
+            <i class="bi bi-person-plus"></i>
+            Generar Invitados
+        </a>
+        <a href="envios.php" class="sidebar-nav-item">
+            <i class="bi bi-whatsapp"></i>
+            Enviar Invitaciones
+        </a>
+        <a href="estadisticas.php" class="sidebar-nav-item">
+            <i class="bi bi-graph-up"></i>
+            Ver Estadísticas
+        </a>
+    </div>
+    
+    <!-- Sección de usuario en la sidebar (solo visible en móvil) -->
+    <div class="sidebar-user-section">
+        <div class="sidebar-user-info">
+            <p class="sidebar-user-name"><?php echo htmlspecialchars($_SESSION['admin_nombre']); ?></p>
+            <p class="sidebar-user-role">Administrador</p>
         </div>
-        <div class="sidebar-nav">
-            <a href="dashboard.php" class="sidebar-nav-item">
-                <i class="bi bi-house"></i>
-                Dashboard
-            </a>
-            <a href="generador.php" class="sidebar-nav-item">
-                <i class="bi bi-person-plus"></i>
-                Generar Invitados
-            </a>
-            <a href="envios.php" class="sidebar-nav-item">
-                <i class="bi bi-whatsapp"></i>
-                Enviar Invitaciones
-            </a>
-            <a href="estadisticas.php" class="sidebar-nav-item">
-                <i class="bi bi-graph-up"></i>
-                Ver Estadísticas
-            </a>
-        </div>
-    </nav>
+        <a href="../../logout.php" class="sidebar-logout-btn">
+            <i class="bi bi-box-arrow-right"></i>
+            Cerrar Sesión
+        </a>
+    </div>
+</nav>
 
     <!-- Main Header -->
     <header class="main-header" id="mainHeader">
         <div class="header-content">
             <div class="header-brand">
                 <div class="header-logo">
-                    FI
+                    Fn
                 </div>
-                <h1 class="header-title">FastInvite</h1>
+                <h1 class="header-title">Fastnvite</h1>
             </div>
             
             <div class="header-center">
-                <h2 class="dashboard-title">🎉 Dashboard de Invitaciones</h2>
+                <h2 class="dashboard-title">📋 Gestión de Invitados</h2>
             </div>
             
             <div class="user-section">
@@ -1808,19 +1922,187 @@ if (
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
-        // Sidebar functionality
-        const sidebar = document.getElementById('sidebar');
-        const sidebarTrigger = document.getElementById('sidebarTrigger');
-        const sidebarOverlay = document.getElementById('sidebarOverlay');
-        const sidebarIcons = document.getElementById('sidebarIcons');
-        const mainContent = document.getElementById('mainContent');
-        const mainHeader = document.getElementById('mainHeader');
-        let sidebarTimeout;
+       // Sidebar functionality
+const sidebar = document.getElementById('sidebar');
+const sidebarTrigger = document.getElementById('sidebarTrigger');
+const sidebarOverlay = document.getElementById('sidebarOverlay');
+const sidebarIcons = document.getElementById('sidebarIcons');
+const mainContent = document.getElementById('mainContent');
+const mainHeader = document.getElementById('mainHeader');
+const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+let sidebarTimeout;
 
-        // Variables globales para el modal
-        let currentGuestId = null;
-        let currentMaxSeats = 0;
-        let currentQuantity = 1;
+// Detectar si estamos en móvil
+function isMobile() {
+    return window.innerWidth <= 768;
+}
+
+// Función para mostrar sidebar
+function showSidebar() {
+    clearTimeout(sidebarTimeout);
+    sidebar.classList.add('show');
+    sidebarOverlay.classList.add('show');
+    
+    if (!isMobile()) {
+        sidebarIcons.classList.add('hide');
+        if (mainContent) mainContent.classList.add('sidebar-open');
+        if (mainHeader) mainHeader.classList.add('sidebar-open');
+    }
+    
+    // Cambiar icono del botón hamburguesa
+    if (mobileMenuBtn) {
+        const icon = mobileMenuBtn.querySelector('i');
+        icon.className = 'bi bi-x';
+    }
+}
+
+// Función para ocultar sidebar
+function hideSidebar() {
+    sidebar.classList.remove('show');
+    sidebarOverlay.classList.remove('show');
+    
+    if (!isMobile()) {
+        sidebarIcons.classList.remove('hide');
+        if (mainContent) mainContent.classList.remove('sidebar-open');
+        if (mainHeader) mainHeader.classList.remove('sidebar-open');
+    }
+    
+    // Restaurar icono del botón hamburguesa
+    if (mobileMenuBtn) {
+        const icon = mobileMenuBtn.querySelector('i');
+        icon.className = 'bi bi-list';
+    }
+}
+
+// Eventos solo para desktop (hover)
+if (!isMobile()) {
+    // Eventos para mostrar sidebar (hover en iconos)
+    if (sidebarIcons) {
+        sidebarIcons.addEventListener('mouseenter', () => {
+            showSidebar();
+        });
+        
+        // Ocultar cuando sale de los iconos
+        sidebarIcons.addEventListener('mouseleave', () => {
+            sidebarTimeout = setTimeout(() => {
+                if (!sidebar.matches(':hover')) {
+                    hideSidebar();
+                }
+            }, 300);
+        });
+    }
+
+    // Eventos para el área de trigger
+    if (sidebarTrigger) {
+        sidebarTrigger.addEventListener('mouseenter', () => {
+            showSidebar();
+        });
+        
+        // Ocultar cuando sale del área de trigger
+        sidebarTrigger.addEventListener('mouseleave', () => {
+            sidebarTimeout = setTimeout(() => {
+                if (!sidebar.matches(':hover') && !sidebarIcons.matches(':hover')) {
+                    hideSidebar();
+                }
+            }, 500);
+        });
+    }
+
+    // Mantener sidebar abierto cuando el mouse está sobre él
+    sidebar.addEventListener('mouseenter', () => {
+        clearTimeout(sidebarTimeout);
+    });
+
+    // Ocultar sidebar cuando el mouse sale
+    sidebar.addEventListener('mouseleave', () => {
+        sidebarTimeout = setTimeout(() => {
+            hideSidebar();
+        }, 300);
+    });
+}
+
+// Evento para botón hamburguesa (móvil)
+if (mobileMenuBtn) {
+    mobileMenuBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (sidebar.classList.contains('show')) {
+            hideSidebar();
+        } else {
+            showSidebar();
+        }
+    });
+}
+
+// Click en trigger para dispositivos táctiles (solo desktop)
+if (sidebarTrigger) {
+    sidebarTrigger.addEventListener('click', () => {
+        if (!isMobile()) {
+            if (sidebar.classList.contains('show')) {
+                hideSidebar();
+            } else {
+                showSidebar();
+            }
+        }
+    });
+}
+
+// Ocultar sidebar al hacer click en overlay
+sidebarOverlay.addEventListener('click', () => {
+    hideSidebar();
+});
+
+// Ocultar sidebar al hacer click en un enlace de navegación
+document.querySelectorAll('.sidebar-nav-item').forEach(item => {
+    item.addEventListener('click', (e) => {
+        setTimeout(() => {
+            hideSidebar();
+        }, 100);
+    });
+});
+
+// Ajustar comportamiento al cambiar tamaño de pantalla
+window.addEventListener('resize', () => {
+    // Si cambiamos de móvil a desktop, resetear estado
+    if (window.innerWidth > 768) {
+        // Restaurar elementos de desktop
+        if (sidebarIcons) sidebarIcons.style.display = 'flex';
+        if (sidebarTrigger) sidebarTrigger.style.display = 'block';
+        if (mobileMenuBtn) mobileMenuBtn.style.display = 'none';
+        
+        // Resetear clases de contenido
+        if (mainContent) {
+            mainContent.style.paddingTop = '';
+            mainContent.classList.remove('sidebar-open');
+        }
+        if (mainHeader) {
+            mainHeader.style.marginTop = '';
+            mainHeader.classList.remove('sidebar-open');
+        }
+        
+        // Ocultar sidebar si está abierto
+        hideSidebar();
+    } else {
+        // Ocultar elementos de desktop en móvil
+        if (sidebarIcons) sidebarIcons.style.display = 'none';
+        if (sidebarTrigger) sidebarTrigger.style.display = 'none';
+        if (mobileMenuBtn) mobileMenuBtn.style.display = 'flex';
+        
+        // Asegurar espaciado para botón hamburguesa
+        if (mainContent) {
+            mainContent.style.paddingTop = '80px';
+            mainContent.classList.remove('sidebar-open');
+        }
+        if (mainHeader) {
+            mainHeader.style.marginTop = '70px';
+            mainHeader.classList.remove('sidebar-open');
+        }
+    }
+});
+
+// Variables globales para el modal
+let currentGuestId = null;
+let currentMaxSeats = 0;
+let currentQuantity = 1;
 
         console.log('Elementos encontrados:', {
             sidebar: !!sidebar,
