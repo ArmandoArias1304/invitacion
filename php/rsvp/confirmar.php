@@ -440,60 +440,10 @@ function actualizarTablaInvitados(idInvitado, cantidadConfirmada, token) {
         }
     }
     
-    // Función para mostrar indicador visual de actualización
+    // Función para mostrar indicador visual de actualización (DESHABILITADA)
     function mostrarIndicadorActualizacion() {
-        // Crear un indicador visual temporal
-        const indicador = document.createElement('div');
-        indicador.id = 'indicador-actualizacion';
-        indicador.innerHTML = `
-            <div style="
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: linear-gradient(45deg, #28a745, #20c997);
-                color: white;
-                padding: 1rem 1.5rem;
-                border-radius: 10px;
-                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-                z-index: 9999;
-                font-weight: 500;
-                animation: slideInRight 0.3s ease;
-            ">
-                <i class="fas fa-sync-alt me-2"></i>
-                Actualizando tabla de invitados...
-            </div>
-        `;
-        
-        // Agregar estilos CSS para la animación
-        if (!document.getElementById('estilos-actualizacion')) {
-            const estilos = document.createElement('style');
-            estilos.id = 'estilos-actualizacion';
-            estilos.textContent = `
-                @keyframes slideInRight {
-                    from { transform: translateX(100%); opacity: 0; }
-                    to { transform: translateX(0); opacity: 1; }
-                }
-                @keyframes slideOutRight {
-                    from { transform: translateX(0); opacity: 1; }
-                    to { transform: translateX(100%); opacity: 0; }
-                }
-            `;
-            document.head.appendChild(estilos);
-        }
-        
-        document.body.appendChild(indicador);
-        
-        // Remover el indicador después de 3 segundos
-        setTimeout(() => {
-            if (indicador.parentNode) {
-                indicador.style.animation = 'slideOutRight 0.3s ease';
-                setTimeout(() => {
-                    if (indicador.parentNode) {
-                        indicador.parentNode.removeChild(indicador);
-                    }
-                }, 300);
-            }
-        }, 3000);
+        // Función deshabilitada - no muestra indicador visual
+        return;
     }
     
     // Ejecutar todas las funciones de actualización

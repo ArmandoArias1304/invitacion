@@ -758,10 +758,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         /* ===== TABLE ===== */
         .table-responsive-custom {
             border-radius: 0.5rem;
-            overflow: hidden;
+            overflow-x: auto;
+            overflow-y: auto;
             box-shadow: var(--shadow-soft);
             max-height: 600px;
-            overflow-y: auto;
+            max-width: 100%;
         }
 
         .table-custom {
@@ -1105,12 +1106,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             .main-content {
                 margin-left: 0;
                 padding: 1rem;
-                padding-top: 80px;
+                padding-top: 50px;
             }
 
             .main-header {
                 margin-left: 0;
-                margin-top: 70px;
+                margin-top: 0 !important;
             }
 
             .header-content .user-section {
@@ -1122,12 +1123,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             }
 
             .header-content {
-                padding: 1rem;
-                justify-content: center !important;
-                text-align: center;
-                position: relative;
-            }
-
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+        justify-content: center !important;
+        display: flex !important;
+        padding: 1rem;
+        position: relative;
+    }
+    .header-brand {
+        justify-content: center;
+        width: 100%;
+    }
+    .user-section {
+        width: 100%;
+        justify-content: center;
+        display: none !important;
+    }
             .header-center {
                 position: static;
                 transform: none;
@@ -1243,6 +1255,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 flex-direction: column;
                 text-align: center;
                 gap: 0.5rem;
+            }
+
+            /* Scroll horizontal para tablas en móvil */
+            .table-responsive-custom {
+                overflow-x: auto !important;
+                max-width: 100vw;
+            }
+            
+            .table-custom {
+                min-width: 800px;
             }
         }
 
@@ -1638,6 +1660,8 @@ label[class="form-label"]:has(+ #previewMensaje),
         0 0 50px rgba(139, 92, 246, 0.3) !important;
     border-color: rgba(99, 102, 241, 0.7) !important;
 }
+
+
     </style>
 </head>
 <body>
@@ -1681,7 +1705,7 @@ label[class="form-label"]:has(+ #previewMensaje),
             <i class="bi bi-person-plus"></i>
             Generar Invitados
         </a>
-        <a href="envios.php" class="sidebar-nav-item">
+        <a href="envios.php" class="sidebar-nav-item active">
             <i class="bi bi-whatsapp"></i>
             Enviar Invitaciones
         </a>
@@ -1713,11 +1737,9 @@ label[class="form-label"]:has(+ #previewMensaje),
                 </div>
                 <h1 class="header-title">Fastnvite</h1>
             </div>
-            
             <div class="header-center">
                 <h2 class="dashboard-title">📱 Envío de Invitaciones</h2>
             </div>
-            
             <div class="user-section">
                 <div class="user-info">
                     <p class="user-name"><?php echo htmlspecialchars($_SESSION['admin_nombre']); ?></p>
@@ -2041,10 +2063,10 @@ Guillermo y Wendy 👰🏻‍♀️🤵🏻‍♂️💒</textarea>
                                                 <i class="bi bi-check-circle"></i> Confirmado
                                             </span>
                                             <?php if ($invitado['fecha_confirmacion']): ?>
-                                                <br><small class="text-muted">
-                                                    <?php echo date('d/m/Y', strtotime($invitado['fecha_confirmacion'])); ?>
-                                                </small>
-                                            <?php endif; ?>
+    <br><small style="color: 94a3b8; font-weight: 100;">
+        <?php echo date('d/m/Y', strtotime($invitado['fecha_confirmacion'])); ?>
+    </small>
+<?php endif; ?>
                                         <?php else: ?>
                                             <span class="badge-custom badge-warning-custom">
                                                 <i class="bi bi-clock"></i> Pendiente

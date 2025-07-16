@@ -989,6 +989,7 @@ $con_telefono = $stmt->fetchColumn();
 
             .main-header {
                 margin-left: 0;
+                margin-top: 0 !important;
             }
 
             .header-content {

@@ -874,10 +874,11 @@ if (
         /* ===== TABLE ===== */
         .table-responsive-custom {
             border-radius: 0.5rem;
-            overflow: hidden;
+            overflow-x: auto;
+            overflow-y: auto;
             box-shadow: var(--shadow-soft);
             max-height: 600px;
-            overflow-y: auto;
+            max-width: 100%;
         }
 
         .table-custom {
@@ -1187,6 +1188,16 @@ if (
 
             .sidebar-nav {
                 padding: 1rem 0 200px 0 !important;
+            }
+
+            /* Scroll horizontal para tablas en móvil */
+            .table-responsive-custom {
+                overflow-x: auto !important;
+                max-width: 100vw;
+            }
+            
+            .table-custom {
+                min-width: 800px;
             }
         }
 
@@ -1559,6 +1570,201 @@ if (
 .table-custom small {
     color: rgba(255, 255, 255, 0.6) !important;
 }
+
+/* ===== CONFIRMACIONES RECIENTES - MODO OSCURO ===== */
+
+/* Cards de confirmaciones individuales */
+.content-card .card-body-custom .p-3.border.rounded-3.bg-light {
+    background: rgba(40, 40, 65, 0.9) !important;
+    border: 1px solid var(--border-color) !important;
+    transition: var(--transition);
+}
+
+/* Hover effect para las cards de confirmaciones */
+.content-card .card-body-custom .p-3.border.rounded-3:hover {
+    background: rgba(45, 45, 70, 0.95) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+}
+
+/* Títulos de confirmaciones */
+.content-card .card-body-custom h5.mb-1 {
+    color: rgba(255, 255, 255, 0.95) !important;
+    font-weight: 600;
+}
+
+/* Fechas */
+.content-card .card-body-custom small.text-muted {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Icono de confirmación */
+.content-card .card-body-custom .text-success {
+    color: var(--success-color) !important;
+}
+
+/* ===== SOLUCIÓN MÁS ESPECÍFICA ===== */
+
+/* Selector más directo para las cards de confirmación */
+.card-body-custom .row.g-3 .p-3 {
+    background: rgba(40, 40, 65, 0.9) !important;
+    border: 1px solid var(--border-color) !important;
+    backdrop-filter: blur(10px);
+}
+
+.card-body-custom .row.g-3 .p-3:hover {
+    background: rgba(45, 45, 70, 0.95) !important;
+    transform: translateY(-2px);
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.3),
+        0 0 15px rgba(99, 102, 241, 0.2);
+}
+
+/* Todos los elementos de texto dentro */
+.card-body-custom .row.g-3 h5 {
+    color: rgba(255, 255, 255, 0.95) !important;
+}
+
+.card-body-custom .row.g-3 small {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.card-body-custom .row.g-3 .text-success {
+    color: var(--success-color) !important;
+}
+
+/* ===== CENTRADO SELECTIVO DE TABLA ===== */
+
+/* Headers centrados */
+.table-custom th {
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+
+/* Celdas centradas por defecto */
+.table-custom td {
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+
+/* EXCEPCIÓN 1: Columna de NOMBRES a la izquierda */
+.table-custom td:first-child {
+    text-align: left !important;
+}
+
+/* EXCEPCIÓN 2: Columna de ACCIONES a la izquierda */
+.table-custom td:last-child {
+    text-align: left !important;
+}
+
+/* Divs con nombres alineados a la izquierda */
+.table-custom td:first-child div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start !important;
+    text-align: left !important;
+    padding-left: 2rem !important;
+}
+
+/* Botones de acción en fila horizontal */
+.table-custom td:last-child .d-flex {
+    justify-content: flex-start !important;
+    align-items: center;
+    flex-direction: row !important;
+    gap: 0.25rem;
+}
+
+/* ===== TIPO DE INVITADO COMO BADGE DE MESA ===== */
+
+.table-custom td:first-child small.text-muted {
+    display: inline-block !important;
+    padding: 0.375rem 0.75rem;
+    border-radius: 0.375rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: capitalize;
+    
+    /* Mismo estilo que badge-info-custom */
+    background: rgba(99, 102, 241, 0.2) !important;
+    color: var(--primary-color) !important;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+}
+
+/* ===== CENTRADO PARA EL RESTO DE CONTENIDO ===== */
+
+/* Badges centrados */
+.table-custom td .badge-custom,
+.table-custom td .badge-info-custom,
+.table-custom td .badge-success-custom,
+.table-custom td .badge-warning-custom {
+    display: inline-flex;
+    margin: 0 auto;
+}
+
+/* Token centrado */
+.table-custom td .token-code {
+    display: inline-block;
+    margin: 0 auto;
+}
+
+/* Copy button junto al token */
+.table-custom td .copy-btn {
+    margin-left: 0.5rem;
+    vertical-align: middle;
+}
+
+/* ===== LABELS DE FILTROS EN MODO OSCURO ===== */
+
+/* Labels de filtros en blanco */
+.form-label.small.text-muted {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-weight: 500;
+}
+
+/* Alternativa más específica */
+.row.g-2 .form-label.small.text-muted {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-weight: 500;
+}
+
+/* Si los anteriores no funcionan, usa este más específico */
+.col-md-2 .form-label.small.text-muted {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .main-header {
+        margin-left: 0;
+        margin-top: 0 !important;
+    }
+    .header-content {
+        padding: 1rem;
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+        position: relative;
+        justify-content: center !important;
+        display: flex !important;
+    }
+    .header-brand {
+        justify-content: center;
+        width: 100%;
+    }
+    .header-center {
+        position: static;
+        transform: none;
+        width: 100%;
+    }
+    .dashboard-title {
+        font-size: 1.25rem;
+    }
+    .user-section {
+        width: 100%;
+        justify-content: center;
+        display: none !important;
+    }
+}
     </style>
 </head>
 <body>
@@ -1625,23 +1831,19 @@ if (
     </div>
 </nav>
 
-    <!-- Main Header -->
+    <!-- Header -->
     <header class="main-header" id="mainHeader">
         <div class="header-content">
             <div class="header-brand">
-                <div class="header-logo">
-                    Fn
-                </div>
+                <div class="header-logo">Fn</div>
                 <h1 class="header-title">Fastnvite</h1>
             </div>
-            
             <div class="header-center">
-                <h2 class="dashboard-title">Dashboard de Invitaciones</h2>
+                <h2 class="dashboard-title">Dashboard</h2>
             </div>
-            
             <div class="user-section">
                 <div class="user-info">
-                    <p class="user-name"><?php echo htmlspecialchars($_SESSION['admin_nombre']); ?></p>
+                    <p class="user-name"><?php echo htmlspecialchars($_SESSION['admin_nombre'] ?? 'Usuario Admin'); ?></p>
                     <p class="user-role">Administrador</p>
                 </div>
                 <a href="../../logout.php" class="logout-btn">
@@ -2628,7 +2830,6 @@ let currentQuantity = 1;
                 const nuevoActivo = document.getElementById(idActivo);
                 if (nuevoActivo) nuevoActivo.focus();
             }
-            showNotification(`¡Nueva confirmación! Invitado #${idInvitado} actualizado`, 'success');
         }
 
         function actualizarFilaMesa(mesa, datos) {
@@ -2998,29 +3199,47 @@ let currentQuantity = 1;
     (function() {
         if (!!window.EventSource) {
             let lastId = 0;
+            let isFirstLoad = true;
             const source = new EventSource('sse_confirmaciones.php');
+            
             source.onmessage = function(event) {
                 if (event.data) {
                     const data = JSON.parse(event.data);
                     if (data && data.id_invitado) {
-                        // Petición AJAX para obtener datos completos y actualizados del invitado
-                        fetch(`dashboard.php?action=obtener_invitado_y_stats&id=${data.id_invitado}`)
-                            .then(res => res.json())
-                            .then(resp => {
-                                if (resp && resp.invitado) {
-                                    actualizarFilaInvitado(data.id_invitado, resp.invitado);
-                                    if (resp.stats) actualizarEstadisticasDesdeDatos(resp.stats);
-                                    if (resp.mesa && resp.mesaDatos) actualizarFilaMesa(resp.mesa, resp.mesaDatos);
-                                    if (resp.confirmaciones_recientes) actualizarConfirmacionesRecientes(resp.confirmaciones_recientes);
-                                }
-                            });
-                        lastId = data.id_confirmacion;
+                        // Ignorar la primera carga para evitar mensajes falsos
+                        if (isFirstLoad) {
+                            isFirstLoad = false;
+                            lastId = data.id_confirmacion || 0;
+                            return;
+                        }
+                        
+                        // Solo procesar si es una confirmación nueva
+                        if (data.id_confirmacion && data.id_confirmacion > lastId) {
+                            // Petición AJAX para obtener datos completos y actualizados del invitado
+                            fetch(`dashboard.php?action=obtener_invitado_y_stats&id=${data.id_invitado}`)
+                                .then(res => res.json())
+                                .then(resp => {
+                                    if (resp && resp.invitado) {
+                                        actualizarFilaInvitado(data.id_invitado, resp.invitado);
+                                        if (resp.stats) actualizarEstadisticasDesdeDatos(resp.stats);
+                                        if (resp.mesa && resp.mesaDatos) actualizarFilaMesa(resp.mesa, resp.mesaDatos);
+                                        if (resp.confirmaciones_recientes) actualizarConfirmacionesRecientes(resp.confirmaciones_recientes);
+                                    }
+                                });
+                            lastId = data.id_confirmacion;
+                        }
                     }
                 }
             };
+            
             source.onerror = function(e) {
                 console.log('SSE error:', e);
             };
+            
+            // Marcar como primera carga después de un breve delay
+            setTimeout(() => {
+                isFirstLoad = false;
+            }, 2000);
         }
     })();
     </script>
