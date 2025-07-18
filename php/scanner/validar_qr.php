@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['stats']) && $_GET['stat
         // Total de personas que ya llegaron
         $stmt = $connection->prepare("
             SELECT COUNT(DISTINCT ae.id_invitado) as invitados_presentes,
-                   SUM(c.cantidad_confirmada) as personas_presentes
+                   SUM(ae.cantidad_ingresada) as personas_presentes
             FROM accesos_evento ae
             JOIN confirmaciones c ON ae.id_invitado = c.id_invitado
             WHERE ae.status_entrada = 'ingreso'
@@ -128,25 +128,21 @@ try {
     
     // Validar token QR en la base de datos
     $datosQR = $db->validarTokenQR($tokenQR);
-    
     if (!$datosQR) {
         // Verificar si el QR ya fue usado
         $stmt = $db->getConnection()->prepare("
-            SELECT tq.usado, i.nombre_completo, ae.timestamp_escaneo
+            SELECT tq.usado, i.nombre_completo
             FROM tokens_qr tq
             LEFT JOIN invitados i ON tq.id_invitado = i.id_invitado
-            LEFT JOIN accesos_evento ae ON tq.id_invitado = ae.id_invitado
             WHERE tq.token_unico = ?
         ");
         $stmt->execute([$tokenQR]);
         $tokenInfo = $stmt->fetch();
-        
         if ($tokenInfo) {
             if ($tokenInfo['usado']) {
                 jsonResponse([
                     'error' => 'QR ya utilizado',
-                    'message' => $tokenInfo['nombre_completo'] . ' ya ingresó el ' . 
-                               date('d/m/Y H:i', strtotime($tokenInfo['timestamp_escaneo'])),
+                    'message' => $tokenInfo['nombre_completo'] . ' ya utilizó todos sus cupos.',
                     'status' => 'ya_usado'
                 ], 409);
             } else {
@@ -162,6 +158,39 @@ try {
             ], 404);
         }
     }
+
+    // NUEVO: Sumar accesos previos y calcular cupos restantes
+    $stmt = $db->getConnection()->prepare("SELECT SUM(cantidad_ingresada) as total_ingresados FROM accesos_evento WHERE token_usado = ? AND status_entrada = 'ingreso'");
+    $stmt->execute([$tokenQR]);
+    $totalIngresados = (int)($stmt->fetchColumn() ?? 0);
+    $cuposRestantes = $datosQR['cantidad_confirmada'] - $totalIngresados;
+    if ($cuposRestantes <= 0) {
+        jsonResponse([
+            'error' => 'QR ya utilizado',
+            'message' => $datosQR['nombre_completo'] . ' ya utilizó todos sus cupos.',
+            'status' => 'ya_usado',
+            'invitado' => [
+                'nombre' => $datosQR['nombre_completo'],
+                'mesa' => $datosQR['mesa'],
+                'cantidad' => $datosQR['cantidad_confirmada'],
+                'total_ingresados' => $totalIngresados,
+                'cupos_restantes' => 0
+            ]
+        ], 409);
+    }
+
+    // Devolver datos para el frontend
+    jsonResponse([
+        'success' => true,
+        'invitado' => [
+            'nombre' => $datosQR['nombre_completo'],
+            'mesa' => $datosQR['mesa'],
+            'cantidad' => $datosQR['cantidad_confirmada'],
+            'total_ingresados' => $totalIngresados,
+            'cupos_restantes' => $cuposRestantes
+        ],
+        'status' => 'parcial'
+    ]);
     
     // Obtener ubicación GPS si está disponible
     $ubicacionGPS = isset($input['ubicacion']) ? 

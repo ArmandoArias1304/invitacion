@@ -1269,10 +1269,10 @@ $con_telefono = $stmt->fetchColumn();
 </button>
     <!-- Sidebar Icons (always visible) -->
     <div class="sidebar-icons" id="sidebarIcons">
-        <a href="dashboard.php" class="sidebar-icon-item" data-tooltip="Dashboard">
+        <a href="dashboard.php" class="sidebar-icon-item active" data-tooltip="Dashboard">
             <i class="bi bi-house"></i>
         </a>
-        <a href="generador.php" class="sidebar-icon-item active" data-tooltip="Generar Invitados">
+        <a href="generador.php" class="sidebar-icon-item" data-tooltip="Generar Invitados">
             <i class="bi bi-person-plus"></i>
         </a>
         <a href="envios.php" class="sidebar-icon-item" data-tooltip="Enviar Invitaciones">
@@ -1280,6 +1280,9 @@ $con_telefono = $stmt->fetchColumn();
         </a>
         <a href="estadisticas.php" class="sidebar-icon-item" data-tooltip="Ver Estadísticas">
             <i class="bi bi-graph-up"></i>
+        </a>
+        <a href="../scanner/control.php" class="sidebar-icon-item" data-tooltip="Scanner">
+            <i class="bi bi-qr-code-scan"></i>
         </a>
     </div>
 
@@ -1289,7 +1292,6 @@ $con_telefono = $stmt->fetchColumn();
     <!-- Sidebar Overlay -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
     
-    <!-- Sidebar -->
     <!-- Sidebar -->
 <nav class="sidebar" id="sidebar">
     <div class="sidebar-header">
@@ -1312,6 +1314,10 @@ $con_telefono = $stmt->fetchColumn();
         <a href="estadisticas.php" class="sidebar-nav-item">
             <i class="bi bi-graph-up"></i>
             Ver Estadísticas
+        </a>
+        <a href="../scanner/control.php" class="sidebar-nav-item">
+            <i class="bi bi-qr-code-scan"></i>
+            Scanner
         </a>
     </div>
     
@@ -1439,7 +1445,7 @@ $con_telefono = $stmt->fetchColumn();
                                 
                                 <div class="form-group">
                                     <label for="cupos_disponibles">Cupos Disponibles</label>
-                                    <input type="number" id="cupos_disponibles" name="cupos_disponibles" value="1" min="1" max="10">
+                                    <input type="number" id="cupos_disponibles" name="cupos_disponibles" value="1" min="1" max="30">
                                 </div>
                             </div>
                             

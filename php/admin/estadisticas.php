@@ -1044,14 +1044,12 @@
     </style>
 </head>
 <body>
-    <!-- Botón hamburguesa para móvil -->
-    <button class="mobile-menu-btn" id="mobileMenuBtn">
-        <i class="bi bi-list"></i>
-    </button>
-
-    <!-- Sidebar Icons (siempre visible en desktop) -->
+<button class="mobile-menu-btn" id="mobileMenuBtn">
+    <i class="bi bi-list"></i>
+</button>
+    <!-- Sidebar Icons (always visible) -->
     <div class="sidebar-icons" id="sidebarIcons">
-        <a href="dashboard.php" class="sidebar-icon-item" data-tooltip="Dashboard">
+        <a href="dashboard.php" class="sidebar-icon-item active" data-tooltip="Dashboard">
             <i class="bi bi-house"></i>
         </a>
         <a href="generador.php" class="sidebar-icon-item" data-tooltip="Generar Invitados">
@@ -1060,53 +1058,61 @@
         <a href="envios.php" class="sidebar-icon-item" data-tooltip="Enviar Invitaciones">
             <i class="bi bi-whatsapp"></i>
         </a>
-        <a href="estadisticas.php" class="sidebar-icon-item active" data-tooltip="Ver Estadísticas">
+        <a href="estadisticas.php" class="sidebar-icon-item" data-tooltip="Ver Estadísticas">
             <i class="bi bi-graph-up"></i>
+        </a>
+        <a href="../scanner/control.php" class="sidebar-icon-item" data-tooltip="Scanner">
+            <i class="bi bi-qr-code-scan"></i>
         </a>
     </div>
 
-    <!-- Sidebar Trigger (área invisible para hover en desktop) -->
+    <!-- Sidebar Trigger (área invisible para hover) -->
     <div class="sidebar-trigger" id="sidebarTrigger"></div>
-
-    <!-- Sidebar Overlay (fondo oscuro al abrir sidebar en móvil) -->
+    
+    <!-- Sidebar Overlay -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
-
-    <!-- Sidebar principal -->
-    <nav class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <h4 class="sidebar-title">Panel de Control</h4>
-            <p class="sidebar-subtitle">Sistema de Invitaciones</p>
+    
+    <!-- Sidebar -->
+<nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <h4 class="sidebar-title">Panel de Control</h4>
+        <p class="sidebar-subtitle">Sistema de Invitaciones</p>
+    </div>
+    <div class="sidebar-nav">
+        <a href="dashboard.php" class="sidebar-nav-item">
+            <i class="bi bi-house"></i>
+            Dashboard
+        </a>
+        <a href="generador.php" class="sidebar-nav-item">
+            <i class="bi bi-person-plus"></i>
+            Generar Invitados
+        </a>
+        <a href="envios.php" class="sidebar-nav-item">
+            <i class="bi bi-whatsapp"></i>
+            Enviar Invitaciones
+        </a>
+        <a href="estadisticas.php" class="sidebar-nav-item">
+            <i class="bi bi-graph-up"></i>
+            Ver Estadísticas
+        </a>
+        <a href="../scanner/control.php" class="sidebar-nav-item">
+            <i class="bi bi-qr-code-scan"></i>
+            Scanner
+        </a>
+    </div>
+    
+    <!-- Sección de usuario en la sidebar (solo visible en móvil) -->
+    <div class="sidebar-user-section">
+        <div class="sidebar-user-info">
+            <p class="sidebar-user-name"><?php echo htmlspecialchars($_SESSION['admin_nombre']); ?></p>
+            <p class="sidebar-user-role">Administrador</p>
         </div>
-        <div class="sidebar-nav">
-            <a href="dashboard.php" class="sidebar-nav-item">
-                <i class="bi bi-house"></i>
-                Dashboard
-            </a>
-            <a href="generador.php" class="sidebar-nav-item">
-                <i class="bi bi-person-plus"></i>
-                Generar Invitados
-            </a>
-            <a href="envios.php" class="sidebar-nav-item">
-                <i class="bi bi-whatsapp"></i>
-                Enviar Invitaciones
-            </a>
-            <a href="estadisticas.php" class="sidebar-nav-item active">
-                <i class="bi bi-graph-up"></i>
-                Ver Estadísticas
-            </a>
-        </div>
-        <!-- Sección de usuario en la sidebar (solo visible en móvil) -->
-        <div class="sidebar-user-section">
-            <div class="sidebar-user-info">
-                <p class="sidebar-user-name"><?php echo htmlspecialchars($_SESSION['admin_nombre'] ?? 'Usuario Admin'); ?></p>
-                <p class="sidebar-user-role">Administrador</p>
-            </div>
-            <a href="../../logout.php" class="sidebar-logout-btn">
-                <i class="bi bi-box-arrow-right"></i>
-                Cerrar Sesión
-            </a>
-        </div>
-    </nav>
+        <a href="../../logout.php" class="sidebar-logout-btn">
+            <i class="bi bi-box-arrow-right"></i>
+            Cerrar Sesión
+        </a>
+    </div>
+</nav>
 
     <!-- Header -->
     <header class="main-header" id="mainHeader">
@@ -1383,7 +1389,7 @@
                                     <tr>
                                         <td>Sin teléfono</td>
                                         <td><strong style="color: var(--danger-color);"><?php echo $problemas['sin_telefono']; ?></strong></td>
-                                        <td><button class="btn btn-primary-custom btn-sm">Corregir</button></td>
+                                        <td><button class="btn btn-primary-custom btn-sm" style="color: white;">Corregir</button></td>
                                     </tr>
                                     <?php endif; ?>
                                     
@@ -1391,7 +1397,7 @@
                                     <tr>
                                         <td>Sin mesa asignada</td>
                                         <td><strong style="color: var(--warning-color);"><?php echo $problemas['sin_mesa']; ?></strong></td>
-                                        <td><button class="btn btn-warning-custom btn-sm">Asignar</button></td>
+                                        <td><button class="btn btn-warning-custom btn-sm" style="color: white;">Asignar</button></td>
                                     </tr>
                                     <?php endif; ?>
                                     
@@ -1399,7 +1405,7 @@
                                     <tr>
                                         <td>Sin token</td>
                                         <td><strong style="color: var(--danger-color);"><?php echo $problemas['sin_token']; ?></strong></td>
-                                        <td><button class="btn btn-success-custom btn-sm">Generar</button></td>
+                                        <td><button class="btn btn-success-custom btn-sm" style="color: white;">Generar</button></td>
                                     </tr>
                                     <?php endif; ?>
                                     
@@ -1407,7 +1413,7 @@
                                     <tr>
                                         <td>Teléfonos duplicados</td>
                                         <td><strong style="color: var(--danger-color);"><?php echo $problemas['duplicados']; ?></strong></td>
-                                        <td><button class="btn btn-danger-custom btn-sm">Revisar</button></td>
+                                        <td><button class="btn btn-danger-custom btn-sm" style="color: white;">Revisar</button></td>
                                     </tr>
                                     <?php endif; ?>
                                     

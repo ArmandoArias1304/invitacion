@@ -28,6 +28,24 @@ $stmt = $conn->prepare("SELECT SUM(cantidad_confirmada) as total FROM confirmaci
 $stmt->execute();
 $stats['total_cupos_confirmados'] = $stmt->fetchColumn() ?: 0;
 
+// Estadísticas de acceso al evento (solo accesos del escáner)
+$stmt = $conn->prepare("
+    SELECT 
+        COUNT(DISTINCT ae.id_invitado) as invitados_presentes,
+        SUM(ae.cantidad_ingresada) as personas_presentes,
+        COUNT(*) as total_accesos
+    FROM accesos_evento ae
+");
+$stmt->execute();
+$statsAcceso = $stmt->fetch(PDO::FETCH_ASSOC);
+$stats['invitados_presentes'] = $statsAcceso['invitados_presentes'] ?: 0;
+$stats['personas_presentes'] = $statsAcceso['personas_presentes'] ?: 0;
+$stats['total_accesos'] = $statsAcceso['total_accesos'] ?: 0;
+
+// Calcular porcentaje de asistencia
+$stats['porcentaje_asistencia'] = $stats['total_cupos_confirmados'] > 0 ? 
+    round(($stats['personas_presentes'] / $stats['total_cupos_confirmados']) * 100, 1) : 0;
+
 // Confirmaciones por día (últimos 7 días)
 $stmt = $conn->prepare("
     SELECT DATE(fecha_confirmacion) as fecha, COUNT(*) as cantidad
@@ -722,7 +740,7 @@ if (
         /* ===== STATS CARDS ===== */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 1.5rem;
             margin-bottom: 2rem;
         }
@@ -776,6 +794,7 @@ if (
         .stat-icon.confirmed { background: linear-gradient(135deg, var(--success-color), #059669); }
         .stat-icon.seats { background: linear-gradient(135deg, var(--warning-color), #d97706); }
         .stat-icon.confirmed-seats { background: linear-gradient(135deg, #10b981, #047857); }
+        .stat-icon.acceso { background: linear-gradient(135deg, #f59e0b, #d97706); }
 
         .stat-number {
             font-size: 2.5rem;
@@ -789,6 +808,31 @@ if (
             font-weight: 500;
             font-size: 0.875rem;
             margin: 0;
+        }
+
+        .stat-details {
+            border-top: 1px solid var(--border-color);
+            padding-top: 1rem;
+            margin-top: 1rem;
+        }
+
+        .stat-indicator {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 0.75rem;
+            color: var(--primary-color);
+            background: rgba(99, 102, 241, 0.1);
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
         }
 
         /* ===== CARDS ===== */
@@ -1102,6 +1146,12 @@ if (
 
         .copy-btn:hover {
             background: var(--text-dark);
+        }
+
+        @media (min-width: 1400px) {
+            .stats-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
         }
 
         @media (max-width: 768px) {
@@ -1785,6 +1835,9 @@ if (
         <a href="estadisticas.php" class="sidebar-icon-item" data-tooltip="Ver Estadísticas">
             <i class="bi bi-graph-up"></i>
         </a>
+        <a href="../scanner/control.php" class="sidebar-icon-item" data-tooltip="Scanner">
+            <i class="bi bi-qr-code-scan"></i>
+        </a>
     </div>
 
     <!-- Sidebar Trigger (área invisible para hover) -->
@@ -1815,6 +1868,10 @@ if (
         <a href="estadisticas.php" class="sidebar-nav-item">
             <i class="bi bi-graph-up"></i>
             Ver Estadísticas
+        </a>
+        <a href="../scanner/control.php" class="sidebar-nav-item">
+            <i class="bi bi-qr-code-scan"></i>
+            Scanner
         </a>
     </div>
     
@@ -1874,7 +1931,7 @@ if (
                 <div class="stat-header">
                     <div>
                         <h3 class="stat-number"><?php echo number_format($stats['total_confirmados']); ?></h3>
-                        <p class="stat-label">Total de Invitaciones Confirmaciones</p>
+                        <p class="stat-label">Invitaciones Confirmaciones</p>
                     </div>
                     <div class="stat-icon confirmed">
                         <i class="bi bi-check-circle"></i>
@@ -1889,7 +1946,7 @@ if (
                         <p class="stat-label">Invitados</p>
                     </div>
                     <div class="stat-icon seats">
-                        <i class="bi bi-chair"></i>
+                    <i class="bi bi-people"></i>
                     </div>
                 </div>
             </div>
@@ -1904,6 +1961,20 @@ if (
                         <i class="bi bi-check2-square"></i>
                     </div>
                 </div>
+            </div>
+            
+            <!-- Nueva card de acceso en tiempo real -->
+            <div class="stat-card" id="accesoCard">
+                <div class="stat-header">
+                    <div>
+                        <h3 class="stat-number" id="personasPresentes"><?php echo number_format($stats['personas_presentes']); ?></h3>
+                        <p class="stat-label">Personas Ingresadas</p>
+                    </div>
+                    <div class="stat-icon acceso">
+                        <i class="bi bi-door-open"></i>
+                    </div>
+                </div>
+                
             </div>
         </div>
 
@@ -3242,6 +3313,81 @@ let currentQuantity = 1;
             }, 2000);
         }
     })();
+
+    // SSE para estadísticas de acceso en tiempo real
+    (function() {
+        if (!!window.EventSource) {
+            let lastAccesoId = 0;
+            let isFirstAccesoLoad = true;
+            const sourceAcceso = new EventSource('sse_accesos.php');
+            
+            sourceAcceso.onmessage = function(event) {
+                if (event.data) {
+                    try {
+                        const data = JSON.parse(event.data);
+                        
+                        // Ignorar heartbeats
+                        if (data.type === 'heartbeat') {
+                            return;
+                        }
+                        
+                        // Ignorar la primera carga
+                        if (isFirstAccesoLoad) {
+                            isFirstAccesoLoad = false;
+                            if (data.acceso && data.acceso.id_acceso) {
+                                lastAccesoId = data.acceso.id_acceso;
+                            }
+                            return;
+                        }
+                        
+                        // Solo procesar si es un acceso nuevo
+                        if (data.acceso && data.acceso.id_acceso > lastAccesoId) {
+                            actualizarEstadisticasAcceso(data.stats);
+                            lastAccesoId = data.acceso.id_acceso;
+                        }
+                    } catch (e) {
+                        console.log('Error parsing SSE acceso data:', e);
+                    }
+                }
+            };
+            
+            sourceAcceso.onerror = function(e) {
+                console.log('SSE acceso error:', e);
+                // Intentar reconectar después de 5 segundos
+                setTimeout(() => {
+                    if (sourceAcceso.readyState === EventSource.CLOSED) {
+                        location.reload();
+                    }
+                }, 5000);
+            };
+            
+            // Marcar como primera carga después de un breve delay
+            setTimeout(() => {
+                isFirstAccesoLoad = false;
+            }, 2000);
+        }
+    })();
+
+    // Función para actualizar estadísticas de acceso
+    function actualizarEstadisticasAcceso(stats) {
+        if (stats) {
+            // Actualizar número principal
+            const personasPresentesEl = document.getElementById('personasPresentes');
+            
+            if (personasPresentesEl) {
+                personasPresentesEl.textContent = stats.personas_presentes.toLocaleString();
+            }
+            
+            // Efecto visual de actualización
+            const accesoCard = document.getElementById('accesoCard');
+            if (accesoCard) {
+                accesoCard.style.transform = 'scale(1.02)';
+                setTimeout(() => {
+                    accesoCard.style.transform = 'scale(1)';
+                }, 200);
+            }
+        }
+    }
     </script>
 </body>
 </html>

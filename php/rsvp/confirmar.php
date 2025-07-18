@@ -399,6 +399,9 @@ if ($token && !$invitado) {
 <!-- QR Code Generator -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 
+<!-- SONIDO DE CONFIRMACIÓN -->
+<audio id="sonidoConfirmacion" src="../../audio/confirmacion.mp3" preload="auto" style="display:none;"></audio>
+
 <script>
 /**
  * FUNCIÓN PARA ACTUALIZAR AUTOMÁTICAMENTE LA TABLA DE INVITADOS
@@ -764,6 +767,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     const alertContainer = document.createElement('div');
                     alertContainer.innerHTML = successAlert.outerHTML;
                     form.parentNode.insertBefore(alertContainer, form);
+                    
+                    // Reproducir sonido elegante de confirmación
+                    const audio = document.getElementById('sonidoConfirmacion');
+                    if (audio) {
+                        audio.currentTime = 0;
+                        audio.play();
+                    }
                     
                     // Ocultar formulario
                     form.style.display = 'none';

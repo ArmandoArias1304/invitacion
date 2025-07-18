@@ -1670,17 +1670,20 @@ label[class="form-label"]:has(+ #previewMensaje),
 </button>
     <!-- Sidebar Icons (always visible) -->
     <div class="sidebar-icons" id="sidebarIcons">
-        <a href="dashboard.php" class="sidebar-icon-item" data-tooltip="Dashboard">
+        <a href="dashboard.php" class="sidebar-icon-item active" data-tooltip="Dashboard">
             <i class="bi bi-house"></i>
         </a>
         <a href="generador.php" class="sidebar-icon-item" data-tooltip="Generar Invitados">
             <i class="bi bi-person-plus"></i>
         </a>
-        <a href="envios.php" class="sidebar-icon-item active" data-tooltip="Enviar Invitaciones">
+        <a href="envios.php" class="sidebar-icon-item" data-tooltip="Enviar Invitaciones">
             <i class="bi bi-whatsapp"></i>
         </a>
         <a href="estadisticas.php" class="sidebar-icon-item" data-tooltip="Ver Estadísticas">
             <i class="bi bi-graph-up"></i>
+        </a>
+        <a href="../scanner/control.php" class="sidebar-icon-item" data-tooltip="Scanner">
+            <i class="bi bi-qr-code-scan"></i>
         </a>
     </div>
 
@@ -1690,7 +1693,7 @@ label[class="form-label"]:has(+ #previewMensaje),
     <!-- Sidebar Overlay -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
     
- <!-- Sidebar -->
+    <!-- Sidebar -->
 <nav class="sidebar" id="sidebar">
     <div class="sidebar-header">
         <h4 class="sidebar-title">Panel de Control</h4>
@@ -1705,13 +1708,17 @@ label[class="form-label"]:has(+ #previewMensaje),
             <i class="bi bi-person-plus"></i>
             Generar Invitados
         </a>
-        <a href="envios.php" class="sidebar-nav-item active">
+        <a href="envios.php" class="sidebar-nav-item">
             <i class="bi bi-whatsapp"></i>
             Enviar Invitaciones
         </a>
         <a href="estadisticas.php" class="sidebar-nav-item">
             <i class="bi bi-graph-up"></i>
             Ver Estadísticas
+        </a>
+        <a href="../scanner/control.php" class="sidebar-nav-item">
+            <i class="bi bi-qr-code-scan"></i>
+            Scanner
         </a>
     </div>
     

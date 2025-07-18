@@ -34,6 +34,15 @@ if (!isset($input['qr_data']) || empty($input['qr_data'])) {
     jsonResponse(['error' => 'Código QR requerido'], 400);
 }
 
+// Validar que venga la cantidad_ingresada
+if (!isset($input['cantidad_ingresada']) || !is_numeric($input['cantidad_ingresada'])) {
+    jsonResponse(['error' => 'Debes indicar cuántas personas están ingresando.'], 400);
+}
+$cantidadIngresada = (int)$input['cantidad_ingresada'];
+if ($cantidadIngresada < 1) {
+    jsonResponse(['error' => 'La cantidad ingresada debe ser al menos 1.'], 400);
+}
+
 try {
     $db = getDB();
     $connection = $db->getConnection();
@@ -54,12 +63,10 @@ try {
     
     // PASO 1: Verificar el estado actual del token QR
     $stmt = $connection->prepare("
-        SELECT tq.*, i.nombre_completo, i.mesa, i.tipo_invitado, c.cantidad_confirmada,
-               ae.timestamp_escaneo, ae.id_acceso
+        SELECT tq.*, i.nombre_completo, i.mesa, i.tipo_invitado, c.cantidad_confirmada
         FROM tokens_qr tq
         JOIN invitados i ON tq.id_invitado = i.id_invitado
         LEFT JOIN confirmaciones c ON i.id_invitado = c.id_invitado
-        LEFT JOIN accesos_evento ae ON tq.id_invitado = ae.id_invitado AND ae.status_entrada = 'ingreso'
         WHERE tq.token_unico = ? AND tq.activo = 1
     ");
     $stmt->execute([$tokenQR]);
@@ -97,54 +104,69 @@ try {
             ]
         ], 409);
     }
-    
-    // PASO 4: Verificar si ya había usado el QR (ya había entrado)
-    if ($tokenInfo['timestamp_escaneo']) {
+
+    // PASO 4: Calcular cuántos ya han ingresado
+    $stmt = $connection->prepare("SELECT SUM(cantidad_ingresada) as total_ingresados FROM accesos_evento WHERE token_usado = ? AND status_entrada = 'ingreso'");
+    $stmt->execute([$tokenQR]);
+    $totalIngresados = (int)($stmt->fetchColumn() ?? 0);
+    $cuposRestantes = $tokenInfo['cantidad_confirmada'] - $totalIngresados;
+    if ($cuposRestantes <= 0) {
         jsonResponse([
-            'success' => true,
-            'message' => 'QR ya utilizado anteriormente',
+            'success' => false,
+            'error' => 'Todos los cupos ya han ingresado con este QR.',
             'status' => 'ya_usado',
             'invitado' => [
                 'nombre' => $tokenInfo['nombre_completo'],
                 'mesa' => $tokenInfo['mesa'],
                 'cantidad' => $tokenInfo['cantidad_confirmada'],
                 'tipo' => $tokenInfo['tipo_invitado'],
-                'primera_entrada' => date('d/m/Y H:i', strtotime($tokenInfo['timestamp_escaneo'])),
-                'hora_entrada' => date('H:i', strtotime($tokenInfo['timestamp_escaneo']))
+                'total_ingresados' => $totalIngresados
             ]
         ]);
     }
-    
-    // PASO 5: QR válido y no usado - REGISTRAR LA ENTRADA
+    if ($cantidadIngresada > $cuposRestantes) {
+        jsonResponse([
+            'success' => false,
+            'error' => 'No puedes ingresar más personas de las que quedan disponibles.',
+            'cupos_restantes' => $cuposRestantes,
+            'status' => 'exceso',
+            'invitado' => [
+                'nombre' => $tokenInfo['nombre_completo'],
+                'mesa' => $tokenInfo['mesa'],
+                'cantidad' => $tokenInfo['cantidad_confirmada'],
+                'tipo' => $tokenInfo['tipo_invitado'],
+                'total_ingresados' => $totalIngresados
+            ]
+        ], 400);
+    }
+
+    // PASO 5: Registrar el acceso parcial
     $connection->beginTransaction();
-    
     try {
-        // Marcar el token QR como usado
-        $stmt = $connection->prepare("UPDATE tokens_qr SET usado = 1 WHERE token_unico = ?");
-        $stmt->execute([$tokenQR]);
-        
         // Obtener ubicación GPS si está disponible
         $ubicacionGPS = '';
         if (isset($input['ubicacion']) && is_array($input['ubicacion'])) {
             $ubicacionGPS = $input['ubicacion']['lat'] . ',' . $input['ubicacion']['lng'];
         }
-        
         // Registrar el acceso al evento
         $stmt = $connection->prepare("
-            INSERT INTO accesos_evento (id_invitado, token_usado, timestamp_escaneo, ubicacion_gps, status_entrada)
-            VALUES (?, ?, NOW(), ?, 'ingreso')
+            INSERT INTO accesos_evento (id_invitado, token_usado, timestamp_escaneo, cantidad_ingresada, ubicacion_gps, status_entrada)
+            VALUES (?, ?, NOW(), ?, ?, 'ingreso')
         ");
         $stmt->execute([
             $tokenInfo['id_invitado'],
             $tokenQR,
+            $cantidadIngresada,
             $ubicacionGPS
         ]);
-        
+        // Si se completan los cupos, marcar QR como usado
+        if (($totalIngresados + $cantidadIngresada) >= $tokenInfo['cantidad_confirmada']) {
+            $stmt = $connection->prepare("UPDATE tokens_qr SET usado = 1 WHERE token_unico = ?");
+            $stmt->execute([$tokenQR]);
+        }
         $connection->commit();
-        
         // Log para auditoría
         error_log("ENTRADA REGISTRADA: " . $tokenInfo['nombre_completo'] . " - Mesa " . $tokenInfo['mesa'] . " - " . date('Y-m-d H:i:s'));
-        
         // RESPUESTA EXITOSA
         jsonResponse([
             'success' => true,
@@ -155,12 +177,13 @@ try {
                 'mesa' => $tokenInfo['mesa'],
                 'cantidad' => $tokenInfo['cantidad_confirmada'],
                 'tipo' => $tokenInfo['tipo_invitado'],
+                'total_ingresados' => $totalIngresados + $cantidadIngresada,
+                'cupos_restantes' => max(0, $tokenInfo['cantidad_confirmada'] - ($totalIngresados + $cantidadIngresada)),
                 'hora_entrada' => date('H:i'),
                 'fecha_entrada' => date('d/m/Y'),
                 'timestamp_entrada' => date('Y-m-d H:i:s')
             ]
         ]);
-        
     } catch (Exception $e) {
         $connection->rollBack();
         throw $e;
